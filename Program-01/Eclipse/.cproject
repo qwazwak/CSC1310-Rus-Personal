@@ -115,4 +115,5 @@
 			<resource resourceType="PROJECT" workspacePath="/CSC-1310-Program-01-MovieProgram"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

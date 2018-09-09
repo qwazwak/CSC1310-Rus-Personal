@@ -23,31 +23,6 @@ using namespace std;
  long movieOscars; //number of oscars won
  double movieNumStars; //taken from IMDB on 10 star scale
  */
-/*
- movieTitle;
- movieLength;
- movieYear;
- movieGenre;
- movieRating;
- movieOscars;
- movieNumStars;
-
-
- Text* movieTitle;
- long movieLength;
- long movieYear;
- Text* movieGenre;
- Text* movieRating;
- long movieOscars;
- double movieNumStars;
- Text* movieTitle = inputTitle;
- long movieLength = inputLength;
- long movieYear = inputYear;
- Text* movieGenre = inputGenre;
- Text* movieRating = inputRating;
- long movieOscars = inputOscars;
- double movieNumStars = inputStars;
- */
 
 Movie::Movie () {
 	movieTitle = new Text;
@@ -77,8 +52,6 @@ Movie::~Movie () {
 	delete movieRating;
 }
 
-//Functions:
-
 /*
  Function name:  editMovieDetails
  Parameters:  	editMovieDetails
@@ -92,157 +65,161 @@ void Movie::editMovieDetails () {
 	char temp[100];
 
 	do {
-
-		cout << "Which detail do you wish to edit?" << endl;
-		cout << "1.  Title" << endl;
-		cout << "2.  Length" << endl;
-		cout << "3.  Year" << endl;
-		cout << "4.  Genre" << endl;
-		cout << "5.  Rating" << endl;
-		cout << "6.  Number of Oscars Won" << endl;
-		cout << "7.  Number of Stars" << endl;
-		cout << "8.  DONE EDITING" << endl;
-		cout << "Enter the number of your selection 1-8:  ";
+		cout << "Which detail do you wish to edit?" << "\n";
+		cout << "1.  Title" << "\n";
+		cout << "2.  Length" << "\n";
+		cout << "3.  Year" << "\n";
+		cout << "4.  Genre" << "\n";
+		cout << "5.  Rating" << "\n";
+		cout << "6.  Number of Oscars Won" << "\n";
+		cout << "7.  Number of Stars" << "\n";
+		cout << "8.  DONE EDITING" << "\n";
+		cout << "Enter the number of your selection 1-8:  " << flush;
 		cin >> choice;
-		cout << endl;
-		while (choice < 1 || choice > 8 || cin.fail ()) {
-			cin.clear ();
-			cout << "Error: make sure you enter only a choice 1 through 8:  ";
+		cout << "\n" << flush;
+		while (choice < 1 || choice > 8 || cin.fail()) {
+			cin.clear();
+			cout << "Error: make sure you enter only a choice 1 through 8:  " << flush;
 			cin >> choice;
 		}
-		cin.ignore ();
+		cin.ignore();
+		cout << endl;
 
 		switch (choice) {
 			case 1:
-				cout << endl << "Current Title: ";
-				movieTitle->displayText ();
-				cout << endl << "NEW TITLE:  ";
-				cin.getline (temp, 500);
-				cout << endl;
-				while (cin.fail ()) {
-					cout << "An error has occurred" << endl << endl;
-
-					cout << "Current Title: ";
-					movieTitle->displayText ();
-					cout << endl << "NEW TITLE:  ";
-					cin.getline (temp, 500);
+				cout << "\n" << "Current Title: " << movieTitle->getText();
+				cout << "\n" << "NEW TITLE:     " << flush;
+				cin.getline(temp, 500);
+				cout << "\n" << flush;
+				while (cin.fail()) {
+					cout << "An error has occurred" << "\n" << "\n";
+					cout << "Current Title: " << movieTitle->getText();
+					cout << "\n" << "NEW TITLE:  " << flush;
+					cin.getline(temp, 500);
 				}
 
-				movieTitle->editText (temp);
+				movieTitle->editText(temp);
+				cout << flush;
 				break;
 
 			case 2:
 				OGLongData = movieLength;
-				cout << endl << "Current Length: " << OGLongData;
-				cout << endl << "NEW LENGTH:     ";
+				cout << "\n" << "Current Length: " << OGLongData;
+				cout << "\n" << "NEW LENGTH:     " << flush;
 				cin >> movieLength;
-				while (cin.fail () || movieLength <= 0) {
-					if (cin.fail () == true) {
-						cout << "An error has occurred" << endl;
+				while (cin.fail() || movieLength <= 0) {
+					if(cin.fail() == true) {
+						cout << "An error has occurred" << "\n" << flush;
 					}
-					cin.clear ();
-					cout << "be sure to enter only numbers greater than zero" << endl;
-					cout << endl << "Current Length: " << OGLongData;
-					cout << endl << "NEW LENGTH:     ";
+					cin.clear();
+					cout << "be sure to enter only numbers greater than zero" << "\n" << "\n";
+					cout << "Current Length: " << OGLongData;
+					cout << "NEW LENGTH:     " << flush;
 					cin >> movieLength;
 				}
-				cin.clear ();
-				cin.ignore ();
+				cin.clear();
+				cin.ignore();
+				cout << flush;
 				break;
 
 			case 3:
 
 				OGLongData = movieYear;
-				cout << endl << "Current Year: " << OGLongData;
-				cout << endl << "NEW YEAR:     ";
+				cout << "Current Year: " << OGLongData << "\n";
+				cout << "NEW YEAR:     " << flush;
 				cin >> movieYear;
-				while (cin.fail () || movieYear <= 0) {
-					if (cin.fail () == true) {
-						cout << "An error has occurred" << endl;
+				while (cin.fail() || movieYear <= 0) {
+					if(cin.fail() == true) {
+						cout << "An error has occurred" << "\n" << "\n" << flush;
 					}
-					cin.clear ();
-					cout << "be sure to enter only numbers greater than zero" << endl;
-					cout << endl << "Current Year: " << OGLongData;
-					cout << endl << "NEW YEAR:     ";
+					cin.clear();
+					cout << "be sure to enter only numbers greater than zero" << "\n" << "\n";
+					cout << "Current Year: " << OGLongData << "\n";
+					cout << "NEW YEAR:     " << flush;
 					cin >> movieYear;
 				}
-				cin.clear ();
-				cin.ignore ();
+				cin.clear();
+				cin.ignore();
+				cout << flush;
 				break;
 
 			case 4:
-				cout << endl << "Current Genre: ";
-				movieGenre->displayText ();
-				cout << endl << "NEW GENRE:  ";
-				cin.getline (temp, 500);
-				cout << endl;
-				while (cin.fail ()) {
-					cout << "An error has occurred" << endl << endl;
+				cout << "Current Genre: " << movieGenre->getText << "\n";
+				cout << "NEW GENRE:  " << flush;
+				cin.getline(temp, 500);
+				cout << "\n" << flush;
+				while (cin.fail()) {
+					cout << "An error has occurred" << "\n" << "\n";
 
-					cout << "Current Genre: ";
-					movieGenre->displayText ();
-					cout << endl << "NEW GENRE:  ";
-					cin.getline (temp, 500);
+					cout << "Current Genre: " << movieGenre->getText() << "\n";
+					cout << "NEW GENRE:  " << flush;
+					cin.getline(temp, 500);
 				}
 
-				movieGenre->editText (temp);
+				movieGenre->editText(temp);
+				cout << flush;
 				break;
 
 			case 5:
-				cout << endl << "Current Rating: ";
-				movieRating->displayText ();
-				cout << endl << "NEW RATING:  ";
-				cin.getline (temp, 500);
-				cout << endl;
-				while (cin.fail ()) {
-					cout << "An error has occurred" << endl << endl;
+				cout << "Current Rating: " << movieRating->getText() << "\n";
+				cout << "NEW RATING:  " << flush;
+				cin.getline(temp, 500);
+				cout << "\n";
+				while (cin.fail()) {
+					cout << "An error has occurred" << "\n" << "\n";
 
-					cout << "Current Rating: ";
-					movieRating->displayText ();
-					cout << endl << "NEW Rating:  ";
-					cin.getline (temp, 500);
+					cout << "Current Rating: "
+					movieRating->getText() << "\n";
+					cout << "NEW Rating:  " << flush;
+					cin.getline(temp, 500);
+					cout << "\n" << flush;
 				}
 
-				movieRating->editText (temp);
+				movieRating->editText(temp);
+				cout << flush;
 				break;
 
 			case 6:
 				OGLongData = movieOscars;
-				cout << endl << "Current Oscars: " << OGLongData;
-				cout << endl << "NEW OSCARS:     ";
+				cout << "Current Oscars: " << OGLongData << "\n";
+				cout << "NEW OSCARS:     " << flush;
 				cin >> movieOscars;
-				while (cin.fail () || movieOscars <= 0) {
-					if (cin.fail () == true) {
-						cout << "An error has occurred" << endl;
+				cout << "\n" << flush;
+				while (cin.fail() || movieOscars <= 0) {
+					if(cin.fail() == true) {
+						cout << "An error has occurred" << "\n" << "\n" << flush;
 					}
-					cin.clear ();
-					cout << "be sure to enter only numbers greater than zero" << endl;
-					cout << endl << "Current Oscars: " << movieYear;
-					cout << endl << "NEW OSCARS:     ";
+					cin.clear();
+					cout << "be sure to enter only numbers greater than zero" << "\n" << "\n";
+					cout << "Current Oscars: " << movieYear << "\n";
+					cout << "NEW OSCARS:     " << flush;
 					cin >> movieOscars;
 				}
-				cin.clear ();
-				cin.ignore ();
+				cin.clear();
+				cin.ignore();
+				cout << flush;
 				break;
 
 			case 7:
 
 				OGDoubleData = movieNumStars;
-				cout << endl << "Current IMDB Rating: " << OGDoubleData;
-				cout << endl << "NEW IMDB RATING:     ";
+				cout << "Current IMDB Rating: " << OGDoubleData << "\n";
+				cout << "NEW IMDB RATING:     " << flush;
 				cin >> movieOscars;
-				while (cin.fail () || movieNumStars < 0) {
-					if (cin.fail () == true) {
-						cout << "An error has occurred" << endl;
+				cout << "\n" << flush;
+				while (cin.fail() || movieNumStars < 0) {
+					if(cin.fail() == true) {
+						cout << "An error has occurred" << "\n" << flush;
 					}
-					cin.clear ();
-					cout << "be sure to enter only numbers greater than zero" << endl;
-					cout << endl << "Current IMDB Rating: " << OGDoubleData;
-					cout << endl << "NEW IMDB RATING:     ";
+					cin.clear();
+					cout << "be sure to enter only numbers greater than zero" << "\n" << "\n";
+					cout << "Current IMDB Rating: " << OGDoubleData << "\n";
+					cout << "NEW IMDB RATING:     " << flush;
 					cin >> movieNumStars;
 				}
-				cin.clear ();
-				cin.ignore ();
+				cin.clear();
+				cin.ignore();
+				cout << flush;
 				break;
 		}
 	} while (choice != 8);
@@ -333,11 +310,11 @@ double Movie::getMovieDetailIMBDRating () {
  */
 void Movie::printMovieDetails () {
 
-	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText () << "\n";
+	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText() << "\n";
 	cout << right << setw(30) << "Length (minutes):  " << left << movieLength << "\n";
 	cout << right << setw(30) << "Year Released:  " << left << movieYear << "\n";
-	cout << right << setw(30) << "Genre:  " << left< movieGenre->getText () << "\n";
-	cout << right << setw(30) << "Rating:  " << left << movieRating->getText () << "\n";
+	cout << right << setw(30) << "Genre:  " << left < movieGenre->getText() << "\n";
+	cout << right << setw(30) << "Rating:  " << left << movieRating->getText() << "\n";
 	cout << right << setw(30) << "Number of Oscars Won:  " << left << movieOscars << "\n";
 	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << flush;
 }
@@ -349,11 +326,11 @@ void Movie::printMovieDetails () {
  Purpose:  		This function should be called when the user wants to print ALL the movie information to the file.
  */
 void Movie::printMovieDetailsToFile (ofstream &outFile) {
-	outFile << movieTitle->getText () << "\n";
+	outFile << movieTitle->getText() << "\n";
 	outFile << movieLength << "\n";
 	outFile << movieYear << "\n";
-	outFile << movieGenre->getText () << "\n";
-	outFile << movieRating->getText () << "\n";
+	outFile << movieGenre->getText() << "\n";
+	outFile << movieRating->getText() << "\n";
 	outFile << movieOscars << "\n";
 	outFile << movieNumStars << "\n" << flush;
 }
