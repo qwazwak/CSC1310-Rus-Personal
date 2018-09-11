@@ -44,6 +44,32 @@ Movie::Movie (Text* inputTitle, long inputLength, long inputYear, Text* inputGen
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
 }
+Movie::Movie (char* inputTitle, long inputLength, long inputYear, char* inputGenre, char* inputRating, long inputOscars, double inputStars) {
+	Text* convertedTitle = new Text(inputTitle);
+	Text* convertedGenre = new Text(inputGenre);
+	Text* convertedRating = new Text(inputRating);
+
+	movieTitle = convertedTitle;
+	movieLength = inputLength;
+	movieYear = inputYear;
+	movieGenre = convertedGenre;
+	movieRating = convertedRating;
+	movieOscars = inputOscars;
+	movieNumStars = inputStars;
+}
+Movie::Movie (string inputTitle, long inputLength, long inputYear, string inputGenre, string inputRating, long inputOscars, double inputStars) {
+	Text* convertedTitle = new Text(inputTitle);
+	Text* convertedGenre = new Text(inputGenre);
+	Text* convertedRating = new Text(inputRating);
+
+	movieTitle = convertedTitle;
+	movieLength = inputLength;
+	movieYear = inputYear;
+	movieGenre = convertedGenre;
+	movieRating = convertedRating;
+	movieOscars = inputOscars;
+	movieNumStars = inputStars;
+}
 
 //Destructor
 Movie::~Movie () {

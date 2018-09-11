@@ -28,7 +28,8 @@ class Text {
 		Text ();
 
 		//Overloading Constructor for quicker setup
-		Text (const char* inputText);
+		Text (const char*);
+		Text (string);
 
 		//Destructor
 		~Text ();

@@ -34,6 +34,9 @@ class Movie {
 
 		//Overloading Constructor for quicker setup
 		Movie (Text*, long, long, Text*, Text*, long, double);
+		Movie (char*, long, long, char*, char*, long, double);
+		Movie (string, long, long, string, string, long, double);
+
 
 		//Destructor
 		~Movie ();

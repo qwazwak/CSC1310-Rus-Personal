@@ -19,53 +19,26 @@ class Movies {
 		//Variables:
 		Movie** moviesArray;    //an array of pointers - each pointer points to a single Movie
 		size_t arraySize;
-		size_t maxMovies;    //maximum number of elements in the array
+		//size_t maxMovies;    //maximum number of elements in the array
 		size_t numMovies;    //current number of movies in the array
+		bool anyMoviesInLibrary;
 
-		//Private functions:
-
-	public:
-		Movies (long inputMaxMovies){
-			numMovies = 0;
-			maxMovies = inputMaxMovies;
-			arraySize = maxMovies;
-
-			moviesArray = new Movie*[arraySize];
-			for(size_t i = 0; i < arraySize; i++){
-				moviesArray[i] = new Movie();
-			}
-
-
-		}
-
-		//Overloading Constructor for quicker setup
-		/*Movies (size_t maxMovies) {
-
-			arraySize = maxMovies;
-			maxMovies = maxMovies;
-			sizeUsed = 0;
-			numMovies = 0;
-			moviesArray = new *Movie[arraySize];
-
-		}*/
-
-		//Destructor
-		~Movies () {
-			for(size_t i = 0; i < arraySize; i++){
-				delete moviesArray[i];
-			}
-			delete[] moviesArray;
-		}
 
 		/*
-		 Function name:  createMovies
-		 Parameters:  	An integer containing the maximum size of the movie library
-		 Returns: 		A pointer to a new Movies structure
-		 Purpose:  		This function should be called when the user needs to create a library
-		 of movies.  The function will dynamically allocate a movies array based
-		 on the maximum size and will also set the current number of movies to zero.
+		 Function name:  resizeMovieArray
+		 Parameters:  	The movies structure (which contains the movie library)
+		 Returns: 		none (void)
+		 Purpose:  		This function is called by addMovieToArray when the array size is not big enough
+		 to hold a new movie that needs to be added.  The function makes the array twice
+		 as big as it currently is and then moves all the movie pointers to this new array.
 		 */
-		Movies* createMovies (int);
+		void expandarray ();
+
+	public:
+		Movies ();
+
+		//Destructor
+		~Movies ();
 
 		/*
 		 Function name:  addMovieToArray
@@ -74,7 +47,8 @@ class Movies {
 		 Purpose:  		This function should be called when you need to add a single movie to the
 		 movie library.
 		 */
-		void addMovieToArray (Movies*);
+		void addMovieToArrayDirect (Movie*);
+		void addMovieToArrayFromUser ();
 
 		/*
 		 Function name:  editMovieInArray
@@ -82,7 +56,7 @@ class Movies {
 		 Returns: 		none
 		 Purpose:  		This function should be called when you need to edit a movie in the array
 		 */
-		void editMovieInArray (Movies*);
+		void editMovieInArray ();
 
 		/*
 		 Function name:  destroyMovies
@@ -92,7 +66,7 @@ class Movies {
 		 movies in the movie library as well as the movie library.  This releases
 		 all the dynamically allocated space in memory.
 		 */
-		void destroyMovies (Movies*);
+		void removeMovie ();
 
 		/*
 		 Function name:  displayMovies
@@ -101,7 +75,7 @@ class Movies {
 		 Purpose:  		This function should be called when the user wants to have all the movies
 		 in the library printed to the screen.
 		 */
-		void displayMovies (Movies*);
+		void displayMoviesAll ();
 
 		/*
 		 Function name:  displayMovieTitles
@@ -110,7 +84,7 @@ class Movies {
 		 Purpose:  		This function should be called when you want to print only the movie titles
 		 out of the movie library
 		 */
-		void displayMovieTitles (Movies*);
+		void displayMovieTitles ();
 
 		/*
 		 Function name:  readMoviesFromFile
@@ -121,7 +95,8 @@ class Movies {
 		 and add the movies to the movie library.  The file must have data in the following order:
 		 title, length, year, genre, rating, num oscars won, star rating
 		 */
-		void readMoviesFromFile (char* filename, Movies* myMovies);
+		void readMoviesFromFile (string filename);
+		void readMoviesFromFile (char* filename);
 
 		/*
 		 Function name:  removeMovieFromArray
@@ -131,7 +106,9 @@ class Movies {
 		 from the movie library.  The function will list all the movie names and allow
 		 the user to select the movie that they wish to remove. Then this function removes the movie.
 		 */
-		void removeMovieFromArray (Movies* myMovies);
+		void removeMovieByUserChoice () {
+
+		}
 
 		/*
 		 Function name:  saveToFile
@@ -143,18 +120,8 @@ class Movies {
 		 of data per line):
 		 title, length, year, genre, rating, num oscars won, star rating
 		 */
-		void saveToFile (char *filename, Movies* myMovies);
-
-		/*
-		 Function name:  resizeMovieArray
-		 Parameters:  	The movies structure (which contains the movie library)
-		 Returns: 		none (void)
-		 Purpose:  		This function is called by addMovieToArray when the array size is not big enough
-		 to hold a new movie that needs to be added.  The function makes the array twice
-		 as big as it currently is and then moves all the movie pointers to this new array.
-		 */
-		void resizeMovieArray (Movies* myMovies);
-
+		void saveToFile (string filename);
+		void saveToFile (char *filename);
 };
 
 #endif
