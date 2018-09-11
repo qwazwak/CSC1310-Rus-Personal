@@ -19,7 +19,6 @@ using namespace std;
  */
 
 Movies::Movies () {
-	anyMoviesInLibrary = false;
 	numMovies = 0;
 	arraySize = 1;
 	moviesArray = new Movies*[1];
@@ -83,7 +82,7 @@ void Movies::addMovieToArrayFromUser () {
 	double numStars;
 
 	//get movie data from the user
-	cin.ignore();  //remove the \n from the keyboard buffer
+	cin.ignore();    //remove the \n from the keyboard buffer
 	cout << "\n" << "\n";
 	cout << "MOVIE TITLE: " << flush;
 	getline(cin, title);
@@ -102,13 +101,13 @@ void Movies::addMovieToArrayFromUser () {
 	cin >> numStars;
 
 	//create the movie
-	Movie* oneMovie = createMovie(title, length, year, genre, rating, numOscars, numStars);
+	Movie* oneMovie = new Movie(title, length, year, genre, rating, numOscars, numStars);
 
 	//add the movie to the library
-	if(myMovies->numMovies == myMovies->maxMovies)
-		resizeMovieArray(myMovies);	//increase size by 2
-
-	myMovies->moviesArray[myMovies->numMovies] = oneMovie;
+	if(numMovies >= arraySize) {
+		expandarray();    //increase size by 2
+	}
+	moviesArray[numMovies] = oneMovie;
 
 	numMovies++;
 }
@@ -131,7 +130,7 @@ void Movies::editMovieInArray () {
  movies in the movie library as well as the movie library.  This releases
  all the dynamically allocated space in memory.
  */
-void Movies::removeMovie () {
+void Movies::removeMovieFromUser () {
 
 }
 
@@ -142,7 +141,7 @@ void Movies::removeMovie () {
  Purpose:  		This function should be called when the user wants to have all the movies
  in the library printed to the screen.
  */
-void Movies::displayMoviesAll () {
+void Movies::displayMoviesTitles () {
 
 }
 
@@ -158,6 +157,18 @@ void Movies::displayMovieTitles () {
 }
 
 /*
+ Function name:  removeMovieFromArray
+ Parameters:  	The movies structure (which contains the movie library)
+ Returns: 		none (void)
+ Purpose:  		This function should be called when the user wants to remove one single movie
+ from the movie library.  The function will list all the movie names and allow
+ the user to select the movie that they wish to remove. Then this function removes the movie.
+ */
+void Movies::removeMovieByUserChoice () {
+
+}
+
+/*
  Function name:  readMoviesFromFile
  Parameters:  	1) A pointer to a character (c-string or string literal argument) containing the filename
  2) The movies structure (which contains the movie library)
@@ -166,10 +177,10 @@ void Movies::displayMovieTitles () {
  and add the movies to the movie library.  The file must have data in the following order:
  title, length, year, genre, rating, num oscars won, star rating
  */
-void Movies::readMoviesFromFile (string filename) {
-	readMoviesFromFile(filename.c_str());
+void Movies::importFromFile (string filename) {
+	importFromFile(filename.c_str());
 }
-void Movies::readMoviesFromFile (char* filename) {
+void Movies::importFromFile (char* filename) {
 	ifstream ifs;
 	string movieTitle;
 	long movieLength;
@@ -199,18 +210,6 @@ void Movies::readMoviesFromFile (char* filename) {
 }
 
 /*
- Function name:  removeMovieFromArray
- Parameters:  	The movies structure (which contains the movie library)
- Returns: 		none (void)
- Purpose:  		This function should be called when the user wants to remove one single movie
- from the movie library.  The function will list all the movie names and allow
- the user to select the movie that they wish to remove. Then this function removes the movie.
- */
-void Movies::removeMovieByUserChoice () {
-
-}
-
-/*
  Function name:  saveToFile
  Parameters:  	1) A pointer to a character (c-string or string literal argument) containing the filename
  2) The movies structure (which contains the movie library)
@@ -220,10 +219,10 @@ void Movies::removeMovieByUserChoice () {
  of data per line):
  title, length, year, genre, rating, num oscars won, star rating
  */
-void Movies::saveToFile (string filename) {
-	saveToFile(filename.c_str());
+void Movies::exportToFile (string filename) {
+	exportToFile(filename.c_str());
 }
-void Movies::saveToFile (char *filename) {
+void Movies::exportToFile (char *filename) {
 	ofstream outputStream;
 	outputStream.open(filename);
 	for (size_t i = 0; i < numMovies; i++) {
