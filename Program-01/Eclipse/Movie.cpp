@@ -14,24 +14,15 @@
 #include <cstring>
 using namespace std;
 
-/*
- Text* movieTitle;  //title of movie
- long movieLength; //length of movie in minutes
- long movieYear; //year released
- Text* movieGenre; //comedy, horror, sci-fi, fantasy, romance, thriller, drama, action, biography
- Text* movieRating; //G, PG, PG-13, R, MA
- long movieOscars; //number of oscars won
- double movieNumStars; //taken from IMDB on 10 star scale
- */
 
 Movie::Movie () {
 	movieTitle = new Text;
-	movieLength = NULL;
-	movieYear = NULL;
+	movieLength = -1;
+	movieYear = -1;
 	movieGenre = new Text;
 	movieRating = new Text;
-	movieOscars = NULL;
-	movieNumStars = NULL;
+	movieOscars = -1;
+	movieNumStars = -1;
 }
 
 //Overloading Constructor for quicker setup
@@ -71,19 +62,13 @@ Movie::Movie (string inputTitle, long inputLength, long inputYear, string inputG
 	movieNumStars = inputStars;
 }
 
-//Destructor
 Movie::~Movie () {
 	delete movieTitle;
 	delete movieGenre;
 	delete movieRating;
 }
 
-/*
- Function name:  editMovieDetails
- Parameters:  	editMovieDetails
- Returns: 		editMovieDetails
- Purpose:  		This function should be called when the user wants to edit a single movie's data
- */
+
 void Movie::editMovieDetails () {
 	int choice;
 	long OGLongData;
@@ -113,13 +98,13 @@ void Movie::editMovieDetails () {
 
 		switch (choice) {
 			case 1:
-				cout << "\n" << "Current Title: " << movieTitle->getText();
+				cout << "\n" << "Current Title: " << movieTitle;
 				cout << "\n" << "NEW TITLE:     " << flush;
 				cin.getline(temp, 500);
 				cout << "\n" << flush;
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
-					cout << "Current Title: " << movieTitle->getText();
+					cout << "Current Title: " << movieTitle;
 					cout << "\n" << "NEW TITLE:  " << flush;
 					cin.getline(temp, 500);
 				}
@@ -170,7 +155,7 @@ void Movie::editMovieDetails () {
 				break;
 
 			case 4:
-				cout << "Current Genre: " << movieGenre->getText << "\n";
+				cout << "Current Genre: " << movieGenre->getText() << "\n";
 				cout << "NEW GENRE:  " << flush;
 				cin.getline(temp, 500);
 				cout << "\n" << flush;
@@ -194,8 +179,8 @@ void Movie::editMovieDetails () {
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
 
-					cout << "Current Rating: "
-					movieRating->getText() << "\n";
+					cout << "Current Rating: ";
+					cout << movieRating->getText() << "\n";
 					cout << "NEW Rating:  " << flush;
 					cin.getline(temp, 500);
 					cout << "\n" << flush;
@@ -294,18 +279,6 @@ void Movie::setMovieDetailIMBDRating (double inputStars) {
 	double movieNumStars = inputStars;
 }
 
-/*
- Function name:  getMovieDetailXXXX
- Parameters:  		A pointer to a Text variable, containing the title of the movie
- An integer containing the length of the movie
- An integer containing the year the movie was released
- A pointer to a Text variable, containing the genre of the movie
- A pointer to a Text variable, containing the rating of the movie
- An integer containing the number of oscars the movie won
- A float containing the IMDB rating of the movie (out of 10 stars)
- Returns: 		the contained value
- Purpose:  		This function should be called when the user wants to access a single movie's data
- */
 Text* Movie::getMovieDetailTitle () {
 	return movieTitle;
 }
@@ -339,7 +312,7 @@ void Movie::printMovieDetails () {
 	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText() << "\n";
 	cout << right << setw(30) << "Length (minutes):  " << left << movieLength << "\n";
 	cout << right << setw(30) << "Year Released:  " << left << movieYear << "\n";
-	cout << right << setw(30) << "Genre:  " << left < movieGenre->getText() << "\n";
+	cout << right << setw(30) << "Genre:  " << left << movieGenre->getText() << "\n";
 	cout << right << setw(30) << "Rating:  " << left << movieRating->getText() << "\n";
 	cout << right << setw(30) << "Number of Oscars Won:  " << left << movieOscars << "\n";
 	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << flush;

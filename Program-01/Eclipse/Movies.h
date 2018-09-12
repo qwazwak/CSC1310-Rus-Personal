@@ -38,20 +38,6 @@ class Movies {
 		 */
 		void removeMovieByID ();
 
-		/*
-		 Function name:	editMovieInArrayDetailXXXXX
-		 Parameters:		The ID of the movie (location in array)
-		 Returns:			none
-		 Purpose:			This function should be called when the class needs to edit a single movies detail in the array
-		 */
-		void editMovieInArrayDetailTitle ();
-		void editMovieInArrayDetailLength ();
-		void editMovieInArrayDetailReleaseYear ();
-		void editMovieInArrayDetailGenre ();
-		void editMovieInArrayDetailAgeRating ();
-		void editMovieInArrayDetailOscarCount ();
-		void editMovieInArrayDetailStarRating ();
-
 	public:
 		Movies ();
 
@@ -64,7 +50,7 @@ class Movies {
 		 Returns: 		none
 		 Purpose:  		This function should be called when the program/programmer needs to add a single movie to the movie library directly and quickly.
 		 */
-		void addMovieToArrayDirect (Movie*);
+		void addMovieToArrayDirect (Movie* inputMoviePointer);
 
 		/*
 		 Function names:	addMovieToArrayFromUser

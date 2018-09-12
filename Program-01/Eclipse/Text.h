@@ -50,6 +50,13 @@ class Text {
 		const char* getText ();
 
 		/*
+		 Function Name:  getTextString()
+		 Parameters:  none
+		 Returns:  a string containing the held text
+		 */
+		string getTextString();
+
+		/*
 		 Function Name:  getLength()
 		 Parameters:  nothing (void)
 		 Returns:  the length of the string
@@ -62,7 +69,6 @@ class Text {
 		 Returns:  nothing (void)
 		 */
 		void editText (const char* newCharArray);
-
 };
 
 #endif

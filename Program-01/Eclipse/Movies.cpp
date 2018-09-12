@@ -6,25 +6,54 @@
  */
 #include "Movies.h"
 #include "Movie.h"
-
 using namespace std;
 
 /*
  //Variables:
- Movie** moviesArray;    //an array of pointers - each pointer points to a single Movie
- size_t arraySize;
- //size_t maxMovies;    //maximum number of elements in the array
- size_t numMovies;    //current number of movies in the array
- bool anyMoviesInLibrary;
+ Movie** moviesArray;	//The main array of pointers - each pointer points to a single Movie
+ size_t arraySize;		//Number of allocated 'movie' spots
+ size_t numMovies;		//Number of stored movies
+ //size_t maxMovies;		//Maximum storable movies
  */
 
+/*
+ Function name:	expandarray
+ Parameters:		none (void)
+ Returns: 		none (void)
+ Purpose:  		Double the capacity of the moviesArray
+ */
+void Movies::expandarray () {
+#if defined(DEBUG)
+	clog << "starting expandarray" << endl;
+#endif
+	Movie** moviesBufferArray = new Movie*[arraySize * 2];
+	for (size_t i = 0; i < arraySize; i++) {
+		moviesBufferArray[i] = moviesArray[i];
+	}
+	delete[] moviesArray;
+	moviesArray = moviesBufferArray;
+	arraySize = arraySize * 2;
+#if defined(DEBUG)
+	clog << "end array expanding" << endl;
+#endif
+}
+
+/*
+ Function name:	removeMovieByID
+ Parameters:		none (void)
+ Returns: 		none (void)
+ Purpose:  		remove one movie from the array and shift other movies as required
+ */
+void Movies::removeMovieByID () {
+
+}
+
+//public:
 Movies::Movies () {
 	numMovies = 0;
 	arraySize = 1;
-	moviesArray = new Movies*[1];
+	moviesArray = new Movie*[1];
 }
-
-//Overloading Constructor for quicker setup
 
 //Destructor
 Movies::~Movies () {
@@ -35,33 +64,14 @@ Movies::~Movies () {
 }
 
 /*
- Function name:  resizeMovieArray
- Parameters:  	The movies structure (which contains the movie library)
- Returns: 		none (void)
- Purpose:  		This function is called by addMovieToArray when the array size is not big enough
- to hold a new movie that needs to be added.  The function makes the array twice
- as big as it currently is and then moves all the movie pointers to this new array.
- */
-void Movies::expandarray () {
-	Movie** moviesBufferArray = new Movies*[arraySize * 2];
-	for (size_t i = 0; i < arraySize; i++) {
-		moviesBufferArray[i] = moviesArray[i];
-	}
-	delete[] moviesArray;
-	moviesArray = moviesBufferArray;
-	arraySize = arraySize * 2;
-}
-
-/*
- Function name:  addMovieToArray
- Parameters:  	1) The movies structure (which contains the movie library)
+ Function names:	addMovieToArrayDirect
+ Parameters:		a pointer to a movie to add
  Returns: 		none
- Purpose:  		This function should be called when you need to add a single movie to the
- movie library.
+ Purpose:  		This function should be called when the program/programmer needs to add a single movie to the movie library directly and quickly.
  */
 void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
 	if(numMovies >= arraySize) {
-		Movie** moviesBufferArray = new Movies*[arraySize * 2];
+		Movie** moviesBufferArray = new Movie*[arraySize * 2];
 		for (size_t i = 0; i < arraySize; i++) {
 			moviesBufferArray[i] = moviesArray[i];
 		}
@@ -72,6 +82,13 @@ void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
 	moviesArray[numMovies] = inputMoviePointer;
 	numMovies++;
 }
+
+/*
+ Function names:	addMovieToArrayFromUser
+ Parameters:		none
+ Returns: 		none
+ Purpose:  		This function should be called when the user wants to add a single movie to the movie library and inpout the movie details
+ */
 void Movies::addMovieToArrayFromUser () {
 	string title;
 	long length;
@@ -113,10 +130,10 @@ void Movies::addMovieToArrayFromUser () {
 }
 
 /*
- Function name:  editMovieInArray
- Parameters:  	The movies structure (which contains the movie library)
- Returns: 		none
- Purpose:  		This function should be called when you need to edit a movie in the array
+ Function name:	editMovieInArray
+ Parameters:		none
+ Returns:			none
+ Purpose:			This function should be called when you need to edit a movie in the array
  */
 void Movies::editMovieInArray () {
 
@@ -135,7 +152,7 @@ void Movies::removeMovieFromUser () {
 }
 
 /*
- Function name:  displayMovies
+ Function name:  displayMoviesTitles
  Parameters:  	1) The movies structure (which contains the movie library)
  Returns: 		none (void)
  Purpose:  		This function should be called when the user wants to have all the movies
@@ -146,13 +163,12 @@ void Movies::displayMoviesTitles () {
 }
 
 /*
- Function name:  displayMovieTitles
- Parameters:  	1) The movies structure (which contains the movie library)
- Returns: 		none (void)
- Purpose:  		This function should be called when you want to print only the movie titles
- out of the movie library
+ Function name:	displayMoviesFullDetails
+ Parameters:		nothing (void)
+ Returns:			nothing (void)
+ Purpose:  		This function should be called when the user wants to have all the movies and all details in the library printed to the screen.
  */
-void Movies::displayMovieTitles () {
+void Movies::displayMoviesFullDetails () {
 
 }
 
@@ -169,13 +185,21 @@ void Movies::removeMovieByUserChoice () {
 }
 
 /*
- Function name:  readMoviesFromFile
- Parameters:  	1) A pointer to a character (c-string or string literal argument) containing the filename
- 2) The movies structure (which contains the movie library)
+ Function name:  displayMovieTitles
+ Parameters:  	1) The movies structure (which contains the movie library)
  Returns: 		none (void)
- Purpose:  		This function should be called when the user wants to read movie data from a file
- and add the movies to the movie library.  The file must have data in the following order:
- title, length, year, genre, rating, num oscars won, star rating
+ Purpose:  		This function should be called when you want to print only the movie titles
+ out of the movie library
+ */
+void Movies::displayMovieTitles () {
+
+}
+
+/*
+ Function name:  importFromFile
+ Parameters:  	A string or char array of the filename, with extention. Only supports pure text
+ Returns: 		nothing (void)
+ Purpose:  		This function should be called when the program/programmer wants to read movie data from a file and add the movies to the movie library.  The file must have data in the following order: title, length, year, genre, rating, num oscars won, star rating
  */
 void Movies::importFromFile (string filename) {
 	importFromFile(filename.c_str());
@@ -210,14 +234,10 @@ void Movies::importFromFile (char* filename) {
 }
 
 /*
- Function name:  saveToFile
- Parameters:  	1) A pointer to a character (c-string or string literal argument) containing the filename
- 2) The movies structure (which contains the movie library)
+ Function name:  exportToFile
+ Parameters:  	A string or char array of the filename, with extention. Only supports pure text
  Returns: 		none (void)
- Purpose:  		This function should be called when the user wants to print all the movie data
- from the movie library to a file.  The data is printed in the following order (one piece
- of data per line):
- title, length, year, genre, rating, num oscars won, star rating
+ Purpose:  		This function should be called when the program/programmer wants to print all the movie data from the movie library to a file.  The data is printed in the following order (one piece of data per line): title, length, year, genre, rating, num oscars won, star rating
  */
 void Movies::exportToFile (string filename) {
 	exportToFile(filename.c_str());
@@ -230,4 +250,3 @@ void Movies::exportToFile (char *filename) {
 	}
 	outputStream.close();
 }
-
