@@ -37,7 +37,6 @@ class Movie {
 		Movie (char*, long, long, char*, char*, long, double);
 		Movie (string, long, long, string, string, long, double);
 
-
 		//Destructor
 		~Movie ();
 
@@ -91,6 +90,14 @@ class Movie {
 		Text* getMovieDetailRating ();
 		long getMovieDetailOscarCount ();
 		double getMovieDetailIMBDRating ();
+
+		/*
+		 Function name:  printMovieDetails
+		 Parameters:  	nothing (void)
+		 Returns: 		nothing (void)
+		 Purpose:  		This function should be called when the user wants to print ALL the movie information to the screen.
+		 */
+		void printMovieTitle ();
 
 		/*
 		 Function name:  printMovieDetails

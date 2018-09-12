@@ -25,7 +25,6 @@ Movie::Movie () {
 	movieNumStars = -1;
 }
 
-//Overloading Constructor for quicker setup
 Movie::Movie (Text* inputTitle, long inputLength, long inputYear, Text* inputGenre, Text* inputRating, long inputOscars, double inputStars) {
 	movieTitle = inputTitle;
 	movieLength = inputLength;
@@ -36,33 +35,28 @@ Movie::Movie (Text* inputTitle, long inputLength, long inputYear, Text* inputGen
 	movieNumStars = inputStars;
 }
 Movie::Movie (char* inputTitle, long inputLength, long inputYear, char* inputGenre, char* inputRating, long inputOscars, double inputStars) {
-	Text* convertedTitle = new Text(inputTitle);
-	Text* convertedGenre = new Text(inputGenre);
-	Text* convertedRating = new Text(inputRating);
-
-	movieTitle = convertedTitle;
+	movieTitle = new Text(inputTitle);
 	movieLength = inputLength;
 	movieYear = inputYear;
-	movieGenre = convertedGenre;
-	movieRating = convertedRating;
+	movieGenre = new Text(inputGenre);;
+	movieRating = new Text(inputRating);
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
 }
 Movie::Movie (string inputTitle, long inputLength, long inputYear, string inputGenre, string inputRating, long inputOscars, double inputStars) {
-	Text* convertedTitle = new Text(inputTitle);
-	Text* convertedGenre = new Text(inputGenre);
-	Text* convertedRating = new Text(inputRating);
-
-	movieTitle = convertedTitle;
+	movieTitle = new Text(inputTitle);
 	movieLength = inputLength;
 	movieYear = inputYear;
-	movieGenre = convertedGenre;
-	movieRating = convertedRating;
+	movieGenre = new Text(inputGenre);;
+	movieRating = new Text(inputRating);
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
 }
 
 Movie::~Movie () {
+#if defined(DEBUG)
+	clog << "Movie CLASS DEBUG: " << "Deallocating memory" << endl;
+#endif
 	delete movieTitle;
 	delete movieGenre;
 	delete movieRating;
@@ -70,10 +64,10 @@ Movie::~Movie () {
 
 
 void Movie::editMovieDetails () {
-	int choice;
+	long choice;
 	long OGLongData;
 	double OGDoubleData;
-	char temp[100];
+	string inputTextBuffer;
 
 	do {
 		cout << "Which detail do you wish to edit?" << "\n";
@@ -85,38 +79,37 @@ void Movie::editMovieDetails () {
 		cout << "6.  Number of Oscars Won" << "\n";
 		cout << "7.  Number of Stars" << "\n";
 		cout << "8.  DONE EDITING" << "\n";
-		cout << "Enter the number of your selection 1-8:  " << flush;
+		cout << "CHOOSE 1-8:  " << flush;
 		cin >> choice;
-		cout << "\n" << flush;
+		cout << "\n";
 		while (choice < 1 || choice > 8 || cin.fail()) {
 			cin.clear();
 			cout << "Error: make sure you enter only a choice 1 through 8:  " << flush;
 			cin >> choice;
+			cout << "\n";
 		}
 		cin.ignore();
-		cout << endl;
 
 		switch (choice) {
 			case 1:
-				cout << "\n" << "Current Title: " << movieTitle;
-				cout << "\n" << "NEW TITLE:     " << flush;
-				cin.getline(temp, 500);
+				cout << "Current Title: " << movieTitle << "\n";
+				cout << "NEW TITLE:  " << flush;
+				getline(cin, inputTextBuffer);
 				cout << "\n" << flush;
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
-					cout << "Current Title: " << movieTitle;
-					cout << "\n" << "NEW TITLE:  " << flush;
-					cin.getline(temp, 500);
+					cout << "Current Title: " << movieTitle << "\n" ;
+					cout << "NEW TITLE:  " << flush;
+					getline(cin, inputTextBuffer);
 				}
-
-				movieTitle->editText(temp);
+				movieTitle->editText(inputTextBuffer);
 				cout << flush;
 				break;
 
 			case 2:
 				OGLongData = movieLength;
-				cout << "\n" << "Current Length: " << OGLongData;
-				cout << "\n" << "NEW LENGTH:     " << flush;
+				cout << "Current Length: " << OGLongData << "\n";
+				cout << "NEW LENGTH:  " << flush;
 				cin >> movieLength;
 				while (cin.fail() || movieLength <= 0) {
 					if(cin.fail() == true) {
@@ -157,24 +150,24 @@ void Movie::editMovieDetails () {
 			case 4:
 				cout << "Current Genre: " << movieGenre->getText() << "\n";
 				cout << "NEW GENRE:  " << flush;
-				cin.getline(temp, 500);
+				getline(cin, inputTextBuffer);
 				cout << "\n" << flush;
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
 
 					cout << "Current Genre: " << movieGenre->getText() << "\n";
 					cout << "NEW GENRE:  " << flush;
-					cin.getline(temp, 500);
+					getline(cin, inputTextBuffer);
 				}
 
-				movieGenre->editText(temp);
+				movieGenre->editText(inputTextBuffer);
 				cout << flush;
 				break;
 
 			case 5:
 				cout << "Current Rating: " << movieRating->getText() << "\n";
 				cout << "NEW RATING:  " << flush;
-				cin.getline(temp, 500);
+				getline(cin, inputTextBuffer);
 				cout << "\n";
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
@@ -182,11 +175,11 @@ void Movie::editMovieDetails () {
 					cout << "Current Rating: ";
 					cout << movieRating->getText() << "\n";
 					cout << "NEW Rating:  " << flush;
-					cin.getline(temp, 500);
+					getline(cin, inputTextBuffer);
 					cout << "\n" << flush;
 				}
 
-				movieRating->editText(temp);
+				movieRating->editText(inputTextBuffer);
 				cout << flush;
 				break;
 
@@ -236,18 +229,6 @@ void Movie::editMovieDetails () {
 	} while (choice != 8);
 }
 
-/*	Function name:  setMovieDetailXXXX
- Parameters:  	A pointer to a movie structure
- A pointer to a Text variable, containing the title of the movie
- An integer containing the length of the movie
- An integer containing the year the movie was released
- A pointer to a Text variable, containing the genre of the movie
- A pointer to a Text variable, containing the rating of the movie
- An integer containing the number of oscars the movie won
- A float containing the IMDB rating of the movie (out of 10 stars)
- Returns: 		nothing (void)
- Purpose:  		This function should be called when the program wants to edit a single movie's single part of data
- */
 void Movie::setMovieFull (Text* inputTitle, long inputLength, long inputYear, Text* inputGenre, Text* inputRating, long inputOscars, double inputStars) {
 	Text* movieTitle = inputTitle;
 	long movieLength = inputLength;
@@ -301,12 +282,10 @@ double Movie::getMovieDetailIMBDRating () {
 	return movieNumStars;
 }
 
-/*
- Function name:  printMovieDetails
- Parameters:  	nothing (void)
- Returns: 		nothing (void)
- Purpose:  		This function should be called when the user wants to print ALL the movie information to the screen.
- */
+void Movie::printMovieTitle (){
+	cout << right << setw(30) << "Movie Title:  " << left << movieTitle << "\n";
+}
+
 void Movie::printMovieDetails () {
 
 	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText() << "\n";
@@ -318,12 +297,7 @@ void Movie::printMovieDetails () {
 	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << flush;
 }
 
-/*
- Function name:  printMovieDetailsToFile
- Parameters:  	a file stream object (sent by reference)
- Returns: 		nothing (void)
- Purpose:  		This function should be called when the user wants to print ALL the movie information to the file.
- */
+
 void Movie::printMovieDetailsToFile (ofstream &outFile) {
 	outFile << movieTitle->getText() << "\n";
 	outFile << movieLength << "\n";

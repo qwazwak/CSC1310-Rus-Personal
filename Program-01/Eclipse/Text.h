@@ -1,9 +1,9 @@
 /* * * * * * * * * * * * * * * * * * * * * * * *
  *
- *	Title:      CSC1310 - Program 01 - Bootleg String Class
- *	Author(s):  Rus Hoffman
- *	Date:       September 4, 2018
- *	Purpose:
+ *	Title:		CSC1310 - Program 01 - Bootleg String Class
+ *	Author(s):	Rus Hoffman
+ *	Date:		September 4, 2018
+ *	Purpose:		Practice usage of classes and overloading of operators
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -21,7 +21,6 @@ class Text {
 		const char* textArray;
 		long textLength;
 		bool textIsAllocated;
-		//Private functions:
 
 	public:
 		//default Constructor
@@ -35,40 +34,41 @@ class Text {
 		~Text ();
 
 		/*
-		 Function Name:  displayText()
-		 Parameters:  nothing (void)
-		 Returns:  nothing (void)
-		 Purpose:  prints out the string (character array) with no formatting or new lines
+		 Function Name:	displayText()
+		 Parameters:		nothing (void)
+		 Returns:			nothing (void)
+		 Purpose:			prints out the text with no formatting, new lines, or flushing of the cout buffer
 		 */
 		void displayText ();
 
 		/*
-		 Function Name:  getText()
-		 Parameters:  none
-		 Returns:  pointer to a constant character array
+		 Function Name:	getText()
+		 Parameters:		nothing (void)
+		 Returns:			pointer to a constant character array
 		 */
 		const char* getText ();
 
 		/*
-		 Function Name:  getTextString()
-		 Parameters:  none
-		 Returns:  a string containing the held text
+		 Function Name:	getTextString()
+		 Parameters:		nothing (void)
+		 Returns:			a string containing the held text
 		 */
-		string getTextString();
+		string getTextString ();
 
 		/*
-		 Function Name:  getLength()
-		 Parameters:  nothing (void)
-		 Returns:  the length of the string
+		 Function Name:	getLength()
+		 Parameters:		nothing (void)
+		 Returns:			a long containing the length of the string
 		 */
 		long getLength ();
 
 		/*
-		 Function Name:  editText()
-		 Parameters:  Send a pointer to a c-string
-		 Returns:  nothing (void)
+		 Function Name:	editText()
+		 Parameters:		a pointer to a c-string or a string
+		 Returns:			nothing (void)
 		 */
 		void editText (const char* newCharArray);
+		void Text::editText (string newText);
 };
 
 #endif

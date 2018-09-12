@@ -28,6 +28,14 @@ class Movies {
 		 Returns: 		none (void)
 		 Purpose:  		Double the capacity of the moviesArray
 		 */
+		long letUserSelectMovie ();
+
+		/*
+		 Function name:	expandarray
+		 Parameters:		none (void)
+		 Returns: 		none (void)
+		 Purpose:  		Double the capacity of the moviesArray
+		 */
 		void expandarray ();
 
 		/*
@@ -85,7 +93,7 @@ class Movies {
 		 Purpose:  		This function should be called when the user wants to have all the movies
 		 in the library printed to the screen.
 		 */
-		void displayMoviesTitles ();
+		void displayAllMoviesTitles (int numOfSpaces = 0);
 
 		/*
 		 Function name:	displayMoviesFullDetails
@@ -93,7 +101,7 @@ class Movies {
 		 Returns:			nothing (void)
 		 Purpose:  		This function should be called when the user wants to have all the movies and all details in the library printed to the screen.
 		 */
-		void displayMoviesFullDetails ();
+		void displayAllMoviesFullDetails ();
 
 		/*
 		 Function name:  removeMovieFromArray
@@ -104,15 +112,6 @@ class Movies {
 		 the user to select the movie that they wish to remove. Then this function removes the movie.
 		 */
 		void removeMovieByUserChoice ();
-
-		/*
-		 Function name:  displayMovieTitles
-		 Parameters:  	1) The movies structure (which contains the movie library)
-		 Returns: 		none (void)
-		 Purpose:  		This function should be called when you want to print only the movie titles
-		 out of the movie library
-		 */
-		void displayMovieTitles ();
 
 		/*
 		 Function name:  importFromFile
