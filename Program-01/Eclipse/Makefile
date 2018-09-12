@@ -15,9 +15,7 @@ release : CCFLAGS  += -O3
 release	: executable
 
 #Debug settings:
-
 #C and C++ Preprocessor flags
-#debug	:	CPPFLAGS += 
 #C++ Compiler Flags
 debug	:	CXXFLAGS += -DDEBUG -g -fno-access-control -pedantic -Wchar-subscripts -Wmain -Wuninitialized -Wall -Wextra -g -Q -O -fexceptions
 #C Compiler Flags
@@ -31,7 +29,6 @@ debug	:	executable
 clean	:	Program-01-Movies.exe
 		del *.o 
 		del Program-01-Movies.exe
-
 
 
 

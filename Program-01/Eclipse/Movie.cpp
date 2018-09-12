@@ -1,9 +1,9 @@
 /* * * * * * * * * * * * * * * * * * * * * * * *
  *
- *	Title:      CSC1310 - Program 01 - Bootleg String Class
- *	Author(s):  Rus Hoffman
- *	Date:       September 4, 2018
- *	Purpose:
+ *	Title:		CSC1310 - Program 01 - Single movie class
+ *	Author(s):	Rus Hoffman
+ *	Date:		September 4, 2018
+ *	Purpose:		Practice usage of classes
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
 #include "Movie.h"
@@ -70,6 +70,9 @@ void Movie::editMovieDetails () {
 	string inputTextBuffer;
 
 	do {
+#if defined(DEBUG)
+	clog << "Movie CLASS DEBUG: " << "entering detail edit loop" << endl;
+#endif
 		cout << "Which detail do you wish to edit?" << "\n";
 		cout << "1.  Title" << "\n";
 		cout << "2.  Length" << "\n";
@@ -83,6 +86,9 @@ void Movie::editMovieDetails () {
 		cin >> choice;
 		cout << "\n";
 		while (choice < 1 || choice > 8 || cin.fail()) {
+#if defined(DEBUG)
+	clog << "Movie CLASS DEBUG: " << "user failed to enter valid input" << endl;
+#endif
 			cin.clear();
 			cout << "Error: make sure you enter only a choice 1 through 8:  " << flush;
 			cin >> choice;
@@ -90,12 +96,16 @@ void Movie::editMovieDetails () {
 		}
 		cin.ignore();
 
+#if defined(DEBUG)
+	clog << "Movie CLASS DEBUG: " << "about to enter switch statement" << endl;
+#endif
 		switch (choice) {
 			case 1:
 				cout << "Current Title: " << movieTitle << "\n";
 				cout << "NEW TITLE:  " << flush;
 				getline(cin, inputTextBuffer);
 				cout << "\n" << flush;
+
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
 					cout << "Current Title: " << movieTitle << "\n" ;
@@ -111,6 +121,7 @@ void Movie::editMovieDetails () {
 				cout << "Current Length: " << OGLongData << "\n";
 				cout << "NEW LENGTH:  " << flush;
 				cin >> movieLength;
+				cout << "\n";
 				while (cin.fail() || movieLength <= 0) {
 					if(cin.fail() == true) {
 						cout << "An error has occurred" << "\n" << flush;
@@ -120,6 +131,7 @@ void Movie::editMovieDetails () {
 					cout << "Current Length: " << OGLongData;
 					cout << "NEW LENGTH:     " << flush;
 					cin >> movieLength;
+					cout << "\n";
 				}
 				cin.clear();
 				cin.ignore();

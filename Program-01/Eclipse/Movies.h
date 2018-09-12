@@ -44,8 +44,7 @@ class Movies {
 		 Returns: 		none (void)
 		 Purpose:  		remove one movie from the array and shift other movies as required
 		 */
-		void removeMovieByID ();
-
+		void removeMovieByID (long);
 	public:
 		Movies ();
 
@@ -104,29 +103,29 @@ class Movies {
 		void displayAllMoviesFullDetails ();
 
 		/*
-		 Function name:  removeMovieFromArray
-		 Parameters:  	The movies structure (which contains the movie library)
-		 Returns: 		none (void)
-		 Purpose:  		This function should be called when the user wants to remove one single movie
+		 Function name:	removeMovieFromArray
+		 Parameters:		The movies structure (which contains the movie library)
+		 Returns:			none (void)
+		 Purpose:			This function should be called when the user wants to remove one single movie
 		 from the movie library.  The function will list all the movie names and allow
 		 the user to select the movie that they wish to remove. Then this function removes the movie.
 		 */
 		void removeMovieByUserChoice ();
 
 		/*
-		 Function name:  importFromFile
-		 Parameters:  	A string or char array of the filename, with extention. Only supports pure text
-		 Returns: 		nothing (void)
-		 Purpose:  		This function should be called when the program/programmer wants to read movie data from a file and add the movies to the movie library.  The file must have data in the following order: title, length, year, genre, rating, num oscars won, star rating
+		 Function name:	importFromFile
+		 Parameters:		A string or char array of the filename, with extention. Only supports pure text
+		 Returns:			nothing (void)
+		 Purpose:			This function should be called when the program/programmer wants to read movie data from a file and add the movies to the movie library.  The file must have data in the following order: title, length, year, genre, rating, num oscars won, star rating
 		 */
 		void importFromFile (string filename);
 		void importFromFile (char* filename);
 
 		/*
-		 Function name:  exportToFile
-		 Parameters:  	A string or char array of the filename, with extention. Only supports pure text
-		 Returns: 		none (void)
-		 Purpose:  		This function should be called when the program/programmer wants to print all the movie data from the movie library to a file.  The data is printed in the following order (one piece of data per line): title, length, year, genre, rating, num oscars won, star rating
+		 Function name:	exportToFile
+		 Parameters:		A string or char array of the filename, with extention. Only supports pure text
+		 Returns:			none (void)
+		 Purpose:			This function should be called when the program/programmer wants to print all the movie data from the movie library to a file.  The data is printed in the following order (one piece of data per line): title, length, year, genre, rating, num oscars won, star rating
 		 */
 		void exportToFile (string filename);
 		void exportToFile (char *filename);

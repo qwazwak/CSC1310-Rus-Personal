@@ -24,7 +24,7 @@ void Movies::expandarray () {
 #endif
 }
 
-void Movies::removeMovieByID () {
+void Movies::removeMovieByID (long ID) {
 
 }
 
@@ -110,7 +110,7 @@ void Movies::removeMovieFromUser () {
 	cout << "Current list of movies:" << "\n";
 	displayAllMoviesTitles(3);
 	cout << "\n" << "\n";
-	cout << "Enter "
+	cout << "Enter ";
 
 
 }
