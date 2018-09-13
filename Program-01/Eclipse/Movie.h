@@ -1,13 +1,14 @@
-#ifndef MOVIE_H
-#define MOVIE_H
 /* * * * * * * * * * * * * * * * * * * * * * * *
  *
- *	Title:      CSC1310 - Program 01 - Bootleg String Class
- *	Author(s):  Rus Hoffman
- *	Date:       September 4, 2018
- *	Purpose:
+ *	Title:		CSC1310 - Program 01 - Single Movie Encapsulation class
+ *	Author(s):	Rus Hoffman
+ *	Date:		September 4, 2018
+ *	Purpose:		Practice working with classes which include member classes
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
+
+#ifndef MOVIE_H
+#define MOVIE_H
 
 #include "Text.h"
 #include <iostream>
@@ -19,15 +20,13 @@ using namespace std;
 class Movie {
 	private:
 		//Variables:
-		Text* movieTitle;    //title of movie
-		long movieLength;    //length of movie in minutes
-		long movieYear;    //year released
-		Text* movieGenre;    //comedy, horror, sci-fi, fantasy, romance, thriller, drama, action, biography
-		Text* movieRating;    //G, PG, PG-13, R, MA
-		long movieOscars;    //number of oscars won
-		double movieNumStars;    //taken from IMDB on 10 star scale
-
-		//Private functions:
+		Text* movieTitle;     //title of movie
+		long movieLength;     //length of movie in minutes
+		long movieYear;     //year released
+		Text* movieGenre;     //comedy, horror, sci-fi, fantasy, romance, thriller, drama, action, biography
+		Text* movieRating;     //G, PG, PG-13, R, MA
+		long movieOscars;     //number of Oscars won
+		double movieNumStars;     //taken from IMDB on 10 star scale
 
 	public:
 		Movie ();
@@ -41,26 +40,18 @@ class Movie {
 		~Movie ();
 
 		/*
-		 Function name:  editMovieDetails
-		 Parameters:  	editMovieDetails
-		 Returns: 		editMovieDetails
-		 Purpose:  		This function should be called when the user wants to edit a single movie's data
+		 Function name:	editMovieDetails
+		 Parameters:		nothing (void)
+		 Returns:			nothing (void)
+		 Purpose:			This function should be called when the user wants to edit a single movie's data
 		 */
 		void editMovieDetails ();
 
 		/*
-		 Function name:  setMovieDetailXXXX
-		 Parameters:  	A pointer to a movie structure
-		 A pointer to a Text variable, containing the title of the movie
-		 An integer containing the length of the movie
-		 An integer containing the year the movie was released
-		 A pointer to a Text variable, containing the genre of the movie
-		 A pointer to a Text variable, containing the rating of the movie
-		 An integer containing the number of oscars the movie won
-		 A float containing the IMDB rating of the movie (out of 10 stars)
-		 Returns: 		nothing (void)
-		 Purpose:  		This function should be called when the user wants to edit a single
-		 movie's data
+		 Function name:	setMovieDetailXXX
+		 Parameters:		Either the variable for that value, or all of them depending on which function
+		 Returns:			nothing (void)
+		 Purpose:			This function should be called when the program needs to edit a single movie's variable
 		 */
 		void setMovieFull (Text*, long, long, Text*, Text*, long, double);
 		void setMovieDetailTitle (Text*);
@@ -72,16 +63,10 @@ class Movie {
 		void setMovieDetailIMBDRating (double);
 
 		/*
-		 Function name:  getMovieDetailXXXX
-		 Parameters:  		A pointer to a Text variable, containing the title of the movie
-		 An integer containing the length of the movie
-		 An integer containing the year the movie was released
-		 A pointer to a Text variable, containing the genre of the movie
-		 A pointer to a Text variable, containing the rating of the movie
-		 An integer containing the number of oscars the movie won
-		 A float containing the IMDB rating of the movie (out of 10 stars)
-		 Returns: 		the contained value
-		 Purpose:  		This function should be called when the user wants to access a single movie's data
+		 Function name:	getMovieDetailXXX
+		 Parameters:		nothing (void)
+		 Returns:			the contained value
+		 Purpose:			This function should be called program needs to get a single movie's piece of data
 		 */
 		Text* getMovieDetailTitle ();
 		long getMovieDetailLength ();
@@ -92,28 +77,36 @@ class Movie {
 		double getMovieDetailIMBDRating ();
 
 		/*
-		 Function name:  printMovieDetails
-		 Parameters:  	nothing (void)
-		 Returns: 		nothing (void)
-		 Purpose:  		This function should be called when the user wants to print ALL the movie information to the screen.
+		 Function name:	printMovieTitle
+		 Parameters:		nothing (void)
+		 Returns:			nothing (void)
+		 Purpose:			This function should be called when the program needs to print the movies title to the cout buffer
 		 */
 		void printMovieTitle ();
 
 		/*
-		 Function name:  printMovieDetails
-		 Parameters:  	nothing (void)
+		 Function name:	printMovieDetails
+		 Parameters:		nothing (void)
 		 Returns: 		nothing (void)
-		 Purpose:  		This function should be called when the user wants to print ALL the movie information to the screen.
+		 Purpose:			This function should be called when the program needs to print ALL the movie information to the cout buffer
 		 */
 		void printMovieDetails ();
 
 		/*
-		 Function name:  printMovieDetailsToFile
-		 Parameters:  	a file stream object (sent by reference)
-		 Returns: 		nothing (void)
-		 Purpose:  		This function should be called when the user wants to print ALL the movie information to the file.
+		 Function name:	printMovieDetailsToFile
+		 Parameters:		a file stream object (sent by reference)
+		 Returns:			nothing (void)
+		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file
 		 */
 		void printMovieDetailsToFile (ofstream &outFile);
+
+		/*
+		 Function name:	printMovieDetailsToFileNoFlushing
+		 Parameters:		a file stream object (sent by reference)
+		 Returns: 		nothing (void)
+		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file without flushing the buffer automatically
+		 */
+		void printMovieDetailsToFileNoFlushing (ofstream &outFile);
 
 };
 

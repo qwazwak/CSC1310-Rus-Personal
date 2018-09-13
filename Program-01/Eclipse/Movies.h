@@ -76,23 +76,23 @@ class Movies {
 		void editMovieInArray ();
 
 		/*
-		 Function name:  destroyMovies
-		 Parameters:  	1) The movies structure (which contains the movie library)
-		 Returns: 		none (void)
-		 Purpose:  		This function should be called when you need to remove all the single
+		 Function name:	destroyMovies
+		 Parameters:		1) The movies structure (which contains the movie library)
+		 Returns:			none (void)
+		 Purpose:			This function should be called when you need to remove all the single
 		 movies in the movie library as well as the movie library.  This releases
 		 all the dynamically allocated space in memory.
 		 */
 		void removeMovieFromUser ();
 
 		/*
-		 Function name:  displayMoviesTitles
-		 Parameters:  	1) The movies structure (which contains the movie library)
-		 Returns: 		none (void)
-		 Purpose:  		This function should be called when the user wants to have all the movies
+		 Function name:	displayAllMoviesOnlyTitle
+		 Parameters:		1) The movies structure (which contains the movie library)
+		 Returns:			none (void)
+		 Purpose:			This function should be called when the user wants to have all the movies
 		 in the library printed to the screen.
 		 */
-		void displayAllMoviesTitles (int numOfSpaces = 0);
+		void displayAllMoviesOnlyTitle ();
 
 		/*
 		 Function name:	displayMoviesFullDetails

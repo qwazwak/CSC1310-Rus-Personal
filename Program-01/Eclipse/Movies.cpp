@@ -65,7 +65,7 @@ void Movies::addMovieToArrayFromUser () {
 	double numStars;
 
 	//get movie data from the user
-	cin.ignore();    //remove the \n from the keyboard buffer
+	cin.ignore();     //remove the \n from the keyboard buffer
 	cout << "\n" << "\n";
 	cout << "MOVIE TITLE: " << flush;
 	getline(cin, title);
@@ -88,7 +88,7 @@ void Movies::addMovieToArrayFromUser () {
 
 	//add the movie to the library
 	if(numMovies >= arraySize) {
-		expandarray();    //increase size by 2
+		expandarray();     //increase size by 2
 	}
 	moviesArray[numMovies] = oneMovie;
 
@@ -105,22 +105,19 @@ void Movies::editMovieInArray () {
 
 }
 
-
 void Movies::removeMovieFromUser () {
 	cout << "Current list of movies:" << "\n";
-	displayAllMoviesTitles(3);
+	displayAllMoviesOnlyTitle();
 	cout << "\n" << "\n";
 	cout << "Enter ";
 
-
 }
 
-void Movies::displayAllMoviesTitles (int numOfSpaces = 0) {
+
+
+void Movies::displayAllMoviesOnlyTitle () {
+	cout << setw(0);
 	for (unsigned long i = 0; i < numMovies; i++) {
-		cout << setw(0);
-		for (unsigned long q = 0; q < numOfSpaces; q++) {
-			cout << " ";
-		}
 		moviesArray[i]->printMovieTitle();
 	}
 	cout << setw(0) << flush;

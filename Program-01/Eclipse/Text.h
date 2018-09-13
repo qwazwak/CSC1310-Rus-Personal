@@ -67,8 +67,8 @@ class Text {
 		 Parameters:		a pointer to a c-string or a string
 		 Returns:			nothing (void)
 		 */
+		void editText (string newText);
 		void editText (const char* newCharArray);
-		void Text::editText (string newText);
 };
 
 #endif
