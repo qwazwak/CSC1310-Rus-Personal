@@ -1,0 +1,442 @@
+
+
+What is the maximum number of movies you can have in your library?
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+What is the name of the file? (example.txt):  
+
+Sorry, I was unable to open the file.
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+What is the name of the file? (example.txt):  
+The Shawshank Redemption was added to the movie library!
+
+The Godfather was added to the movie library!
+
+The Dark Knight was added to the movie library!
+
+Schindler's List was added to the movie library!
+
+The Lord of the Rings: The Return of the King was added to the movie library!
+
+Fight Club was added to the movie library!
+
+The Lord of the Rings: Fellowship of the Ring was added to the movie library!
+
+Forrest Gump was added to the movie library!
+
+The Matrix was added to the movie library!
+
+The Lord of the Rings: The Two Towers was added to the movie library!
+
+One Flew Over the Cuckoo's Nest was added to the movie library!
+
+Se7en was added to the movie library!
+
+It's a Wonderful Life was added to the movie library!
+
+Saving Private Ryan was added to the movie library!
+
+Interstellar was added to the movie library!
+
+The Green Mile was added to the movie library!
+
+Raiders of the Lost Ark was added to the movie library!
+
+Back to the Future was added to the movie library!
+
+
+18 movies were read from the file and added to your movie library.
+
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+What do you want to name the file? (example.txt):  
+
+All movies in your library have been printed to duck.txt
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+MOVIE TITLE: 
+MOVIE LENGTH (in minutes): 
+MOVIE YEAR: 
+MOVIE GENRE: 
+MOVIE RATING: 
+NUMBER OF OSCARS WON: 
+STAR RATING (out of 10): 
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  19
+
+
+
+Choose from the following movies to remove:
+
+MOVIE 1: The Shawshank Redemption
+MOVIE 2: The Godfather
+MOVIE 3: The Dark Knight
+MOVIE 4: Schindler's List
+MOVIE 5: The Lord of the Rings: The Return of the King
+MOVIE 6: Fight Club
+MOVIE 7: The Lord of the Rings: Fellowship of the Ring
+MOVIE 8: Forrest Gump
+MOVIE 9: The Matrix
+MOVIE 10: The Lord of the Rings: The Two Towers
+MOVIE 11: One Flew Over the Cuckoo's Nest
+MOVIE 12: Se7en
+MOVIE 13: It's a Wonderful Life
+MOVIE 14: Saving Private Ryan
+MOVIE 15: Interstellar
+MOVIE 16: The Green Mile
+MOVIE 17: Raiders of the Lost Ark
+MOVIE 18: Back to the Future
+MOVIE 19: Troop Beverly Hills
+Choose a movie to remove between 1 & 19:  
+
+The movie "Raiders of the Lost Ark" has been successfully deleted.
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+Choose from the following movies to edit:
+
+MOVIE 1: The Shawshank Redemption
+MOVIE 2: The Godfather
+MOVIE 3: The Dark Knight
+MOVIE 4: Schindler's List
+MOVIE 5: The Lord of the Rings: The Return of the King
+MOVIE 6: Fight Club
+MOVIE 7: The Lord of the Rings: Fellowship of the Ring
+MOVIE 8: Forrest Gump
+MOVIE 9: The Matrix
+MOVIE 10: The Lord of the Rings: The Two Towers
+MOVIE 11: One Flew Over the Cuckoo's Nest
+MOVIE 12: Se7en
+MOVIE 13: It's a Wonderful Life
+MOVIE 14: Saving Private Ryan
+MOVIE 15: Interstellar
+MOVIE 16: The Green Mile
+MOVIE 17: Back to the Future
+MOVIE 18: Troop Beverly Hills
+Choose a movie to remove between 1 & 18:  
+
+Which detail do you wish to edit?
+1.  Title
+2.  Length
+3.  Year
+4.  Genre
+5.  Rating
+6.  Number of Oscars Won
+7.  Number of Stars
+8.  DONE EDITING
+CHOOSE 1-8:  
+Current Title: It's a Wonderful Life
+NEW TITLE:  
+
+Which detail do you wish to edit?
+1.  Title
+2.  Length
+3.  Year
+4.  Genre
+5.  Rating
+6.  Number of Oscars Won
+7.  Number of Stars
+8.  DONE EDITING
+CHOOSE 1-8:  
+Current Rating: PG
+NEW GENRE:  
+
+Which detail do you wish to edit?
+1.  Title
+2.  Length
+3.  Year
+4.  Genre
+5.  Rating
+6.  Number of Oscars Won
+7.  Number of Stars
+8.  DONE EDITING
+CHOOSE 1-8:  
+Current Star Rating from IMDB: 8.6
+NEW STAR RATING:  
+
+Which detail do you wish to edit?
+1.  Title
+2.  Length
+3.  Year
+4.  Genre
+5.  Rating
+6.  Number of Oscars Won
+7.  Number of Stars
+8.  DONE EDITING
+CHOOSE 1-8:  
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+                                  ----------MOVIE 1----------
+                Movie Title:  The Shawshank Redemption
+           Length (minutes):  82
+              Year Released:  1994
+                      Genre:  Drama, Crime
+                     Rating:  R
+       Number of Oscars Won:  0
+            Number of Stars:  9.3
+
+
+                                  ----------MOVIE 2----------
+                Movie Title:  The Godfather
+           Length (minutes):  115
+              Year Released:  1972
+                      Genre:  Drama, Crime
+                     Rating:  R
+       Number of Oscars Won:  3
+            Number of Stars:  9.2
+
+
+                                  ----------MOVIE 3----------
+                Movie Title:  The Dark Knight
+           Length (minutes):  92
+              Year Released:  2008
+                      Genre:  Action, Crime
+                     Rating:  PG-13
+       Number of Oscars Won:  2
+            Number of Stars:  9
+
+
+                                  ----------MOVIE 4----------
+                Movie Title:  Schindler's List
+           Length (minutes):  195
+              Year Released:  1993
+                      Genre:  Biography
+                     Rating:  R
+       Number of Oscars Won:  7
+            Number of Stars:  8.9
+
+
+                                  ----------MOVIE 5----------
+                Movie Title:  The Lord of the Rings: The Return of the King
+           Length (minutes):  201
+              Year Released:  2003
+                      Genre:  Adventure
+                     Rating:  PG-13
+       Number of Oscars Won:  11
+            Number of Stars:  8.9
+
+
+                                  ----------MOVIE 6----------
+                Movie Title:  Fight Club
+           Length (minutes):  139
+              Year Released:  1999
+                      Genre:  Drama
+                     Rating:  R
+       Number of Oscars Won:  0
+            Number of Stars:  8.8
+
+
+                                  ----------MOVIE 7----------
+                Movie Title:  The Lord of the Rings: Fellowship of the Ring
+           Length (minutes):  178
+              Year Released:  2001
+                      Genre:  Adventure
+                     Rating:  PG-13
+       Number of Oscars Won:  4
+            Number of Stars:  8.8
+
+
+                                  ----------MOVIE 8----------
+                Movie Title:  Forrest Gump
+           Length (minutes):  142
+              Year Released:  1994
+                      Genre:  Drama
+                     Rating:  PG-13
+       Number of Oscars Won:  6
+            Number of Stars:  8.8
+
+
+                                  ----------MOVIE 9----------
+                Movie Title:  The Matrix
+           Length (minutes):  136
+              Year Released:  1999
+                      Genre:  Action, Sci-Fi
+                     Rating:  R
+       Number of Oscars Won:  4
+            Number of Stars:  8.7
+
+
+                                  ----------MOVIE 10----------
+                Movie Title:  The Lord of the Rings: The Two Towers
+           Length (minutes):  179
+              Year Released:  2002
+                      Genre:  Adventure
+                     Rating:  PG-13
+       Number of Oscars Won:  2
+            Number of Stars:  8.7
+
+
+                                  ----------MOVIE 11----------
+                Movie Title:  One Flew Over the Cuckoo's Nest
+           Length (minutes):  133
+              Year Released:  1975
+                      Genre:  Drama
+                     Rating:  R
+       Number of Oscars Won:  5
+            Number of Stars:  8.7
+
+
+                                  ----------MOVIE 12----------
+                Movie Title:  Se7en
+           Length (minutes):  127
+              Year Released:  1995
+                      Genre:  Crime, Drama, Mystery
+                     Rating:  R
+       Number of Oscars Won:  1
+            Number of Stars:  8.6
+
+
+                                  ----------MOVIE 13----------
+                Movie Title:  It's A Wonderful Life
+           Length (minutes):  130
+              Year Released:  1946
+                      Genre:  Drama, Family, Fantasy
+                     Rating:  G
+       Number of Oscars Won:  0
+            Number of Stars:  8.5
+
+
+                                  ----------MOVIE 14----------
+                Movie Title:  Saving Private Ryan
+           Length (minutes):  169
+              Year Released:  1998
+                      Genre:  Drama, War
+                     Rating:  R
+       Number of Oscars Won:  5
+            Number of Stars:  8.6
+
+
+                                  ----------MOVIE 15----------
+                Movie Title:  Interstellar
+           Length (minutes):  169
+              Year Released:  2014
+                      Genre:  Adveture, Drama, Sci-Fi
+                     Rating:  PG-13
+       Number of Oscars Won:  1
+            Number of Stars:  8.6
+
+
+                                  ----------MOVIE 16----------
+                Movie Title:  The Green Mile
+           Length (minutes):  189
+              Year Released:  1999
+                      Genre:  Crime, Drama, Fantasy
+                     Rating:  R
+       Number of Oscars Won:  0
+            Number of Stars:  8.5
+
+
+                                  ----------MOVIE 17----------
+                Movie Title:  Back to the Future
+           Length (minutes):  116
+              Year Released:  1985
+                      Genre:  Adventure, Comedy, Sci-Fi
+                     Rating:  PG
+       Number of Oscars Won:  1
+            Number of Stars:  8.5
+
+
+                                  ----------MOVIE 18----------
+                Movie Title:  Troop Beverly Hills
+           Length (minutes):  120
+              Year Released:  1992
+                      Genre:  Comedy
+                     Rating:  PG
+       Number of Oscars Won:  0
+            Number of Stars:  4.5
+
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+What do you want to name the file? (example.txt):  
+
+All movies in your library have been printed to bammalammajamjam.txt
+
+
+What would you like to do?
+1.  Read movies from file.
+2.  Save movies to a file.
+3.  Add a movie.
+4.  Delete a movie.
+5.  Edit a movie.
+6.  Print all movies.
+7.  Delete ALL movies and end the program.
+CHOOSE 1-7:  
+
+GOODBYE!
+
