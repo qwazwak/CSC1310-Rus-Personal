@@ -103,14 +103,14 @@ void Movie::editMovieDetails () {
 #endif
 		switch (choice) {
 			case 1:
-				cout << "Current Title: " << movieTitle << "\n";
+				cout << "Current Title: " << movieTitle->getText() << "\n";
 				cout << "NEW TITLE:  " << flush;
 				getline(cin, inputTextBuffer);
 				cout << "\n" << flush;
 
 				while (cin.fail()) {
 					cout << "An error has occurred" << "\n" << "\n";
-					cout << "Current Title: " << movieTitle << "\n";
+					cout << "Current Title: " << movieTitle->getText() << "\n";
 					cout << "NEW TITLE:  " << flush;
 					getline(cin, inputTextBuffer);
 					cout << "\n";
@@ -166,7 +166,7 @@ void Movie::editMovieDetails () {
 				break;
 
 			case 4:
-				cout << "Current Genre: " << movieGenre << "\n";
+				cout << "Current Genre: " << movieGenre->getText() << "\n";
 				cout << "NEW GENRE:     " << flush;
 				getline(cin, inputTextBuffer);
 				cout << "\n" << flush;
@@ -174,7 +174,7 @@ void Movie::editMovieDetails () {
 					cin.clear();
 					cout << "An error has occurred" << "\n" << "\n";
 
-					cout << "Current Genre: " << movieGenre << "\n";
+					cout << "Current Genre: " << movieGenre->getText() << "\n";
 					cout << "NEW GENRE:  " << flush;
 					getline(cin, inputTextBuffer);
 				}
@@ -186,7 +186,7 @@ void Movie::editMovieDetails () {
 				break;
 
 			case 5:
-				cout << "Current Rating: " << movieRating << "\n";
+				cout << "Current Rating: " << movieRating->getText() << "\n";
 				cout << "NEW RATING:     " << flush;
 				getline(cin, inputTextBuffer);
 				cout << "\n";
@@ -194,7 +194,7 @@ void Movie::editMovieDetails () {
 					cout << "An error has occurred" << "\n" << "\n";
 
 					cout << "Current Rating: ";
-					cout << movieRating << "\n";
+					cout << movieRating->getText() << "\n";
 					cout << "NEW Rating:     " << flush;
 					getline(cin, inputTextBuffer);
 					cout << "\n" << flush;
@@ -254,34 +254,38 @@ void Movie::editMovieDetails () {
 }
 
 void Movie::setMovieFull (Text* inputTitle, long inputLength, long inputYear, Text* inputGenre, Text* inputRating, long inputOscars, double inputStars) {
-	Text* movieTitle = inputTitle;
-	long movieLength = inputLength;
-	long movieYear = inputYear;
-	Text* movieGenre = inputGenre;
-	Text* movieRating = inputRating;
-	long movieOscars = inputOscars;
-	double movieNumStars = inputStars;
+	setMovieDetailTitle(inputTitle);
+	setMovieDetailLength(inputLength);
+	setMovieDetailReleaseYear(inputYear);
+	setMovieDetailGenre(inputGenre);
+	setMovieDetailRating(inputRating);
+	setMovieDetailOscarCount(inputOscars);
+	setMovieDetailIMBDRating(inputStars);
+
 }
 void Movie::setMovieDetailTitle (Text* inputTitle) {
-	Text* movieTitle = inputTitle;
+	delete movieTitle;
+	movieTitle = new Text(inputTitle->getText());
 }
 void Movie::setMovieDetailLength (long inputLength) {
-	long movieLength = inputLength;
+	movieLength = inputLength;
 }
 void Movie::setMovieDetailReleaseYear (long inputYear) {
-	long movieYear = inputYear;
+	movieYear = inputYear;
 }
 void Movie::setMovieDetailGenre (Text* inputGenre) {
-	Text* movieGenre = inputGenre;
+	delete movieGenre;
+	movieGenre = new Text(inputGenre->getText());
 }
 void Movie::setMovieDetailRating (Text* inputRating) {
-	Text* movieRating = inputRating;
+	delete movieRating;
+	movieRating = new Text(inputRating->getText());
 }
 void Movie::setMovieDetailOscarCount (long inputOscars) {
-	long movieOscars = inputOscars;
+	movieOscars = inputOscars;
 }
 void Movie::setMovieDetailIMBDRating (double inputStars) {
-	double movieNumStars = inputStars;
+	movieNumStars = inputStars;
 }
 
 Text* Movie::getMovieDetailTitle () {
@@ -307,17 +311,17 @@ double Movie::getMovieDetailIMBDRating () {
 }
 
 void Movie::printMovieTitle () {
-	cout << right << setw(30) << "Movie Title:  " << left << movieTitle << "\n";
+	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText() << setw(0) << "\n";
 }
 
 void Movie::printMovieDetails () {
-	cout << right << setw(30) << "Movie Title:  " << left << movieTitle << "\n";
+	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText() << "\n";
 	cout << right << setw(30) << "Length (minutes):  " << left << movieLength << "\n";
 	cout << right << setw(30) << "Year Released:  " << left << movieYear << "\n";
-	cout << right << setw(30) << "Genre:  " << left << movieGenre << "\n";
-	cout << right << setw(30) << "Rating:  " << left << movieRating << "\n";
+	cout << right << setw(30) << "Genre:  " << left << movieGenre->getText() << "\n";
+	cout << right << setw(30) << "Rating:  " << left << movieRating->getText() << "\n";
 	cout << right << setw(30) << "Number of Oscars Won:  " << left << movieOscars << "\n";
-	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << flush;
+	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << setw(0) << flush;
 }
 
 void Movie::printMovieDetailsToFile (ofstream &outFile) {

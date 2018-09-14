@@ -1,9 +1,12 @@
-/*
- Title:  Movies.cpp
- Author:  April R Crockett
- Date:  11/7/2017
- Purpose:  Be able to create, manage, print, save & delete a movie library
- */
+/* * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ *	Title:		CSC1310 - Program 01 - Single Movie Encapsulation class
+ *	Author(s):	Rus Hoffman
+ *	Date:		September 4, 2018
+ *	Purpose:		Practice working with classes which include member classes
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include "Movies.h"
 #include "Movie.h"
 using namespace std;
@@ -12,47 +15,53 @@ void Movies::expandarray () {
 #if defined(DEBUG)
 	clog << "starting expandarray" << endl;
 #endif
-	Movie** moviesBufferArray = new Movie*[arraySize * 2];
-	for (size_t i = 0; i < arraySize; i++) {
+	Movie** moviesBufferArray = new Movie*[maxMoviesHoldable * 2];
+	for (long i = 0; i < numMovies; i++) {
 		moviesBufferArray[i] = moviesArray[i];
 	}
 	delete[] moviesArray;
 	moviesArray = moviesBufferArray;
-	arraySize = arraySize * 2;
+	maxMoviesHoldable = maxMoviesHoldable * 2;
 #if defined(DEBUG)
 	clog << "end array expanding" << endl;
 #endif
 }
 
 void Movies::removeMovieByID (long ID) {
-
+	delete moviesArray[ID];
+	numMovies = numMovies - 1;
+	if(ID != (numMovies - 1)) {
+		for (long i = ID; i < numMovies; i++) {
+			moviesArray[i] = moviesArray[i + 1];
+		}
+	}
 }
 
 Movies::Movies () {
 	numMovies = 0;
-	arraySize = 1;
-	moviesArray = new Movie*[1];
+	maxMoviesHoldable = 1;
+	moviesArray = new Movie*[maxMoviesHoldable];
+}
+
+Movies::Movies (long maxSize) {
+	numMovies = 0;
+	maxMoviesHoldable = maxSize;
+	moviesArray = new Movie*[maxSize];
 }
 
 Movies::~Movies () {
-	for (size_t i = 0; i < arraySize; i++) {
+	for (long i = 0; i < maxMoviesHoldable; i++) {
 		delete moviesArray[i];
 	}
 	delete[] moviesArray;
 }
 
 void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
-	if(numMovies >= arraySize) {
-		Movie** moviesBufferArray = new Movie*[arraySize * 2];
-		for (size_t i = 0; i < arraySize; i++) {
-			moviesBufferArray[i] = moviesArray[i];
-		}
-		delete[] moviesArray;
-		moviesArray = moviesBufferArray;
-		arraySize = arraySize * 2;
+	if(maxMoviesHoldable == numMovies) {
+		expandarray();
 	}
 	moviesArray[numMovies] = inputMoviePointer;
-	numMovies++;
+	numMovies = numMovies + 1;
 }
 
 void Movies::addMovieToArrayFromUser () {
@@ -87,7 +96,7 @@ void Movies::addMovieToArrayFromUser () {
 	Movie* oneMovie = new Movie(title, length, year, genre, rating, numOscars, numStars);
 
 	//add the movie to the library
-	if(numMovies >= arraySize) {
+	if(numMovies >= maxMoviesHoldable) {
 		expandarray();     //increase size by 2
 	}
 	moviesArray[numMovies] = oneMovie;
@@ -105,19 +114,18 @@ void Movies::editMovieInArray () {
 
 }
 
-void Movies::removeMovieFromUser () {
+void Movies::removeMovieByUserChoice () {
+
 	cout << "Current list of movies:" << "\n";
 	displayAllMoviesOnlyTitle();
 	cout << "\n" << "\n";
 	cout << "Enter ";
-
 }
 
-
-
 void Movies::displayAllMoviesOnlyTitle () {
-	cout << setw(0);
-	for (unsigned long i = 0; i < numMovies; i++) {
+	cout << "\n";
+	for (long i = 0; i < numMovies; i++) {
+		cout << setw(30) << right << "Movie Number: " << left << i << setw(0);
 		moviesArray[i]->printMovieTitle();
 	}
 	cout << setw(0) << flush;
@@ -125,21 +133,16 @@ void Movies::displayAllMoviesOnlyTitle () {
 
 void Movies::displayAllMoviesFullDetails () {
 	cout << "\n";
-	for (unsigned long i = 0; i < numMovies; i++) {
+	for (long i = 0; i < numMovies; i++) {
 		moviesArray[i]->printMovieDetails();
 	}
 	cout << setw(0) << flush;
 }
 
-void Movies::removeMovieByUserChoice () {
-
-}
-
 void Movies::importFromFile (string filename) {
-	importFromFile(filename.c_str());
-}
-
-void Movies::importFromFile (char* filename) {
+#if defined(DEBUG)
+	clog << "Movies CLASS DEBUG: " << "starting import" << endl;
+#endif
 	ifstream ifs;
 	string movieTitle;
 	long movieLength;
@@ -152,11 +155,14 @@ void Movies::importFromFile (char* filename) {
 	ifs.open(filename);
 
 	while (true) {
-		ifs >> movieTitle;
+		ifs.ignore(256, '\n');
+		getline(ifs, movieTitle);
 		ifs >> movieLength;
 		ifs >> movieYear;
+		ifs.ignore(256, '\n');
+		getline(ifs, movieGenre);
+		getline(ifs, movieRating);
 		ifs >> movieGenre;
-		ifs >> movieRating;
 		ifs >> movieOscars;
 		ifs >> movieNumStars;
 
@@ -166,6 +172,14 @@ void Movies::importFromFile (char* filename) {
 		addMovieToArrayDirect(new Movie(movieTitle, movieLength, movieYear, movieGenre, movieRating, movieOscars, movieNumStars));
 	}
 	ifs.close();
+#if defined(DEBUG)
+	clog << "Movies CLASS DEBUG: " << "done with import" << endl;
+#endif
+}
+
+void Movies::importFromFile (char* filename) {
+	string tempString(filename);
+	importFromFile(filename);
 }
 
 void Movies::exportToFile (string filename) {
@@ -175,8 +189,9 @@ void Movies::exportToFile (string filename) {
 void Movies::exportToFile (char *filename) {
 	ofstream outputStream;
 	outputStream.open(filename);
-	for (size_t i = 0; i < numMovies; i++) {
+	for (long i = 0; i < numMovies; i++) {
 		moviesArray[i]->printMovieDetailsToFile(outputStream);
+		outputStream << flush;
 	}
 	outputStream.close();
 }

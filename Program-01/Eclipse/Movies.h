@@ -18,9 +18,8 @@ class Movies {
 	private:
 		//Variables:
 		Movie** moviesArray;	//The main array of pointers - each pointer points to a single Movie
-		size_t arraySize;		//Number of allocated 'movie' spots
-		size_t numMovies;		//Number of stored movies
-		//size_t maxMovies;		//Maximum storable movies
+		long maxMoviesHoldable;		//Number of allocated 'movie' spots
+		long numMovies;		//Number of stored movies
 
 		/*
 		 Function name:	expandarray
@@ -47,6 +46,7 @@ class Movies {
 		void removeMovieByID (long);
 	public:
 		Movies ();
+		Movies (long);
 
 		//Destructor
 		~Movies ();
@@ -76,14 +76,14 @@ class Movies {
 		void editMovieInArray ();
 
 		/*
-		 Function name:	destroyMovies
-		 Parameters:		1) The movies structure (which contains the movie library)
+		 Function name:	removeMovieFromArray
+		 Parameters:		The movies structure (which contains the movie library)
 		 Returns:			none (void)
-		 Purpose:			This function should be called when you need to remove all the single
-		 movies in the movie library as well as the movie library.  This releases
-		 all the dynamically allocated space in memory.
+		 Purpose:			This function should be called when the user wants to remove one single movie
+		 from the movie library.  The function will list all the movie names and allow
+		 the user to select the movie that they wish to remove. Then this function removes the movie.
 		 */
-		void removeMovieFromUser ();
+		void removeMovieByUserChoice ();
 
 		/*
 		 Function name:	displayAllMoviesOnlyTitle
@@ -101,16 +101,6 @@ class Movies {
 		 Purpose:  		This function should be called when the user wants to have all the movies and all details in the library printed to the screen.
 		 */
 		void displayAllMoviesFullDetails ();
-
-		/*
-		 Function name:	removeMovieFromArray
-		 Parameters:		The movies structure (which contains the movie library)
-		 Returns:			none (void)
-		 Purpose:			This function should be called when the user wants to remove one single movie
-		 from the movie library.  The function will list all the movie names and allow
-		 the user to select the movie that they wish to remove. Then this function removes the movie.
-		 */
-		void removeMovieByUserChoice ();
 
 		/*
 		 Function name:	importFromFile

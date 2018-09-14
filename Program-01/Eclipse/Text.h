@@ -10,6 +10,7 @@
 #if !defined(TEXT_H)
 #define TEXT_H
 
+
 #include <iostream>
 #include <iomanip>
 #include <cstring>

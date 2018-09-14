@@ -6,25 +6,27 @@
  *	Purpose:		Practice usage of classes and overloading of operators
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
-#define DEBUG
 #include "Text.h"
+
 #include <cstring>
 
 using namespace std;
 
 //Overloads the '<<' operator allowing the usage of cout << TextClassObject; to work
+#if defined(STREAMOVERLOAD)
 ostream& operator<< (ostream& outputStream, Text* textToOutput) {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "Overloading << with Text*" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "Overloading << with Text*" << endl;
 #endif
-	outputStream << textToOutput->getTextString();
+	outputStream << textToOutput->getText();
 	return outputStream;
 }
+#endif
 
 //Default constructor
 Text::Text () {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "Initializing a Text class with default constructor" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "Initializing a Text class with default constructor" << endl;
 #endif
 	textArray = "";
 	textIsAllocated = true;
@@ -33,8 +35,8 @@ Text::Text () {
 
 //Overloading Constructor for quicker setup with a constant char array
 Text::Text (const char* inputText) {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "Initializing a Text class with faster constructor (char)" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "Initializing a Text class with faster constructor (char)" << endl;
 #endif
 	textArray = inputText;
 	textLength = 0;
@@ -46,8 +48,8 @@ Text::Text (const char* inputText) {
 
 //Overloading Constructor for quicker setup with a string
 Text::Text (string inputText) {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "Initializing a Text class with faster constructor (string)" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "Initializing a Text class with faster constructor (string)" << endl;
 #endif
 	textArray = inputText.c_str();
 	textLength = inputText.length();
@@ -56,8 +58,8 @@ Text::Text (string inputText) {
 
 //Destructor
 Text::~Text () {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "Deallocating Text class" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "Deallocating Text class" << endl;
 #endif
 	//If the memory is allocated when it comes time to deallocate, deallocate it
 	if(textIsAllocated == true) {
@@ -66,44 +68,44 @@ Text::~Text () {
 }
 
 void Text::displayText () {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "Using cout built in function" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "Using cout built in function" << endl;
 #endif
 	cout << textArray;
 }
 
 const char* Text::getText () {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "getting char text" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "getting char text" << endl;
 #endif
 	return textArray;
 }
 
 string Text::getTextString () {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "getting string" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "getting string" << endl;
 #endif
 	string str(textArray);
 	return str;
 }
 
 long Text::getLength () {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "getting length" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "getting length" << endl;
 #endif
 	return strlen(textArray);
 }
 
 void Text::editText (string newText) {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "replacing text with string" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "replacing text with string" << endl;
 #endif
 	editText(newText.c_str());
 }
 
 void Text::editText (const char* newCharArray) {
-#if defined(DEBUG)
-	clog << "Text CLASS DEBUG: " << "replacing text with char array" << endl;
+#if defined(TEXT_H_DEBUG)
+	clog << "Text CLASS TEXT_H_DEBUG: " << "replacing text with char array" << endl;
 #endif
 	if(textIsAllocated == true) {
 		delete[] textArray;
