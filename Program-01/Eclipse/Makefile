@@ -4,6 +4,7 @@ CCFLAGS += -I ./ -std=c11
 
 #Builds to pick from:
 all		:	release
+#Program-01-Movies.exe : executable
 executable	:	Driver.o Movies.o Movie.o Text.o
 			$(CXX) $(CXXFLAGS) -o Program-01-Movies.exe Driver.o Movies.o Movie.o Text.o
 
@@ -27,7 +28,7 @@ debug	:	executable
 
 
 #Cleanup! Deletes old exe and object files
-clean	:	Program-01-Movies.exe
+clean	:	#Program-01-Movies.exe
 		del *.o 
 		del Program-01-Movies.exe
 

@@ -19,9 +19,10 @@ using namespace std;
 class Text {
 	private:
 		//Variables:
-		const char* textArray;
-		long textLength;
-		bool textIsAllocated;
+
+
+
+		string theText;
 
 	public:
 		//default Constructor
@@ -47,14 +48,7 @@ class Text {
 		 Parameters:		nothing (void)
 		 Returns:			pointer to a constant character array
 		 */
-		const char* getText ();
-
-		/*
-		 Function Name:	getTextString()
-		 Parameters:		nothing (void)
-		 Returns:			a string containing the held text
-		 */
-		string getTextString ();
+		string getText ();
 
 		/*
 		 Function Name:	getLength()

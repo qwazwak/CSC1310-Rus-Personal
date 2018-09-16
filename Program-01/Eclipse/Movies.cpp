@@ -60,6 +60,7 @@ void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
 	if(maxMoviesHoldable == numMovies) {
 		expandarray();
 	}
+	inputMoviePointer->printMovieDetails();
 	moviesArray[numMovies] = inputMoviePointer;
 	numMovies = numMovies + 1;
 }
@@ -132,11 +133,18 @@ void Movies::displayAllMoviesOnlyTitle () {
 }
 
 void Movies::displayAllMoviesFullDetails () {
-	cout << "\n";
+	cout << setfill(' ') << "\n";
 	for (long i = 0; i < numMovies; i++) {
+		cout << left << setw(0) << "                  ------" << "Number " << right << setw(5) << i << setw(0) << left << "------                  " << "\n";
 		moviesArray[i]->printMovieDetails();
+		cout << left << setw(0) << "                  ------" << "Number " << right << setw(5) << i << setw(0) << left << "------                  " << "\n";
 	}
 	cout << setw(0) << flush;
+}
+
+void Movies::importFromFile (char* filename) {
+	string tempString(filename);
+	importFromFile(filename);
 }
 
 void Movies::importFromFile (string filename) {
@@ -155,14 +163,14 @@ void Movies::importFromFile (string filename) {
 	ifs.open(filename);
 
 	while (true) {
-		ifs.ignore(256, '\n');
+		ifs.ignore();
+
 		getline(ifs, movieTitle);
 		ifs >> movieLength;
 		ifs >> movieYear;
-		ifs.ignore(256, '\n');
+		ifs.ignore();
 		getline(ifs, movieGenre);
 		getline(ifs, movieRating);
-		ifs >> movieGenre;
 		ifs >> movieOscars;
 		ifs >> movieNumStars;
 
@@ -177,21 +185,17 @@ void Movies::importFromFile (string filename) {
 #endif
 }
 
-void Movies::importFromFile (char* filename) {
-	string tempString(filename);
-	importFromFile(filename);
+void Movies::exportToFile (char* filename) {
+	string temp(filename);
+	exportToFile(temp);
 }
 
 void Movies::exportToFile (string filename) {
-	exportToFile(filename.c_str());
-}
-
-void Movies::exportToFile (char *filename) {
 	ofstream outputStream;
 	outputStream.open(filename);
 	for (long i = 0; i < numMovies; i++) {
 		moviesArray[i]->printMovieDetailsToFile(outputStream);
-		outputStream << flush;
 	}
+	outputStream << flush;
 	outputStream.close();
 }
