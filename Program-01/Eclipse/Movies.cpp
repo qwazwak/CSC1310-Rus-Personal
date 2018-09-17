@@ -13,7 +13,7 @@ using namespace std;
 
 void Movies::expandarray () {
 #if defined(DEBUG)
-	clog << "starting expandarray" << endl;
+	clog << "EXPANDING ARRAY" << endl;
 #endif
 	Movie** moviesBufferArray = new Movie*[maxMoviesHoldable * 2];
 	for (long i = 0; i < numMovies; i++) {
@@ -22,9 +22,6 @@ void Movies::expandarray () {
 	delete[] moviesArray;
 	moviesArray = moviesBufferArray;
 	maxMoviesHoldable = maxMoviesHoldable * 2;
-#if defined(DEBUG)
-	clog << "end array expanding" << endl;
-#endif
 }
 
 void Movies::removeMovieByID (long ID) {
@@ -35,6 +32,37 @@ void Movies::removeMovieByID (long ID) {
 			moviesArray[i] = moviesArray[i + 1];
 		}
 	}
+}
+
+bool Movies::isOnlyNumaric (string input) {
+	for (unsigned long i = 0; i < input.length(); i++) {
+		if( ! (input[i] >= '0' && input[i] <= '9')) {
+			return false;
+		}
+	}
+	if(input[0] == '\n') {
+		return false;
+	}
+	return true;
+}
+
+bool Movies::isOnlyNumaricFloat (string input) {
+	long countOfDot = 0;
+	for (unsigned long i = 0; i < input.length(); i++) {
+		if( ! (input[i] >= '0' && input[i] <= '9')) {
+			if(input[i] == '.'){
+				++countOfDot;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	if(input[0] == '\n' || countOfDot < 0 || countOfDot > 1) {
+		return false;
+	}
+
+	return true;
 }
 
 Movies::Movies () {
@@ -50,61 +78,143 @@ Movies::Movies (long maxSize) {
 }
 
 Movies::~Movies () {
-	for (long i = 0; i < maxMoviesHoldable; i++) {
+	for (long i = 0; i < numMovies; i++) {
 		delete moviesArray[i];
 	}
 	delete[] moviesArray;
 }
 
 void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
-	if(maxMoviesHoldable == numMovies) {
+	if(maxMoviesHoldable <= numMovies) {
 		expandarray();
 	}
-	inputMoviePointer->printMovieDetails();
 	moviesArray[numMovies] = inputMoviePointer;
 	numMovies = numMovies + 1;
 }
 
 void Movies::addMovieToArrayFromUser () {
-	string title;
-	long length;
-	long year;
-	string genre;
-	string rating;
-	long numOscars;
-	double numStars;
+	bool inputIsGood;
+	string inputBuffer;
+	bool inputIsOnlyNumbers;
+
+	string title = "error";
+	long length = -99;
+	long year = -99;
+	string genre = "error";
+	string rating = "error";
+	long numOscars = -99;
+	double numStars = -99;
 
 	//get movie data from the user
-	cin.ignore();     //remove the \n from the keyboard buffer
-	cout << "\n" << "\n";
+	cout << "\n";
 	cout << "MOVIE TITLE: " << flush;
 	getline(cin, title);
-	cout << "\n" << "MOVIE LENGTH (in minutes): " << flush;
-	cin >> length;
-	cout << "\n" << "MOVIE YEAR: " << flush;
-	cin >> year;
-	cin.ignore();
-	cout << "\n" << "MOVIE GENRE: " << flush;
+	cout << "\n";
+
+	do {
+		inputIsGood = true;
+		cout << "MOVIE LENGTH (in minutes): " << flush;
+		getline(cin, inputBuffer);
+
+		inputIsOnlyNumbers = isOnlyNumaric(inputBuffer);
+
+		if(cin.fail()) {
+			cout << "an unknown error has occurred" << "\n";
+			cin.clear();
+		}
+		if(inputIsOnlyNumbers == false) {
+			inputIsGood = false;
+			cout << "error: only enter numbers" << "\n";
+		}
+		if(inputIsOnlyNumbers == true) {
+			length = stol(inputBuffer);
+			if(length < 1) {
+				inputIsGood = false;
+				cout << "error: only enter a number greater than zero" << "\n";
+			}
+		}
+
+	} while ( !inputIsGood);
+	cout << "\n";
+
+	do {
+		inputIsGood = true;
+		cout << "MOVIE YEAR: " << flush;
+		getline(cin, inputBuffer);
+
+		inputIsOnlyNumbers = isOnlyNumaric(inputBuffer);
+
+		if(cin.fail()) {
+			cout << "an unknown error has occurred" << "\n";
+			cin.clear();
+		}
+		if(inputIsOnlyNumbers == false) {
+			inputIsGood = false;
+			cout << "error: only enter numbers" << "\n";
+		}
+		if(inputIsOnlyNumbers == true) {
+			year = stol(inputBuffer);
+		}
+	} while ( !inputIsGood);
+	cout << "\n";
+	cout << "MOVIE GENRE: " << flush;
 	getline(cin, genre);
-	cout << "\n" << "MOVIE RATING: " << flush;
+	cout << "\n";
+	cout << "MOVIE RATING: " << flush;
 	getline(cin, rating);
-	cout << "\n" << "NUMBER OF OSCARS WON: " << flush;
-	cin >> numOscars;
-	cout << "\n" << "STAR RATING (out of 10): " << flush;
-	cin >> numStars;
+	cout << "\n";
+	do {
+		inputIsGood = true;
+		cout << "NUMBER OF OSCARS WON: " << flush;
+		getline(cin, inputBuffer);
 
-	//create the movie
-	Movie* oneMovie = new Movie(title, length, year, genre, rating, numOscars, numStars);
+		inputIsOnlyNumbers = isOnlyNumaric(inputBuffer);
 
-	//add the movie to the library
-	if(numMovies >= maxMoviesHoldable) {
-		expandarray();     //increase size by 2
-	}
-	moviesArray[numMovies] = oneMovie;
+		if(cin.fail()) {
+			cout << "an unknown error has occurred" << "\n";
+			cin.clear();
+		}
+		if(inputIsOnlyNumbers == false) {
+			inputIsGood = false;
+			cout << "error: only enter numbers" << "\n";
+		}
+		if(inputIsOnlyNumbers == true) {
+			numOscars = stol(inputBuffer);
+			if(length < 1) {
+				inputIsGood = false;
+				cout << "error: only enter a number greater than zero" << "\n";
+			}
+		}
 
-	numMovies++;
+	} while ( !inputIsGood);
+	cout << "\n";
+	do {
+			inputIsGood = true;
+			cout << "STAR RATING (out of 10): " << flush;
+			getline(cin, inputBuffer);
+
+			inputIsOnlyNumbers = isOnlyNumaricFloat(inputBuffer);
+
+			if(cin.fail()) {
+				cout << "an unknown error has occurred" << "\n";
+				cin.clear();
+			}
+			if(inputIsOnlyNumbers == false) {
+				inputIsGood = false;
+				cout << "error: only enter numbers" << "\n";
+			}
+			if(inputIsOnlyNumbers == true) {
+				numStars = stol(inputBuffer);
+				if(numStars < 0 || numStars> 10) {
+					inputIsGood = false;
+					cout << "error: only enter a number between 0 and 10, inclusive" << "\n";
+				}
+			}
+
+		} while ( !inputIsGood);
+	cout << "\n" << flush;
+	addMovieToArrayDirect(new Movie(title, length, year, genre, rating, numOscars, numStars));
 }
-
 /*
  Function name:	editMovieInArray
  Parameters:		none
@@ -112,22 +222,52 @@ void Movies::addMovieToArrayFromUser () {
  Purpose:			This function should be called when you need to edit a movie in the array
  */
 void Movies::editMovieInArray () {
-
+	long numberPicked;
+	displayAllMoviesOnlyTitle();
+	cout << "\n";
+	cout << "Enter the number of the movie you wish to edit: " << flush;
+	cin >> numberPicked;
+	cout << "\n";
+	while (numberPicked < 1 || numberPicked > numMovies || cin.fail()) {
+		if(cin.fail()) {
+			cout << "an error has occurred" << "\n";
+		}
+		if(numberPicked < 1 || numberPicked > numMovies) {
+			cout << "invalid input, only enter a number 1-numMovies" << "\n";
+		}
+		cout << "Enter the number of the movie you wish to edit: " << flush;
+		cin >> numberPicked;
+	}
+	moviesArray[numberPicked - 1]->editMovieDetails();
 }
 
 void Movies::removeMovieByUserChoice () {
-
+	long numberPicked;
 	cout << "Current list of movies:" << "\n";
 	displayAllMoviesOnlyTitle();
-	cout << "\n" << "\n";
-	cout << "Enter ";
+	cout << "\n";
+	cout << "Enter the number of the movie to remove";
+	cin >> numberPicked;
+	cout << "\n";
+	while (numberPicked < 1 || numberPicked > numMovies || cin.fail()) {
+		if(cin.fail()) {
+			cout << "an error has occurred" << "\n";
+		}
+		if(numberPicked < 1 || numberPicked > numMovies) {
+			cout << "invalid input, only enter a number 1-" << numMovies << "\n";
+		}
+		cout << "Enter the number of the movie to remove: ";
+		cin >> numberPicked;
+	}
+	removeMovieByID(numberPicked);
 }
 
 void Movies::displayAllMoviesOnlyTitle () {
 	cout << "\n";
 	for (long i = 0; i < numMovies; i++) {
-		cout << setw(30) << right << "Movie Number: " << left << i << setw(0);
+		cout << setw(30) << right << "Movie Number: " << left << i + 1 << setw(0) << "\n";
 		moviesArray[i]->printMovieTitle();
+		cout << "\n";
 	}
 	cout << setw(0) << flush;
 }
@@ -135,9 +275,10 @@ void Movies::displayAllMoviesOnlyTitle () {
 void Movies::displayAllMoviesFullDetails () {
 	cout << setfill(' ') << "\n";
 	for (long i = 0; i < numMovies; i++) {
-		cout << left << setw(0) << "                  ------" << "Number " << right << setw(5) << i << setw(0) << left << "------                  " << "\n";
+		cout << left << setw(0) << "                  ------" << "Number " << right << setw(5) << i + 1 << setw(0) << left << "------                  " << "\n";
 		moviesArray[i]->printMovieDetails();
-		cout << left << setw(0) << "                  ------" << "Number " << right << setw(5) << i << setw(0) << left << "------                  " << "\n";
+		cout << left << setw(0) << "                  ------" << "Number " << right << setw(5) << i + 1 << setw(0) << left << "------                  " << "\n";
+		cout << "\n" << "\n";
 	}
 	cout << setw(0) << flush;
 }
@@ -152,6 +293,7 @@ void Movies::importFromFile (string filename) {
 	clog << "Movies CLASS DEBUG: " << "starting import" << endl;
 #endif
 	ifstream ifs;
+	string inputBuffer;
 	string movieTitle;
 	long movieLength;
 	long movieYear;
@@ -163,17 +305,33 @@ void Movies::importFromFile (string filename) {
 	ifs.open(filename);
 
 	while (true) {
-		ifs.ignore();
-
 		getline(ifs, movieTitle);
-		ifs >> movieLength;
-		ifs >> movieYear;
-		ifs.ignore();
-		getline(ifs, movieGenre);
-		getline(ifs, movieRating);
-		ifs >> movieOscars;
-		ifs >> movieNumStars;
 
+		getline(ifs, inputBuffer);		//ifs >> movieLength;
+		movieLength = stol(inputBuffer);
+
+		getline(ifs, inputBuffer);		//ifs >> movieYear;
+		movieYear = stol(inputBuffer);
+
+		//ifs.ignore();
+		getline(ifs, movieGenre);
+
+		getline(ifs, movieRating);
+
+		getline(ifs, inputBuffer);		//ifs >> movieOscars;
+		movieOscars = stol(inputBuffer);
+
+		getline(ifs, inputBuffer);		//ifs >> movieNumStars;
+		movieNumStars = stol(inputBuffer);
+		//ifs.ignore();
+
+		cout << movieTitle << "\n";
+		cout << movieLength << "\n";
+		cout << movieYear << "\n";
+		cout << movieGenre << "\n";
+		cout << movieRating << "\n";
+		cout << movieOscars << "\n";
+		cout << movieNumStars << "\n" << flush;
 		if(ifs.eof()) {
 			break;
 		}

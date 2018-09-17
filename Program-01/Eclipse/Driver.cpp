@@ -5,7 +5,6 @@
  Purpose:  To demonstrate the Movies, Movie, and Text structure code working
  by allowing the user to add, save, delete, and edit movies to/from a library.
  */
-#define DEBUG TRUE
 #include "Movies.h"
 #include "Movie.h"
 #include "Text.h"
@@ -13,19 +12,41 @@
 
 using namespace std;
 
+void bootlegClearScreen (unsigned int numLinesToClear = 60) {
+	cout << flush;
+	for (unsigned int i = 0; i < numLinesToClear; i = i + 1) {
+		cout << "\n";
+	}
+	cout << flush;
+}
+
+bool isOnlyNumaric (string input) {
+	for (unsigned long i = 0; i < input.length(); i++) {
+		if( ! (input[i] >= '0' && input[i] <= '9')) {
+			return false;
+		}
+	}
+	if(input[0] == '\n'){
+		return false;
+	}
+	return true;
+}
+
 int main () {
 	long menuChoice;
-	long maxMovies;
+	long maxMovies = 1;
 	string filename;
-
-	cout << "\n\nWhat is the maximum number of movies you can have in your library?\n";
-	cin >> maxMovies;
-	while (maxMovies <= 0) {
-		cout << "\n\nYou have to have at least one movie in your library.\n";
-		cout << "What is the maximum number of movies you can have in your library.\n";
-		cin >> maxMovies;
-	}
+	string inputBuffer;
+	//cout << "\n\nWhat is the maximum number of movies you can have in your library?\n";
+	//cin >> maxMovies;
+	//while (maxMovies <= 0) {
+//		cout << "\n\nYou have to have at least one movie in your library.\n";
+//		cout << "What is the maximum number of movies you can have in your library.\n";
+//		cin >> maxMovies;
+//	}
 	Movies movieLibrary(maxMovies);
+	bool inputIsOnlyNumbers;
+	bool inputIsGood;
 
 	do {
 		cout << "\n\nWhat would you like to do?\n";
@@ -36,34 +57,50 @@ int main () {
 		cout << "5.  Edit a movie.\n";
 		cout << "6.  Print all movies.\n";
 		cout << "7.  Delete ALL movies and end the program.\n";
-		cout << "CHOOSE 1-7:  " << flush;
-		cin >> menuChoice;
-		while (menuChoice < 1 || menuChoice > 7) {
-			cout << "That is not a valid choice.\n";
-			cout << "CHOOSE 1-7:  ";
-			cin >> menuChoice;
-		}
+		do {
+			inputIsGood = true;
+			cout << "CHOOSE 1-7:  " << flush;
+			getline(cin, inputBuffer);
+
+			inputIsOnlyNumbers = isOnlyNumaric(inputBuffer);
+
+			if(cin.fail()){
+				cout << "an unknown error has occurred" << "\n";
+				cin.clear();
+			}
+			if(inputIsOnlyNumbers == false) {
+				inputIsGood = false;
+				cout << "error: only enter numbers" << "\n";
+			}
+			if(inputIsOnlyNumbers == true){
+				menuChoice = stol(inputBuffer);
+				if(menuChoice < 1 || menuChoice > 7){
+					inputIsGood = false;
+					cout << "error: only enter a number 1 to 7" << "\n";
+				}
+			}
+
+		} while (!inputIsGood);
+
 
 		switch (menuChoice) {
 			case 1:
-#if defined(DEBUG)
-				clog << "Driver DEBUG: " << "Case 1" << endl;
-#endif
-				cout << "\n\nWhat is the name of the file? (example.txt):  " << endl << "\n" << flush;
-				cin.ignore(256, '\n');
+				cout << "\n";
+				cout << "What is the name of the file? (example.txt):  " << flush;
+				//cin.ignore();
 				getline(cin, filename);
-#if defined(DEBUG)
-				clog << "Driver DEBUG: " << "cin no fail \"" << filename << "\"" << endl;
-				cout << "yeet" << endl;
-#endif
+				cout << "\n";
+				while (cin.fail()) {
+					cout << "an error has occured, try again" << "\n";
+					cout << "What is the name of the file? (example.txt):  " << flush;
+				}
+				cout << filename << endl;
 				movieLibrary.importFromFile(filename);     //function is in Movies.cpp
-#if defined(DEBUG)
-				clog << "Driver DEBUG: " << "post load" << endl;
-#endif
 				break;
 
 			case 2:
-				cout << "\n\nWhat do you want to name the file? (example.txt):  ";
+				cout << "\n";
+				cout << "What do you want to name the file? (example.txt):  ";
 				cin >> filename;
 				movieLibrary.exportToFile(filename);     //function is in Movies.cpp
 
@@ -92,7 +129,6 @@ int main () {
 
 	} while (menuChoice != 7);
 
-	cout << "\n\nGOODBYE!\n\n";
-
+	cout << "\n" << "shutting down" << "\n" << flush;
 	return 0;
 }

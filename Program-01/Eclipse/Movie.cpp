@@ -38,7 +38,6 @@ Movie::Movie (char* inputTitle, long inputLength, long inputYear, char* inputGen
 	movieLength = inputLength;
 	movieYear = inputYear;
 	movieGenre = new Text(inputGenre);
-	;
 	movieRating = new Text(inputRating);
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
@@ -48,16 +47,12 @@ Movie::Movie (string inputTitle, long inputLength, long inputYear, string inputG
 	movieLength = inputLength;
 	movieYear = inputYear;
 	movieGenre = new Text(inputGenre);
-	;
 	movieRating = new Text(inputRating);
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
 }
 
 Movie::~Movie () {
-#if defined(DEBUG)
-	clog << "Movie CLASS DEBUG: " << "Deallocating memory" << endl;
-#endif
 	delete movieTitle;
 	delete movieGenre;
 	delete movieRating;
@@ -68,11 +63,8 @@ void Movie::editMovieDetails () {
 	long OGLongData;
 	double OGDoubleData;
 	string inputTextBuffer;
-
+	cout << setw(0) << setfill(' ');
 	do {
-#if defined(DEBUG)
-		clog << "Movie CLASS DEBUG: " << "entering detail edit loop" << endl;
-#endif
 		cout << "\n";
 		cout << "Which detail do you wish to edit?" << "\n";
 		cout << "1.  Title" << "\n";
@@ -87,20 +79,19 @@ void Movie::editMovieDetails () {
 		cin >> choice;
 		cout << "\n";
 		while (choice < 1 || choice > 8 || cin.fail()) {
-#if defined(DEBUG)
-			clog << "Movie CLASS DEBUG: " << "user failed to enter valid input" << endl;
-#endif
+			if(cin.fail() == true) {
+				cout << "An error has occurred" << "\n";
+			}
+			if(choice < 1 || choice > 8) {
+				cout << "be sure to only enter a number" << "\n";
+			}
 			cin.clear();
 			cout << "Error: make sure you enter only a choice 1 through 8:  " << flush;
 			cin >> choice;
 			cout << "\n";
 		}
 		cin.clear();
-		cin.ignore();
 		cout << "\n";
-#if defined(DEBUG)
-		clog << "Movie CLASS DEBUG: " << "about to enter switch statement" << endl;
-#endif
 		switch (choice) {
 			case 1:
 				cout << "Current Title: " << movieTitle->getText() << "\n";
@@ -117,7 +108,6 @@ void Movie::editMovieDetails () {
 				}
 				movieTitle->editText(inputTextBuffer);
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 
@@ -139,7 +129,6 @@ void Movie::editMovieDetails () {
 					cout << "\n";
 				}
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 
@@ -161,7 +150,6 @@ void Movie::editMovieDetails () {
 					cin >> movieYear;
 				}
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 
@@ -181,7 +169,6 @@ void Movie::editMovieDetails () {
 
 				movieGenre->editText(inputTextBuffer);
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 
@@ -202,7 +189,6 @@ void Movie::editMovieDetails () {
 
 				movieRating->editText(inputTextBuffer);
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 
@@ -223,7 +209,6 @@ void Movie::editMovieDetails () {
 					cin >> movieOscars;
 				}
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 
@@ -246,11 +231,12 @@ void Movie::editMovieDetails () {
 					cout << "\n";
 				}
 				cin.clear();
-				cin.ignore();
 				cout << flush;
 				break;
 		}
+		cin.ignore(256, '\n');
 	} while (choice != 8);
+	cin.ignore(256, '\n');
 }
 
 void Movie::setMovieFull (Text* inputTitle, long inputLength, long inputYear, Text* inputGenre, Text* inputRating, long inputOscars, double inputStars) {

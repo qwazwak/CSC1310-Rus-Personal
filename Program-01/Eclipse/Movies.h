@@ -44,6 +44,16 @@ class Movies {
 		 Purpose:  		remove one movie from the array and shift other movies as required
 		 */
 		void removeMovieByID (long);
+
+		/*
+		 Function name:	removeMovieByID
+		 Parameters:		none (void)
+		 Returns: 		none (void)
+		 Purpose:  		remove one movie from the array and shift other movies as required
+		 */
+		bool isOnlyNumaric (string input);
+		bool isOnlyNumaricFloat (string input);
+
 	public:
 		Movies ();
 		Movies (long);
@@ -57,6 +67,7 @@ class Movies {
 		 Returns: 		none
 		 Purpose:  		This function should be called when the program/programmer needs to add a single movie to the movie library directly and quickly.
 		 */
+		//void addMovieToArrayDirect (Text*, long, long, Text*, Text*, long, double);
 		void addMovieToArrayDirect (Movie* inputMoviePointer);
 
 		/*
