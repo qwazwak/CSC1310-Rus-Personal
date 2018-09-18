@@ -14,6 +14,37 @@
 #include <cstring>
 using namespace std;
 
+bool Movie::isOnlyNumaric (string input) {
+	for (unsigned long i = 0; i < input.length(); i++) {
+		if( ! (input[i] >= '0' && input[i] <= '9')) {
+			return false;
+		}
+	}
+	if(input[0] == '\n') {
+		return false;
+	}
+	return true;
+}
+
+bool Movie::isOnlyNumaricFloat (string input) {
+	long countOfDot = 0;
+	for (unsigned long i = 0; i < input.length(); i++) {
+		if( ! (input[i] >= '0' && input[i] <= '9')) {
+			if(input[i] == '.'){
+				++countOfDot;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	if(input[0] == '\n' || countOfDot < 0 || countOfDot > 1) {
+		return false;
+	}
+
+	return true;
+}
+
 Movie::Movie () {
 	movieTitle = new Text;
 	movieLength = -1;
@@ -33,6 +64,7 @@ Movie::Movie (Text* inputTitle, long inputLength, long inputYear, Text* inputGen
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
 }
+
 Movie::Movie (char* inputTitle, long inputLength, long inputYear, char* inputGenre, char* inputRating, long inputOscars, double inputStars) {
 	movieTitle = new Text(inputTitle);
 	movieLength = inputLength;
@@ -42,6 +74,7 @@ Movie::Movie (char* inputTitle, long inputLength, long inputYear, char* inputGen
 	movieOscars = inputOscars;
 	movieNumStars = inputStars;
 }
+
 Movie::Movie (string inputTitle, long inputLength, long inputYear, string inputGenre, string inputRating, long inputOscars, double inputStars) {
 	movieTitle = new Text(inputTitle);
 	movieLength = inputLength;
@@ -59,6 +92,9 @@ Movie::~Movie () {
 }
 
 void Movie::editMovieDetails () {
+	string inputBuffer;
+	bool inputIsOnlyNumbers;
+	bool inputIsGood;
 	long choice;
 	long OGLongData;
 	double OGDoubleData;
@@ -75,23 +111,24 @@ void Movie::editMovieDetails () {
 		cout << "6.  Number of Oscars Won" << "\n";
 		cout << "7.  Number of Stars" << "\n";
 		cout << "8.  DONE EDITING" << "\n";
-		cout << "CHOOSE 1-8:  " << flush;
-		cin >> choice;
-		cout << "\n";
-		while (choice < 1 || choice > 8 || cin.fail()) {
-			if(cin.fail() == true) {
-				cout << "An error has occurred" << "\n";
+
+		do{
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore();
+				cout << "an error has occurred, try again" << "\n";
 			}
-			if(choice < 1 || choice > 8) {
-				cout << "be sure to only enter a number" << "\n";
+			else if(choice < 1 || choice > 8){
+				cout << "only enter a number between 1 and 8" << "\n";
 			}
-			cin.clear();
-			cout << "Error: make sure you enter only a choice 1 through 8:  " << flush;
+			cout << "CHOOSE 1-8:  " << flush;
 			cin >> choice;
-			cout << "\n";
-		}
-		cin.clear();
-		cout << "\n";
+		} while (cin.fail() || choice < 1 || choice > 8);
+		cin.ignore();
+
+
+
+
 		switch (choice) {
 			case 1:
 				cout << "Current Title: " << movieTitle->getText() << "\n";
@@ -234,9 +271,7 @@ void Movie::editMovieDetails () {
 				cout << flush;
 				break;
 		}
-		cin.ignore(256, '\n');
 	} while (choice != 8);
-	cin.ignore(256, '\n');
 }
 
 void Movie::setMovieFull (Text* inputTitle, long inputLength, long inputYear, Text* inputGenre, Text* inputRating, long inputOscars, double inputStars) {

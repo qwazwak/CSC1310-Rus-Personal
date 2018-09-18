@@ -1,10 +1,14 @@
-/*
- Title:  Driver.cpp
- Author:  April Crockett
- Date:  11/7/2017
- Purpose:  To demonstrate the Movies, Movie, and Text structure code working
- by allowing the user to add, save, delete, and edit movies to/from a library.
- */
+/* * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ *	Title:		CSC1310 - Program 01 - Driver source
+ *	Author(s):	Rus Hoffman
+ *	Date:		September 4, 2018
+ *	Purpose:		drive the Movies, Movie, and Text classes
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
 #include "Movies.h"
 #include "Movie.h"
 #include "Text.h"
@@ -26,7 +30,7 @@ bool isOnlyNumaric (string input) {
 			return false;
 		}
 	}
-	if(input[0] == '\n'){
+	if(input[0] == '\n') {
 		return false;
 	}
 	return true;
@@ -45,11 +49,11 @@ int main () {
 //		cin >> maxMovies;
 //	}
 	Movies movieLibrary(maxMovies);
-	bool inputIsOnlyNumbers;
-	bool inputIsGood;
+	//bool inputIsOnlyNumbers;
+	//bool inputIsGood;
 
 	do {
-		cout << "\n\nWhat would you like to do?\n";
+		cout << "What would you like to do?\n";
 		cout << "1.  Read movies from file.\n";
 		cout << "2.  Save movies to a file.\n";
 		cout << "3.  Add a movie.\n";
@@ -57,30 +61,20 @@ int main () {
 		cout << "5.  Edit a movie.\n";
 		cout << "6.  Print all movies.\n";
 		cout << "7.  Delete ALL movies and end the program.\n";
-		do {
-			inputIsGood = true;
-			cout << "CHOOSE 1-7:  " << flush;
-			getline(cin, inputBuffer);
-
-			inputIsOnlyNumbers = isOnlyNumaric(inputBuffer);
-
+		do{
 			if(cin.fail()){
 				cout << "an unknown error has occurred" << "\n";
 				cin.clear();
+				cin.ignore();
+				cout << "an error has occurred, try again" << "\n";
 			}
-			if(inputIsOnlyNumbers == false) {
-				inputIsGood = false;
-				cout << "error: only enter numbers" << "\n";
+			else if(menuChoice < 1 || menuChoice > 7){
+				cout << "an error has occurred, try again" << "\n";
 			}
-			if(inputIsOnlyNumbers == true){
-				menuChoice = stol(inputBuffer);
-				if(menuChoice < 1 || menuChoice > 7){
-					inputIsGood = false;
-					cout << "error: only enter a number 1 to 7" << "\n";
-				}
-			}
-
-		} while (!inputIsGood);
+			cout << "CHOOSE 1-7:  " << flush;
+			cin >> menuChoice;
+		} while (cin.fail() || menuChoice < 1 || menuChoice > 7);
+		cin.ignore(1024, '\n');
 
 
 		switch (menuChoice) {
@@ -90,18 +84,34 @@ int main () {
 				//cin.ignore();
 				getline(cin, filename);
 				cout << "\n";
-				while (cin.fail()) {
-					cout << "an error has occured, try again" << "\n";
-					cout << "What is the name of the file? (example.txt):  " << flush;
+				while (cin.fail() || (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.')) {
+					if (cin.fail()){
+						cout << "an error has occurred" << "\n";
+					}
+					if (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
+						cout << "error: be sure the file name ends in .txt" << "\n";
+					}
+					cout << "What do you want to name the file? (example.txt):  ";
+					getline(cin, filename);
 				}
-				cout << filename << endl;
 				movieLibrary.importFromFile(filename);     //function is in Movies.cpp
 				break;
 
 			case 2:
 				cout << "\n";
 				cout << "What do you want to name the file? (example.txt):  ";
-				cin >> filename;
+				getline(cin, filename);
+				cout << "\n";
+				while (cin.fail() || (filename[filename.length()-1] == 't' && filename[filename.length()-2] == 'x' && filename[filename.length()-3] == 't' && filename[filename.length()-4] == '.')) {
+					if (cin.fail()){
+						cout << "an error has occurred" << "\n";
+					}
+					if (filename[filename.length()-1] == 't' && filename[filename.length()-2] == 'x' && filename[filename.length()-3] == 't' && filename[filename.length()-4] == '.') {
+						cout << "error: be sure the file name ends in .txt" << "\n";
+					}
+					cout << "What do you want to name the file? (example.txt):  ";
+					getline(cin, filename);
+				}
 				movieLibrary.exportToFile(filename);     //function is in Movies.cpp
 
 				break;
@@ -122,7 +132,8 @@ int main () {
 				movieLibrary.displayAllMoviesFullDetails();
 				break;
 
-			case 7:     //delete all movies
+			case 7:
+				//exit menu loop and close program
 				break;
 
 		}
