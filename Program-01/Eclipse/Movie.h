@@ -24,15 +24,17 @@ class Movie {
 		long movieLength;     //length of movie in minutes
 		long movieYear;     //year released
 		Text* movieGenre;     //comedy, horror, sci-fi, fantasy, romance, thriller, drama, action, biography
-		Text* movieRating;     //G, PG, PG-13, R, MA
+		Text* movieRating;     //Age rating, EX: G, PG, PG-13, R, MA
 		long movieOscars;     //number of Oscars won
 		double movieNumStars;     //taken from IMDB on 10 star scale
+
+		bool isOnlyNumaric (string input);
+		bool isOnlyNumaricFloat (string input);
 
 	public:
 		Movie ();
 
 		//Overloading Constructor for quicker setup
-
 		Movie (Text*, long, long, Text*, Text*, long, double);
 		Movie (char*, long, long, char*, char*, long, double);
 		Movie (string, long, long, string, string, long, double);
@@ -44,7 +46,7 @@ class Movie {
 		 Function name:	editMovieDetails
 		 Parameters:		nothing (void)
 		 Returns:			nothing (void)
-		 Purpose:			This function should be called when the user wants to edit a single movie's data
+		 Purpose:			This function should be called to give the user a menu to edit the movie's details
 		 */
 		void editMovieDetails ();
 
@@ -52,7 +54,7 @@ class Movie {
 		 Function name:	setMovieDetailXXX
 		 Parameters:		Either the variable for that value, or all of them depending on which function
 		 Returns:			nothing (void)
-		 Purpose:			This function should be called when the program needs to edit a single movie's variable
+		 Purpose:			This function should be called when the program needs to replace a single movie's variable
 		 */
 		void setMovieFull (Text*, long, long, Text*, Text*, long, double);
 		void setMovieDetailTitle (Text*);
@@ -67,7 +69,7 @@ class Movie {
 		 Function name:	getMovieDetailXXX
 		 Parameters:		nothing (void)
 		 Returns:			the contained value
-		 Purpose:			This function should be called program needs to get a single movie's piece of data
+		 Purpose:			This function should be called when the program needs to get a single movie's piece of data
 		 */
 		Text* getMovieDetailTitle ();
 		long getMovieDetailLength ();
@@ -111,4 +113,4 @@ class Movie {
 
 };
 
-#endif // MOVIE_H
+#endif // end MOVIE_H define

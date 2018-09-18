@@ -46,6 +46,7 @@ Text::Text (string inputText) {
 #endif
 	theText = inputText;
 }
+
 //Destructor
 Text::~Text () {
 #if defined(TEXT_H_DEBUG)
