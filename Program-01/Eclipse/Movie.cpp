@@ -94,6 +94,9 @@ Movie::~Movie () {
 }
 
 void Movie::editMovieDetails () {
+	//string inputBuffer;
+	//bool inputIsOnlyNumbers;
+	//bool inputIsGood;
 	long choice;
 	long OGLongData;
 	double OGDoubleData;
@@ -116,14 +119,20 @@ void Movie::editMovieDetails () {
 				cin.ignore();
 				cout << "an error has occurred" << "\n";
 			}
-			else
-				if(choice < 1 || choice > 8) {
+			else {
+				if(choice < 1 || choice > 8){
 					cout << "only enter a number between 1 and 8" << "\n";
 				}
+			}
 			cout << "CHOOSE 1-8:  " << flush;
 			cin >> choice;
 		} while (cin.fail() || choice < 1 || choice > 8);
 		cin.ignore();
+
+
+
+
+
 
 		switch (choice) {
 			case 1:
@@ -144,6 +153,7 @@ void Movie::editMovieDetails () {
 
 			case 2:
 				OGLongData = movieLength;
+				
 				do {
 					if(cin.fail()) {
 						cin.clear();

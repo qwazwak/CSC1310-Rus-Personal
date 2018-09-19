@@ -28,6 +28,9 @@ class Movie {
 		long movieOscars;     //number of Oscars won
 		double movieNumStars;     //taken from IMDB on 10 star scale
 
+		bool isOnlyNumaric (string input);
+		bool isOnlyNumaricFloat (string input);
+
 	public:
 		Movie ();
 

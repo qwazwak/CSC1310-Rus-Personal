@@ -40,7 +40,7 @@ int main () {
 	long menuChoice;
 	long maxMovies = 1;
 	string filename;
-	string inputBuffer;
+	//string inputBuffer;
 	//cout << "\n\nWhat is the maximum number of movies you can have in your library?\n";
 	//cin >> maxMovies;
 	//while (maxMovies <= 0) {
@@ -63,7 +63,6 @@ int main () {
 		cout << "7.  Delete ALL movies and end the program.\n";
 		do{
 			if(cin.fail()){
-				cout << "an unknown error has occurred" << "\n";
 				cin.clear();
 				cin.ignore();
 				cout << "an error has occurred, try again" << "\n";
