@@ -96,7 +96,7 @@ class Movie {
 		 Function name:	printMovieDetailsToFile
 		 Parameters:		a file stream object (sent by reference)
 		 Returns:			nothing (void)
-		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file
+		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file. Does not modify stream settings at all
 		 */
 		void printMovieDetailsToFile (ofstream &outFile);
 
@@ -104,7 +104,7 @@ class Movie {
 		 Function name:	printMovieDetailsToFileNoFlushing
 		 Parameters:		a file stream object (sent by reference)
 		 Returns: 		nothing (void)
-		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file without flushing the buffer automatically
+		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file without flushing the buffer automatically. Does not modify stream settings at all
 		 */
 		void printMovieDetailsToFileNoFlushing (ofstream &outFile);
 
