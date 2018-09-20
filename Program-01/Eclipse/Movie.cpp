@@ -12,40 +12,42 @@
 #include <iomanip>
 #include <fstream>
 #include <cstring>
+#include <limits>
 using namespace std;
 
+
 /*
-bool Movie::isOnlyNumaric (string input) {
-	for (unsigned long i = 0; i < input.length(); i++) {
-		if( ! (input[i] >= '0' && input[i] <= '9')) {
-			return false;
-		}
-	}
-	if(input[0] == '\n') {
-		return false;
-	}
-	return true;
-}
+ bool Movie::isOnlyNumaric (string input) {
+ for (unsigned long i = 0; i < input.length(); i++) {
+ if( ! (input[i] >= '0' && input[i] <= '9')) {
+ return false;
+ }
+ }
+ if(input[0] == '\n') {
+ return false;
+ }
+ return true;
+ }
 
-bool Movie::isOnlyNumaricFloat (string input) {
-	long countOfDot = 0;
-	for (unsigned long i = 0; i < input.length(); i++) {
-		if( ! (input[i] >= '0' && input[i] <= '9')) {
-			if(input[i] == '.') {
-				++countOfDot;
-			}
-			else {
-				return false;
-			}
-		}
-	}
-	if(input[0] == '\n' || countOfDot < 0 || countOfDot > 1) {
-		return false;
-	}
+ bool Movie::isOnlyNumaricFloat (string input) {
+ long countOfDot = 0;
+ for (unsigned long i = 0; i < input.length(); i++) {
+ if( ! (input[i] >= '0' && input[i] <= '9')) {
+ if(input[i] == '.') {
+ ++countOfDot;
+ }
+ else {
+ return false;
+ }
+ }
+ }
+ if(input[0] == '\n' || countOfDot < 0 || countOfDot > 1) {
+ return false;
+ }
 
-	return true;
-}
-*/
+ return true;
+ }
+ */
 
 Movie::Movie () {
 	movieTitle = new Text;
@@ -88,6 +90,14 @@ Movie::Movie (string inputTitle, long inputLength, long inputYear, string inputG
 }
 
 Movie::~Movie () {
+	movieTitle->editText("");
+	movieLength = 0;
+	movieYear = 0;
+	movieGenre->editText("");
+	movieRating->editText("");
+	movieOscars = 0;
+	movieNumStars = 0;
+
 	delete movieTitle;
 	delete movieGenre;
 	delete movieRating;
@@ -97,13 +107,15 @@ void Movie::editMovieDetails () {
 	//string inputBuffer;
 	//bool inputIsOnlyNumbers;
 	//bool inputIsGood;
+
+
 	long choice;
 	long OGLongData;
 	double OGDoubleData;
 	string inputTextBuffer;
 	cout << setw(0) << setfill(' ');
 	do {
-		cout << "\n";
+		cout << "\n" << "\n" << "\n";
 		cout << "Which detail do you wish to edit?" << "\n";
 		cout << "1.  Title" << "\n";
 		cout << "2.  Length" << "\n";
@@ -111,41 +123,57 @@ void Movie::editMovieDetails () {
 		cout << "4.  Genre" << "\n";
 		cout << "5.  Rating" << "\n";
 		cout << "6.  Number of Oscars Won" << "\n";
-		cout << "7.  Number of Stars" << "\n";
+		cout << "7.  IMDB Star Rating" << "\n";
 		cout << "8.  DONE EDITING" << "\n";
-		do {
+
+
+		cout << "CHOOSE 1-8:  " << flush;
+		cin >> choice;
+		while (cin.fail() || choice < 1 || choice > 8) {
 			if(cin.fail()) {
 				cin.clear();
-				cin.ignore();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << "an error has occurred" << "\n";
 			}
 			else {
-				if(choice < 1 || choice > 8){
+				if(choice < 1 || choice > 8) {
 					cout << "only enter a number between 1 and 8" << "\n";
 				}
 			}
 			cout << "CHOOSE 1-8:  " << flush;
 			cin >> choice;
-		} while (cin.fail() || choice < 1 || choice > 8);
-		cin.ignore();
+		}
 
 
 
-
-
+		cout << "\n" << "\n" << "\n";
 
 		switch (choice) {
 			case 1:
-				do {
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+				cout << "Current Title: " << movieTitle->getText() << "\n";
+				cout << "NEW TITLE:  " << flush;
+				getline(cin, inputTextBuffer);
+
+				while (cin.fail() || inputTextBuffer.empty()) {
+					cout << "\n";
 					if(cin.fail()) {
 						cin.clear();
-						cin.ignore();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						cout << "an error has occurred" << "\n";
 					}
+					else {
+						if(inputTextBuffer.empty()) {
+							cout << "be sure to enter some text" << "\n";
+						}
+					}
+
+					cout << "\n";
 					cout << "Current Title: " << movieTitle->getText() << "\n";
 					cout << "NEW TITLE:  " << flush;
 					getline(cin, inputTextBuffer);
-				} while (cin.fail());
+				}
 				movieTitle->editText(inputTextBuffer);
 				cin.clear();
 				cout << flush;
@@ -153,11 +181,13 @@ void Movie::editMovieDetails () {
 
 			case 2:
 				OGLongData = movieLength;
-				
-				do {
+				cout << "Current Length: " << OGLongData << "\n";
+				cout << "NEW LENGTH:  " << flush;
+				cin >> movieLength;
+				while (cin.fail() || movieLength < 1) {
 					if(cin.fail()) {
 						cin.clear();
-						cin.ignore();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						cout << "an error has occurred" << "\n";
 					}
 					else {
@@ -168,45 +198,62 @@ void Movie::editMovieDetails () {
 					cout << "Current Length: " << OGLongData << "\n";
 					cout << "NEW LENGTH:  " << flush;
 					cin >> movieLength;
-				} while (cin.fail() || movieLength < 1);
+				}
 				cin.clear();
 				cout << flush;
 				break;
 
 			case 3:
 				OGLongData = movieYear;
-				do {
+				cout << "Current Year: " << OGLongData << "\n";
+				cout << "NEW YEAR:  " << flush;
+				cin >> movieYear;
+				while (cin.fail()) {
 					if(cin.fail()) {
 						cin.clear();
-						cin.ignore();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						cout << "an error has occurred" << "\n";
 					}
 					cout << "Current Year: " << OGLongData << "\n";
 					cout << "NEW YEAR:  " << flush;
 					cin >> movieYear;
-				} while (cin.fail());
+				}
 				cin.clear();
 				cout << flush;
 				break;
 
 			case 4:
-				do {
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << "Current Genre: " << movieGenre->getText() << "\n";
+				cout << "NEW GENRE:  " << flush;
+				getline(cin, inputTextBuffer);
+				while (cin.fail() || inputTextBuffer.empty()) {
 					if(cin.fail()) {
 						cin.clear();
 						cin.ignore();
 						cout << "an error has occurred" << "\n";
 					}
+					else {
+						if(inputTextBuffer.empty()) {
+							cout << "be sure you enter some text" << "\n";
+						}
+					}
 					cout << "Current Genre: " << movieGenre->getText() << "\n";
 					cout << "NEW GENRE:  " << flush;
 					getline(cin, inputTextBuffer);
-				} while (cin.fail());
+				}
+
 				movieGenre->editText(inputTextBuffer);
 				cin.clear();
 				cout << flush;
 				break;
 
 			case 5:
-				do {
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << "Current Rating: " << movieRating->getText() << "\n";
+				cout << "NEW RATING:  " << flush;
+				getline(cin, inputTextBuffer);
+				while (cin.fail()) {
 					if(cin.fail()) {
 						cin.clear();
 						cin.ignore();
@@ -215,7 +262,7 @@ void Movie::editMovieDetails () {
 					cout << "Current Rating: " << movieRating->getText() << "\n";
 					cout << "NEW RATING:  " << flush;
 					getline(cin, inputTextBuffer);
-				} while (cin.fail());
+				}
 				movieRating->editText(inputTextBuffer);
 				cin.clear();
 				cout << flush;
@@ -223,7 +270,10 @@ void Movie::editMovieDetails () {
 
 			case 6:
 				OGLongData = movieOscars;
-				do {
+				cout << "Current Oscar Count: " << OGLongData << "\n";
+				cout << "NEW OSCAR COUNT:  " << flush;
+				cin >> movieOscars;
+				while (cin.fail() || movieOscars < 0) {
 					if(cin.fail()) {
 						cin.clear();
 						cin.ignore();
@@ -237,14 +287,17 @@ void Movie::editMovieDetails () {
 					cout << "Current Oscar Count: " << OGLongData << "\n";
 					cout << "NEW OSCAR COUNT:  " << flush;
 					cin >> movieOscars;
-				} while (cin.fail() || movieOscars < 0);
+				}
 				cin.clear();
 				cout << flush;
 				break;
 
 			case 7:
 				OGDoubleData = movieNumStars;
-				do {
+				cout << "Current IMDB Rating: " << OGDoubleData << "\n";
+				cout << "NEW IMDB RATING:  " << flush;
+				cin >> movieNumStars;
+				while (cin.fail() || movieNumStars < 0 || movieNumStars > 10) {
 					if(cin.fail()) {
 						cin.clear();
 						cin.ignore();
@@ -258,7 +311,7 @@ void Movie::editMovieDetails () {
 					cout << "Current IMDB Rating: " << OGDoubleData << "\n";
 					cout << "NEW IMDB RATING:  " << flush;
 					cin >> movieNumStars;
-				} while (cin.fail() || movieNumStars < 0 || movieNumStars > 10);
+				}
 				cin.clear();
 				cout << flush;
 				break;

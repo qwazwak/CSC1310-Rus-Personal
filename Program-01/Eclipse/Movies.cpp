@@ -26,12 +26,13 @@ void Movies::expandarray () {
 
 void Movies::removeMovieByID (long ID) {
 	delete moviesArray[ID];
-	numMovies = numMovies - 1;
 	if(ID != (numMovies - 1)) {
 		for (long i = ID; i < numMovies; i++) {
 			moviesArray[i] = moviesArray[i + 1];
 		}
 	}
+	delete moviesArray[numMovies - 1];
+	numMovies = numMovies - 1;
 }
 
 bool Movies::isOnlyNumaric (string input) {
@@ -86,13 +87,15 @@ Movies::~Movies () {
 
 void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
 	if(maxMoviesHoldable <= numMovies) {
-		expandarray();
+		this->expandarray();
 	}
 	moviesArray[numMovies] = inputMoviePointer;
 	numMovies = numMovies + 1;
 }
 
 void Movies::addMovieToArrayFromUser () {
+	cout << "FIX ME" << endl;
+	//TODO: rewrite to match others
 	bool inputIsGood;
 	string inputBuffer;
 	bool inputIsOnlyNumbers;
@@ -246,20 +249,17 @@ void Movies::removeMovieByUserChoice () {
 	cout << "Current list of movies:" << "\n";
 	displayAllMoviesOnlyTitle();
 	cout << "\n";
-	cout << "Enter the number of the movie to remove";
-	cin >> numberPicked;
-	cout << "\n";
-	while (numberPicked < 1 || numberPicked > numMovies || cin.fail()) {
+	do {
+		cout << "Enter the number of the movie to remove: ";
+		cin >> numberPicked;
 		if(cin.fail()) {
 			cout << "an error has occurred" << "\n";
 		}
 		if(numberPicked < 1 || numberPicked > numMovies) {
 			cout << "invalid input, only enter a number 1-" << numMovies << "\n";
 		}
-		cout << "Enter the number of the movie to remove: ";
-		cin >> numberPicked;
-	}
-	removeMovieByID(numberPicked);
+	} while (numberPicked < 1 || numberPicked > numMovies || cin.fail());
+	removeMovieByID(numberPicked - 1);
 }
 
 void Movies::displayAllMoviesOnlyTitle () {
@@ -285,7 +285,7 @@ void Movies::displayAllMoviesFullDetails () {
 
 void Movies::importFromFile (char* filename) {
 	string tempString(filename);
-	importFromFile(filename);
+	this->importFromFile(filename);
 }
 
 void Movies::importFromFile (string filename) {
@@ -325,6 +325,7 @@ void Movies::importFromFile (string filename) {
 		movieNumStars = stol(inputBuffer);
 		//ifs.ignore();
 
+#if defined(MOVIES_LOG_ON_IMPORT)
 		cout << movieTitle << "\n";
 		cout << movieLength << "\n";
 		cout << movieYear << "\n";
@@ -332,10 +333,11 @@ void Movies::importFromFile (string filename) {
 		cout << movieRating << "\n";
 		cout << movieOscars << "\n";
 		cout << movieNumStars << "\n" << flush;
+#endif
 		if(ifs.eof()) {
 			break;
 		}
-		addMovieToArrayDirect(new Movie(movieTitle, movieLength, movieYear, movieGenre, movieRating, movieOscars, movieNumStars));
+		this->addMovieToArrayDirect(new Movie(movieTitle, movieLength, movieYear, movieGenre, movieRating, movieOscars, movieNumStars));
 	}
 	ifs.close();
 #if defined(DEBUG)
@@ -345,7 +347,7 @@ void Movies::importFromFile (string filename) {
 
 void Movies::exportToFile (char* filename) {
 	string temp(filename);
-	exportToFile(temp);
+	this->exportToFile(temp);
 }
 
 void Movies::exportToFile (string filename) {

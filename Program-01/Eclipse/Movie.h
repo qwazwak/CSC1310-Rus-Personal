@@ -17,6 +17,10 @@
 #include <cstring>
 using namespace std;
 
+#if !defined(CLEARSCREEN_SIZE)
+#define CLEARSCREEN_SIZE 100
+#endif
+
 class Movie {
 	private:
 		//Variables:
@@ -30,6 +34,8 @@ class Movie {
 
 		bool isOnlyNumaric (string input);
 		bool isOnlyNumaricFloat (string input);
+
+		void bootlegCLS();
 
 	public:
 		Movie ();
