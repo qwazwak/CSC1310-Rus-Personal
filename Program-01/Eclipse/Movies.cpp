@@ -13,7 +13,7 @@ using namespace std;
 
 void Movies::expandarray () {
 #if defined(DEBUG)
-	clog << "EXPANDING ARRAY" << endl;
+	clog << "EXPANDING ARRAY from size: " << maxMoviesHoldable << endl;
 #endif
 	Movie** moviesBufferArray = new Movie*[maxMoviesHoldable * 2];
 	for (long i = 0; i < numMovies; i++) {
