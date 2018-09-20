@@ -7,6 +7,8 @@
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
 
+
+
 #include "Movies.h"
 #include "Movie.h"
 #include "Text.h"
@@ -59,16 +61,15 @@ int main () {
 		cout << "5.  Edit a movie.\n";
 		cout << "6.  Print all movies.\n";
 		cout << "7.  Delete ALL movies and end the program.\n";
-		do {
-			if(cin.fail()) {
+		do{
+			if(cin.fail()){
 				cin.clear();
 				cin.ignore();
 				cout << "an error has occurred, try again" << "\n";
 			}
-			else
-				if(menuChoice < 1 || menuChoice > 7) {
-					cout << "an error has occurred, try again" << "\n";
-				}
+			else if(menuChoice < 1 || menuChoice > 7){
+				cout << "an error has occurred, try again" << "\n";
+			}
 			cout << "CHOOSE 1-7:  " << flush;
 			cin >> menuChoice;
 		} while (cin.fail() || menuChoice < 1 || menuChoice > 7);
@@ -100,11 +101,11 @@ int main () {
 				cout << "What do you want to name the file? (example.txt):  ";
 				getline(cin, filename);
 				cout << "\n";
-				while (cin.fail() || (filename[filename.length() - 1] == 't' && filename[filename.length() - 2] == 'x' && filename[filename.length() - 3] == 't' && filename[filename.length() - 4] == '.')) {
-					if(cin.fail()) {
+				while (cin.fail() || (filename[filename.length()-1] == 't' && filename[filename.length()-2] == 'x' && filename[filename.length()-3] == 't' && filename[filename.length()-4] == '.')) {
+					if (cin.fail()){
 						cout << "an error has occurred" << "\n";
 					}
-					if(filename[filename.length() - 1] == 't' && filename[filename.length() - 2] == 'x' && filename[filename.length() - 3] == 't' && filename[filename.length() - 4] == '.') {
+					if (filename[filename.length()-1] == 't' && filename[filename.length()-2] == 'x' && filename[filename.length()-3] == 't' && filename[filename.length()-4] == '.') {
 						cout << "error: be sure the file name ends in .txt" << "\n";
 					}
 					cout << "What do you want to name the file? (example.txt):  ";
