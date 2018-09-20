@@ -35,7 +35,7 @@ class Movie {
 		bool isOnlyNumaric (string input);
 		bool isOnlyNumaricFloat (string input);
 
-		void bootlegCLS();
+		void bootlegCLS ();
 
 	public:
 		Movie ();
@@ -60,7 +60,7 @@ class Movie {
 		 Function name:	setMovieDetailXXX
 		 Parameters:		Either the variable for that value, or all of them depending on which function
 		 Returns:			nothing (void)
-		 Purpose:			This function should be called when the program needs to replace a single movie's variable
+		 Purpose:			This function should be called when the program needs to replace a single movie's variable, or all of them
 		 */
 		void setMovieFull (Text*, long, long, Text*, Text*, long, double);
 		void setMovieDetailTitle (Text*);
@@ -107,7 +107,7 @@ class Movie {
 		 Returns:			nothing (void)
 		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file. Does not modify stream settings at all
 		 */
-		void printMovieDetailsToFile (ofstream &outFile);
+		void printMovieDetailsToFile (ofstream& outFile);
 
 		/*
 		 Function name:	printMovieDetailsToFileNoFlushing
@@ -115,8 +115,8 @@ class Movie {
 		 Returns: 		nothing (void)
 		 Purpose:  		This function should be called when the program needs to print ALL the movie information to a file without flushing the buffer automatically. Does not modify stream settings at all
 		 */
-		void printMovieDetailsToFileNoFlushing (ofstream &outFile);
+		void printMovieDetailsToFileNoFlushing (ofstream& outFile);
 
 };
 
-#endif // end MOVIE_H define
+#endif //end MOVIE_H define

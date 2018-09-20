@@ -94,7 +94,6 @@ void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
 }
 
 void Movies::addMovieToArrayFromUser () {
-	cout << "FIX ME" << endl;
 	//TODO: rewrite to match others
 	bool inputIsGood;
 	string inputBuffer;

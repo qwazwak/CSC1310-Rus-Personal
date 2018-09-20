@@ -15,40 +15,6 @@
 #include <limits>
 using namespace std;
 
-
-/*
- bool Movie::isOnlyNumaric (string input) {
- for (unsigned long i = 0; i < input.length(); i++) {
- if( ! (input[i] >= '0' && input[i] <= '9')) {
- return false;
- }
- }
- if(input[0] == '\n') {
- return false;
- }
- return true;
- }
-
- bool Movie::isOnlyNumaricFloat (string input) {
- long countOfDot = 0;
- for (unsigned long i = 0; i < input.length(); i++) {
- if( ! (input[i] >= '0' && input[i] <= '9')) {
- if(input[i] == '.') {
- ++countOfDot;
- }
- else {
- return false;
- }
- }
- }
- if(input[0] == '\n' || countOfDot < 0 || countOfDot > 1) {
- return false;
- }
-
- return true;
- }
- */
-
 Movie::Movie () {
 	movieTitle = new Text;
 	movieLength = -1;

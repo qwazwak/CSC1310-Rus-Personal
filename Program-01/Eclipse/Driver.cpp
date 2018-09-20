@@ -37,31 +37,21 @@ bool isOnlyNumaric (string input) {
 
 int main () {
 	long menuChoice;
-	long maxMovies = 1;
+	const long INITMAXMOVIE = 1;
 	string filename;
-	//string inputBuffer;
-	//cout << "\n\nWhat is the maximum number of movies you can have in your library?\n";
-	//cin >> maxMovies;
-	//while (maxMovies <= 0) {
-//		cout << "\n\nYou have to have at least one movie in your library.\n";
-//		cout << "What is the maximum number of movies you can have in your library.\n";
-//		cin >> maxMovies;
-//	}
-	Movies movieLibrary(maxMovies);
-	//bool inputIsOnlyNumbers;
-	//bool inputIsGood;
+	Movies movieLibrary(INITMAXMOVIE);
 
 	do {
 		cin.clear();
-		cout << "What would you like to do?\n";
-		cout << "1.  Read movies from file.\n";
-		cout << "2.  Save movies to a file.\n";
-		cout << "3.  Add a movie.\n";
-		cout << "4.  Delete a movie.\n";
-		cout << "5.  Edit a movie.\n";
-		cout << "6.  Print all movies.\n";
-		cout << "7.  Delete ALL movies and end the program.\n";
-
+		cout << "\n" << "\n" << "\n";
+		cout << "What would you like to do?" << "\n";
+		cout << "1.  Read movies from file" << "\n";
+		cout << "2.  Save movies to a file" << "\n";
+		cout << "3.  Add a movie" << "\n";
+		cout << "4.  Delete a movie" << "\n";
+		cout << "5.  Edit a movie" << "\n";
+		cout << "6.  Print all movies" << "\n";
+		cout << "7.  Delete ALL movies and end the program" << "\n";
 
 		cout << "CHOOSE 1-7:  " << flush;
 		cin >> menuChoice;
@@ -80,38 +70,43 @@ int main () {
 			cin >> menuChoice;
 		}
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "\n";
 
 
 		switch (menuChoice) {
 			case 1:
-				cout << "\n";
-
-				cout << "What do you want to name the file? (example.txt):  ";
+				cout << "\n" << "What is file named? (example.txt):  ";
 				getline(cin, filename);
-				while ((cin.fail() || (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.')))  {
-					cout << "What do you want to name the file? (example.txt):  ";
-					getline(cin, filename);
+				while ( (cin.fail() || (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.'))) {
 					if(cin.fail()) {
 						cout << "an error has occurred" << "\n";
 					}
-					if(filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
-						cout << "error: be sure the file name ends in .txt" << "\n";
+					else {
+						if(filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
+							cout << "error: be sure the file name ends in .txt" << "\n";
+						}
 					}
+					cout << "What is file named? (example.txt):  ";
+					getline(cin, filename);
 				}
 				movieLibrary.importFromFile(filename);     //function is in Movies.cpp
 				break;
 
 			case 2:
-				cout << "\n";
-				while (cin.fail() || (filename[filename.length() - 1] == 't' && filename[filename.length() - 2] == 'x' && filename[filename.length() - 3] == 't' && filename[filename.length() - 4] == '.')) {
-					cout << "What do you want to name the file? (example.txt):  ";
-					getline(cin, filename);
+				cout << "\n" << "What do you want to name the file? (example.txt):  ";
+				getline(cin, filename);
+				while ( (cin.fail() || (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.'))) {
 					if(cin.fail()) {
 						cout << "an error has occurred" << "\n";
 					}
-					if(filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
-						cout << "error: be sure the file name ends in .txt" << "\n";
+					else {
+						if(filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
+							cout << "error: be sure the file name ends in .txt" << "\n";
+						}
 					}
+					cout << "What do you want to name the file? (example.txt):  ";
+					getline(cin, filename);
+
 				}
 				movieLibrary.exportToFile(filename);     //function is in Movies.cpp
 				break;
@@ -140,6 +135,6 @@ int main () {
 
 	} while (menuChoice != 7);
 
-	cout << "\n" << "shutting down" << "\n" << flush;
+	cout << "\n" << "END PROGRAM" << "\n" << flush;
 	return 0;
 }
