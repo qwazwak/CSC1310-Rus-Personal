@@ -15,6 +15,10 @@
 
 using namespace std;
 
+bool has_suffix (const string &str, const string &suffix) {
+	return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
 void bootlegClearScreen (unsigned int numLinesToClear = 60) {
 	cout << flush;
 	for (unsigned int i = 0; i < numLinesToClear; i = i + 1) {
@@ -36,6 +40,7 @@ bool isOnlyNumaric (string input) {
 }
 
 int main () {
+	const string STANDARDFILEEXTENTION = ".txt";
 	long menuChoice;
 	const long INITMAXMOVIE = 1;
 	string filename;
@@ -72,39 +77,38 @@ int main () {
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "\n";
 
-
 		switch (menuChoice) {
 			case 1:
-				cout << "\n" << "What is file named? (example.txt):  ";
+				cout << "\n" << "What is file named? (example" << STANDARDFILEEXTENTION << "):  ";
 				getline(cin, filename);
-				while ( (cin.fail() || (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.'))) {
-					if(cin.fail()) {
+				while (cin.fail() == true || has_suffix(filename, STANDARDFILEEXTENTION) == false) {
+					if(cin.fail() == true) {
 						cout << "an error has occurred" << "\n";
 					}
 					else {
-						if(filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
-							cout << "error: be sure the file name ends in .txt" << "\n";
+						if(has_suffix(filename, STANDARDFILEEXTENTION) == false) {
+							cout << "error: be sure the file name ends in \"" << STANDARDFILEEXTENTION << "\"" << "\n";
 						}
 					}
-					cout << "What is file named? (example.txt):  ";
+					cout << "What is file named? (example" << STANDARDFILEEXTENTION << "):  ";
 					getline(cin, filename);
 				}
 				movieLibrary.importFromFile(filename);     //function is in Movies.cpp
 				break;
 
 			case 2:
-				cout << "\n" << "What do you want to name the file? (example.txt):  ";
+				cout << "\n" << "What do you want to name the file? (example" << STANDARDFILEEXTENTION << "):  ";
 				getline(cin, filename);
-				while ( (cin.fail() || (filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.'))) {
-					if(cin.fail()) {
+				while (cin.fail() == true || has_suffix(filename, STANDARDFILEEXTENTION) == false) {
+					if(cin.fail() == true) {
 						cout << "an error has occurred" << "\n";
 					}
 					else {
-						if(filename[filename.length() - 2] == 't' && filename[filename.length() - 3] == 'x' && filename[filename.length() - 4] == 't' && filename[filename.length() - 5] == '.') {
-							cout << "error: be sure the file name ends in .txt" << "\n";
+						if(has_suffix(filename, STANDARDFILEEXTENTION) == false) {
+							cout << "error: be sure the file name ends in \"" << STANDARDFILEEXTENTION << "\"" << "\n";
 						}
 					}
-					cout << "What do you want to name the file? (example.txt):  ";
+					cout << "What do you want to name the file? (example" << STANDARDFILEEXTENTION << "):  ";
 					getline(cin, filename);
 
 				}
@@ -134,7 +138,8 @@ int main () {
 		}
 
 	} while (menuChoice != 7);
-
+#if defined(DEBUG_LOGGING)
 	cout << "\n" << "END PROGRAM" << "\n" << flush;
+#endif
 	return 0;
 }

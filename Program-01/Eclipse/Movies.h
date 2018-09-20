@@ -1,9 +1,11 @@
-/*
- Title:  Movies.h
- Author:  April R Crockett
- Date:  11/7/2017
- Purpose:  Be able to create, manage, print, save & delete a movie library
- */
+/* * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ *	Title:		CSC1310 - Program 01 - Movies array container
+ *	Author(s):	Rus Hoffman
+ *	Date:		September 4, 2018
+ *	Purpose:		Contain a number of movies and provide functions for easy usage
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * */
 #if !defined(MOVIES_H)
 #define MOVIES_H
 
@@ -44,15 +46,6 @@ class Movies {
 		 Purpose:  		remove one movie from the array and shift other movies as required
 		 */
 		void removeMovieByID (long);
-
-		/*
-		 Function name:	removeMovieByID
-		 Parameters:		none (void)
-		 Returns: 		none (void)
-		 Purpose:  		remove one movie from the array and shift other movies as required
-		 */
-		bool isOnlyNumaric (string input);
-		bool isOnlyNumaricFloat (string input);
 
 	public:
 		Movies ();

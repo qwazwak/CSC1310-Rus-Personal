@@ -158,7 +158,7 @@ void Movie::editMovieDetails () {
 					}
 					else {
 						if(choice < 1) {
-							cout << "only enter a number between above zero" << "\n";
+							cout << "only enter a number above zero" << "\n";
 						}
 					}
 					cout << "Current Length: " << OGLongData << "\n";
@@ -171,8 +171,8 @@ void Movie::editMovieDetails () {
 
 			case 3:
 				OGLongData = movieYear;
-				cout << "Current Year: " << OGLongData << "\n";
-				cout << "NEW YEAR:  " << flush;
+				cout << "Current Release Year: " << OGLongData << "\n";
+				cout << "NEW RELEASE YEAR:  " << flush;
 				cin >> movieYear;
 				while (cin.fail()) {
 					if(cin.fail()) {
@@ -224,6 +224,11 @@ void Movie::editMovieDetails () {
 						cin.clear();
 						cin.ignore();
 						cout << "an error has occurred" << "\n";
+					}
+					else {
+						if(inputTextBuffer.empty() == true) {
+							cout << "be sure you enter some text" << "\n";
+						}
 					}
 					cout << "Current Rating: " << movieRating->getText() << "\n";
 					cout << "NEW RATING:  " << flush;
@@ -355,6 +360,17 @@ void Movie::printMovieDetails () {
 	cout << right << setw(30) << "Number of Oscars Won:  " << left << movieOscars << "\n";
 	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << setw(0) << flush;
 }
+
+void Movie::printMovieDetailsNoFlush () {
+	cout << right << setw(30) << "Movie Title:  " << left << movieTitle->getText() << "\n";
+	cout << right << setw(30) << "Length (minutes):  " << left << movieLength << "\n";
+	cout << right << setw(30) << "Year Released:  " << left << movieYear << "\n";
+	cout << right << setw(30) << "Genre:  " << left << movieGenre->getText() << "\n";
+	cout << right << setw(30) << "Rating:  " << left << movieRating->getText() << "\n";
+	cout << right << setw(30) << "Number of Oscars Won:  " << left << movieOscars << "\n";
+	cout << right << setw(30) << "Number of Stars:  " << left << movieNumStars << "\n" << setw(0);
+}
+
 
 void Movie::printMovieDetailsToFile (ofstream &outFile) {
 	outFile << movieTitle->getText() << "\n";

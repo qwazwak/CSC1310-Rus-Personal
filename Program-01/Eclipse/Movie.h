@@ -102,6 +102,14 @@ class Movie {
 		void printMovieDetails ();
 
 		/*
+		 Function name:	printMovieDetailsNoFlush
+		 Parameters:		nothing (void)
+		 Returns: 		nothing (void)
+		 Purpose:			This function should be called when the program needs to print ALL the movie information to the cout buffer, but without flushing the cout buffer
+		 */
+		void printMovieDetailsNoFlush ();
+
+		/*
 		 Function name:	printMovieDetailsToFile
 		 Parameters:		a file stream object (sent by reference)
 		 Returns:			nothing (void)
