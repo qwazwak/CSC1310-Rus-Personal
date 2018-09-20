@@ -30,7 +30,7 @@ bool Movie::isOnlyNumaricFloat (string input) {
 	long countOfDot = 0;
 	for (unsigned long i = 0; i < input.length(); i++) {
 		if( ! (input[i] >= '0' && input[i] <= '9')) {
-			if(input[i] == '.'){
+			if(input[i] == '.') {
 				++countOfDot;
 			}
 			else {
@@ -112,15 +112,16 @@ void Movie::editMovieDetails () {
 		cout << "7.  Number of Stars" << "\n";
 		cout << "8.  DONE EDITING" << "\n";
 
-		do{
-			if(cin.fail()){
+		do {
+			if(cin.fail()) {
 				cin.clear();
 				cin.ignore();
 				cout << "an error has occurred, try again" << "\n";
 			}
-			else if(choice < 1 || choice > 8){
-				cout << "only enter a number between 1 and 8" << "\n";
-			}
+			else
+				if(choice < 1 || choice > 8) {
+					cout << "only enter a number between 1 and 8" << "\n";
+				}
 			cout << "CHOOSE 1-8:  " << flush;
 			cin >> choice;
 		} while (cin.fail() || choice < 1 || choice > 8);
@@ -153,9 +154,6 @@ void Movie::editMovieDetails () {
 				OGLongData = movieLength;
 				//cout << "Current Length: " << OGLongData << "\n";
 				//cout << "NEW LENGTH:  " << flush;
-
-
-
 
 				do {
 					inputIsGood = true;
@@ -203,7 +201,6 @@ void Movie::editMovieDetails () {
 				//cin.clear();
 				cout << flush;
 
-
 				break;
 
 			case 3:
@@ -234,36 +231,24 @@ void Movie::editMovieDetails () {
 
 				} while ( !inputIsGood);
 
+				/*
 
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-				cout << "Current Year: " << OGLongData << "\n";
-				cout << "NEW YEAR:     " << flush;
-				cin >> movieYear;
-				while (cin.fail() || movieYear <= 0) {
-					if(cin.fail() == true) {
-						cin.clear();
-						cout << "An error has occurred" << "\n" << "\n";
-					}
-					cin.clear();
-					cout << "be sure to enter only numbers greater than zero with no spaces" << "\n" << "\n";
-					cout << "Current Year: " << OGLongData << "\n";
-					cout << "NEW YEAR:     " << flush;
-					cin >> movieYear;
-				}
-				cin.clear();
-				*/
+				 cout << "Current Year: " << OGLongData << "\n";
+				 cout << "NEW YEAR:     " << flush;
+				 cin >> movieYear;
+				 while (cin.fail() || movieYear <= 0) {
+				 if(cin.fail() == true) {
+				 cin.clear();
+				 cout << "An error has occurred" << "\n" << "\n";
+				 }
+				 cin.clear();
+				 cout << "be sure to enter only numbers greater than zero with no spaces" << "\n" << "\n";
+				 cout << "Current Year: " << OGLongData << "\n";
+				 cout << "NEW YEAR:     " << flush;
+				 cin >> movieYear;
+				 }
+				 cin.clear();
+				 */
 				cout << flush;
 				break;
 
