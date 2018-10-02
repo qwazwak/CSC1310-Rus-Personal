@@ -81,16 +81,13 @@ int main () {
 			case 1:
 				cout << "\n" << "What is file named? (example" << STANDARDFILEEXTENTION << "):  ";
 				getline(cin, filename);
-				while (cin.fail() == true || has_suffix(filename, STANDARDFILEEXTENTION) == false || filename.length() == 4) {
+				while (cin.fail() == true || has_suffix(filename, STANDARDFILEEXTENTION) == false) {
 					if(cin.fail() == true) {
 						cout << "an error has occurred" << "\n";
 					}
 					else {
 						if(has_suffix(filename, STANDARDFILEEXTENTION) == false) {
 							cout << "error: be sure the file name ends in \"" << STANDARDFILEEXTENTION << "\"" << "\n";
-						}
-						if(filename.length() == 4){
-							cout << "be sure to enter a file name" << "\n";
 						}
 					}
 					cout << "What is file named? (example" << STANDARDFILEEXTENTION << "):  ";
@@ -102,16 +99,13 @@ int main () {
 			case 2:
 				cout << "\n" << "What do you want to name the file? (example" << STANDARDFILEEXTENTION << "):  ";
 				getline(cin, filename);
-				while (cin.fail() == true || has_suffix(filename, STANDARDFILEEXTENTION) == false || filename.length() == 4) {
+				while (cin.fail() == true || has_suffix(filename, STANDARDFILEEXTENTION) == false) {
 					if(cin.fail() == true) {
 						cout << "an error has occurred" << "\n";
 					}
 					else {
 						if(has_suffix(filename, STANDARDFILEEXTENTION) == false) {
 							cout << "error: be sure the file name ends in \"" << STANDARDFILEEXTENTION << "\"" << "\n";
-						}
-						if(filename.length() == 4){
-							cout << "be sure to enter a file name" << "\n";
 						}
 					}
 					cout << "What do you want to name the file? (example" << STANDARDFILEEXTENTION << "):  ";

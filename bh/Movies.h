@@ -55,21 +55,6 @@ class Movies {
 		~Movies ();
 
 		/*
-		 Function name:	getnumMovies
-		 Parameters:		none (void)
-		 Returns:			index of the movie
-		 */
-		long getNumMovies ();
-
-		/*
-		 Function name:	getMovieByID
-		 Parameters:		index of the movie to return
-		 Returns:			a pointer to the Movie
-		 Purpose:			get a movie out of the array
-		 */
-		Movie* getMovieByID (long);
-
-		/*
 		 Function names:	addMovieToArrayDirect
 		 Parameters:		a pointer to a movie to add
 		 Returns: 		none

@@ -1,9 +1,9 @@
 /* * * * * * * * * * * * * * * * * * * * * * * *
  *
- *	Title:		CSC1310 - Program 01 - Movies array container
+ *	Title:		CSC1310 - Program 01 - Single Movie Encapsulation class
  *	Author(s):	Rus Hoffman
  *	Date:		September 4, 2018
- *	Purpose:		Contain a number of movies and provide functions for easy usage
+ *	Purpose:		Practice working with classes which include member classes
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -53,14 +53,6 @@ Movies::~Movies () {
 		delete moviesArray[i];
 	}
 	delete[] moviesArray;
-}
-
-long Movies::getNumMovies () {
-	return numMovies;
-}
-
-Movie* Movies::getMovieByID (long ID) {
-	return moviesArray[ID];
 }
 
 void Movies::addMovieToArrayDirect (Movie* inputMoviePointer) {
@@ -218,7 +210,6 @@ void Movies::addMovieToArrayFromUser () {
 //Movie IMDB block - cin - end
 	cout << "\n" << flush;
 	addMovieToArrayDirect(new Movie(title, length, year, genre, rating, numOscars, numStars));
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void Movies::editMovieInArray () {
@@ -246,22 +237,16 @@ void Movies::removeMovieByUserChoice () {
 	cout << "Current list of movies:" << "\n";
 	displayAllMoviesOnlyTitle();
 	cout << "\n";
-
-	cout << "Enter the number of the movie to remove: ";
-	cin >> numberPicked;
-	while (numberPicked < 1 || numberPicked > numMovies || cin.fail()) {
-
+	do {
+		cout << "Enter the number of the movie to remove: ";
+		cin >> numberPicked;
 		if(cin.fail()) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout << "an error has occurred" << "\n";
 		}
 		if(numberPicked < 1 || numberPicked > numMovies) {
-			cout << "invalid input, only enter a number between 1  and " << numMovies << " inclusive" << "\n";
+			cout << "invalid input, only enter a number between 1  and " << numMovies << "inclusive" << "\n";
 		}
-		cout << "Enter the number of the movie to remove: ";
-		cin >> numberPicked;
-	}
+	} while (numberPicked < 1 || numberPicked > numMovies || cin.fail());
 	removeMovieByID(numberPicked - 1);
 }
 
