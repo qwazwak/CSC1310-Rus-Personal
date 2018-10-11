@@ -1,0 +1,15 @@
+
+
+
+What would you like to do?
+1.  Read movies from file
+2.  Save movies to a file
+3.  Add a movie
+4.  Delete a movie
+5.  Edit a movie
+6.  Print all movies
+7.  Delete ALL movies and end the program
+CHOOSE 1-7:  only enter a number between 1 and 7, inclusive
+CHOOSE 1-7:  
+
+What is file named? (example.txt):  
