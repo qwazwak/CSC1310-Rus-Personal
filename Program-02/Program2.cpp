@@ -7,9 +7,8 @@
  *
  * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-#include <Queue.h>
-#include <Stack.h>
+#include "Queue.h"
+#include "Stack.h"
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
@@ -21,76 +20,16 @@
 
 using namespace std;
 
-int worstCharToInt (char input) {
-	switch (input) {
-		case '0':
-			return 0;
-			break;
-		case '1':
-			return 1;
-			break;
-		case '2':
-			return 2;
-			break;
-		case '3':
-			return 3;
-			break;
-		case '4':
-			return 4;
-			break;
-		case '5':
-			return 5;
-			break;
-		case '6':
-			return 6;
-			break;
-		case '7':
-			return 7;
-			break;
-		case '8':
-			return 8;
-			break;
-		case '9':
-			return 9;
-			break;
-		default:
-			return -1;
-	}
-}
-/*
-void removeSpaces (string &theString) {
-	string newString = "";
-	for (size_t i = 0; i < theString.length(); i++){
-		if(theString.at(i) != ' '){
-			newString += theString[i];
-		}
-	}
-	theString = newString;
-}
+#define DEBUG_LOGGING
 
-string makeStringCopyNoSpace (string theString) {
-	string newString = "";
-	for (size_t i = 0; i < theString.length(); i++){
-		if(theString.at(i) != ' '){
-			newString += theString.at(i);
-		}
-	}
-	return newString;
+double worstCharToDouble (char input) {
+	char aBootlegChar[2];
+	aBootlegChar[0] = input;
+	aBootlegChar[1] = '\n';
+	return atof(aBootlegChar);
 }
-
-
-void reverseString (string &theString) {
-	for (size_t i = 0; i < theString.length(); i++) {
-		theString += (theString[i] == ' ') ? 0 : 1;
-	}
-	while (theString.find(' ') != string::npos) {
-		theString.erase(theString.find(' '));
-	}
-}
-*/
 
 bool isLowerPriority (const char &firstChar, const char &secondChar) {
-	string errorMessage = "Invalid char in isLowerPriority";
 	int charAPri;
 	int charBPri;
 	switch (firstChar) {
@@ -132,32 +71,34 @@ bool isLowerPriority (const char &firstChar, const char &secondChar) {
 			break;
 	}
 	if(charAPri == -1 || charBPri == -1) {
+		string errorMessage = "Invalid char in isLowerPriority";
 		throw (errorMessage);
 	}
-	return charAPri < charBPri ? true : false;
+	return charAPri <= charBPri ? true : false;
 }
 
-MyQueue<char>* fuglyConverter (const string inputString) {
-	MyQueue<char> inputDataQ;
-	for (size_t i = 0; i < inputString.length(); i++) {
-		inputDataQ.push_back(inputString[i]);
+string infixToPostfix (string inputExpression) {
+	string stupidStringBuffer = "";
+	MyQueue<char> infixQueue;
+	for (size_t i = 0; i < inputExpression.length(); i++) {
+		if(inputExpression.at(i) != ' ') {
+			infixQueue.push(inputExpression.at(i));
+		}
 	}
-
-	MyQueue<char>* postfixQueue = new MyQueue<char>;
-
+	string outputString = "";
 	MyStack<char> opStack;
 	char currentToken;
+	while (infixQueue.isEmpty() == false) {
+		currentToken = infixQueue.pop();
 
-
-	while (inputDataQ.empty() == false) {
-		currentToken = inputDataQ.pop();
 		switch (currentToken) {
 			case '(':
 				opStack.push('(');
 				break;
 			case ')':
-				while (opStack.peek() != '(') {
-					postfixQueue->push(opStack.pop());
+				while (opStack.isEmpty() == false && opStack.peek() != '(') {
+					stupidStringBuffer = opStack.pop();
+					outputString += stupidStringBuffer;
 				}
 				opStack.pop();
 				break;
@@ -165,129 +106,77 @@ MyQueue<char>* fuglyConverter (const string inputString) {
 			case '-':
 			case '*':
 			case '/':
-				while (opStack.isEmpty() == false && isLowerPriority(currentToken, opStack.peek())) {
-					postfixQueue->push(opStack.pop());
+				if(opStack.isEmpty() == false) {
+					while (opStack.isEmpty() == false && isLowerPriority(currentToken, opStack.peek())) {
+						stupidStringBuffer = opStack.pop();
+						outputString += stupidStringBuffer;
+					}
 				}
 				opStack.push(currentToken);
 				break;
-			default:     //Value is operand
-				postfixQueue->push(currentToken);
+			default:
+				outputString += currentToken;
 				break;
 		}
-		while (opStack.empty() == false) {
-			postfixQueue->push(opStack.pop());
-		}
+
 	}
-	return postfixQueue;
+	while (opStack.isEmpty() == false) {
+		stupidStringBuffer = opStack.pop();
+		outputString += stupidStringBuffer;
+	}
+	return outputString;
 }
 
-/*
-calculateExpression
-this function accepts a string as a parameter and will return a double, which holds the result of the
-calculation. This function will create a Stack<double> object. Then, it will parse through the string, one character at a time.
-o If the character is a digit, then convert the character to a double and then push it on the stack.
-o Otherwise, the character is an operator, so pop two nodes from the stack, saving their values in two different
-temporary variables. Then, if the character is a ‘+’, then get the addition of these two values. If the character is a
-‘-‘ then get the subtraction of the first one from the second one. Do this for addition, subtraction, multiplication,
-and division. No other operator is supported in this program. Last, push this result on the stack.
-Once you parse through the entire string, you can return the final result from this function.
- */
-double calculateExpression (const string inputString) {
-	double finalValue;
-	MyQueue<char>* valuesToProcess = new MyQueue<char>;
-	MyStack<long>* numberStack = new MyStack<long>;
-	for(size_t i = 0; i < inputString.length(); i++){
-		valuesToProcess->push(inputString.at(i));
-	}
-	char currentChar;
-	long numberToWorkWithA;
-	long numberToWorkWithB;
-
-	while(inputString.length() > 0){
-		currentChar = valuesToProcess->pop();
-		if(isdigit(currentChar)){
-			numberStack->push(static_cast<long>(worstCharToInt(currentChar)));
+double calculatePostfixExpression (string inputString) {
+	MyStack<double> numberStack;
+	MyQueue<char> postfixEquation;
+	double firstNumber;
+	double secondNumber;
+	char currentToken;
+	string stringBuffer;
+	for (size_t i = 0; i < inputString.length(); i++) {
+		if(inputString.at(i) != ' ') {
+			postfixEquation.push(inputString.at(i));
 		}
-		else{
-			numberToWorkWithA = numberStack->pop();
-			numberToWorkWithB = numberStack->pop();
-			switch(currentChar){
-				case '+':
-					numberStack->push(numberToWorkWithB + numberToWorkWithA);
-					break;
-				case '-':
-					numberStack->push(numberToWorkWithB - numberToWorkWithA);
-					break;
-				case '*':
-					numberStack->push(numberToWorkWithB * numberToWorkWithA);
-					break;
-				case '/':
-					numberStack->push(numberToWorkWithB / numberToWorkWithA);
-					break;
-				default:
-					string badError = "INVALID OPERATOR";
-					throw(badError);
-					break;
-			}
-		}
-
-
 	}
-	delete valuesToProcess;
-	delete numberStack;
-	return finalValue;
-}
 
-double calculatePostfixExpression (const string &inputText) {
-	char currentChar;
-	string singleCharBuffer;
-	string newEditableString = inputText;
-	double result = 0;
-	MyStack<double> theStack;
-
-
-	double memeOne;
-	double yeetTwo;
-	removeSpaces(newEditableString);
-	while (newEditableString.empty() == false) {
-		currentChar = newEditableString[0];
-		newEditableString.erase(0, 1);
-
-
-		if(isdigit(currentChar) != 0) {
-			theStack.push(static_cast<double>(worstCharToInt(currentChar)));
+	while (postfixEquation.isEmpty() == false) {
+		currentToken = postfixEquation.pop();
+		if(isdigit(currentToken)) {
+			numberStack.push(worstCharToDouble(currentToken));
 		}
 		else {
-			memeOne = theStack.pop();
-			yeetTwo = theStack.pop();
-			switch (currentChar) {
+			firstNumber = numberStack.pop();
+			secondNumber = numberStack.pop();
+			switch (currentToken) {
 				case '+':
-					theStack.push(yeetTwo + memeOne);
+
+					numberStack.push(secondNumber + firstNumber);
 					break;
 				case '-':
-					theStack.push(yeetTwo - memeOne);
+					numberStack.push(secondNumber - firstNumber);
 					break;
 				case '*':
-					theStack.push(yeetTwo * memeOne);
+					numberStack.push(secondNumber * firstNumber);
 					break;
 				case '/':
-					theStack.push(yeetTwo / memeOne);
+					numberStack.push(secondNumber / firstNumber);
 					break;
 				default:
-					cout << "well fuck" << endl;
-					break;
+					string error = "INVALID CHARS IN POSTFIX CALCULATOR";
+					cerr << error << endl;
+					throw (error);
 			}
 		}
 	}
-	return result;
+	return numberStack.pop();
 }
 
 int main () {
-	int menuChoice;
+	string menuChoice;
 	string inputBufferString;
 	string infixString;
 	string postfixString;
-	MyQueue<char>* postfixQueue = new MyQueue<char>;
 	double calculatedValue = 0;
 
 	cout << "Infix to Postfix Converter" << endl;
@@ -300,71 +189,52 @@ int main () {
 			cout << "Enter an expression in postfix format" << endl;
 			getline(cin, infixString);
 		}
-#if defined(DEBUG_LOGGING)
-	clog << "Input loaded, about to remove space" << endl;
-#endif
-		removeSpaces(infixString);
+		postfixString = infixToPostfix(infixString);
 
-#if defined(DEBUG_LOGGING)
-	clog << "removed spaces" << endl;
-#endif
-		cout << endl;
-		cout << "Infix notation: " << endl;
-		cout << "\t";
-		for (size_t i = 0; i < infixString.length(); i++) {
-			cout << infixString.at(i) << " ";
+		//Remove spaces in string
+		infixString.erase(std::remove(infixString.begin(), infixString.end(), ' '), infixString.end());
+		{
+			string infixWithSpacesTemp = "";
+			for (size_t i = 0; i < infixString.length(); i++) {
+				infixWithSpacesTemp += infixString.at(i);
+				if(i + 1 < infixString.length()) {
+					infixWithSpacesTemp += ' ';
+				}
+			}
+			infixString = infixWithSpacesTemp;
 		}
-		cout << endl;
-#if defined(DEBUG_LOGGING)
-	clog << "done with infix" << endl;
 
-	cout << "postfix" << endl;
-	postfixQueue->display(true);
-#endif
-		delete postfixQueue;
-		postfixQueue = fuglyConverter(infixString);
-
-		cout << endl;
-		postfixString = "";
-		while(postfixQueue->empty() != false){
-			postfixString += postfixQueue->pop();
+		postfixString.erase(std::remove(postfixString.begin(), postfixString.end(), ' '), postfixString.end());
+		{
+			string postfixWithSpacesTemp = "";
+			for (size_t i = 0; i < postfixString.length(); i++) {
+				postfixWithSpacesTemp += postfixString.at(i);
+				if(i + 1 < postfixString.length()) {
+					postfixWithSpacesTemp += ' ';
+				}
+			}
+			postfixString = postfixWithSpacesTemp;
 		}
-#if defined(DEBUG_LOGGING)
-	clog << "made postfixString" << endl;
-#endif
 		calculatedValue = calculatePostfixExpression(postfixString);
 
-		cout << "Postfix notation:" << endl;
-		cout << "\t";
-		cout << postfixString << endl;
-		cout << endl;
-		cout << "Calculated Value: " << calculatedValue << endl;
 
-		cin.clear();
-		cout << "\n" << "\n";
-		cout << "Repeat or exit program?" << "\n";
-		cout << "1.  do another equation" << "\n";
-		cout << "2.  exit program" << "\n";
-		cout << "CHOOSE 1 or 2:  " << flush;
-		cin >> menuChoice;
-		while (cin.fail() || menuChoice < 1 || menuChoice > 2) {
+		cout << "Infix notation:" << endl << "\t" << infixString << endl << "Postfix notation:" << endl << "\t" << postfixString << endl << "Calculated Value:" << endl << "\t" << calculatedValue << endl << endl << endl;
+		cout << "Would you like to run the program again? (Y\\N)" << "\n";
+		getline(cin, menuChoice);
+
+		while (cin.fail() || menuChoice.length() != 1 || (menuChoice.at(0) == 'Y' || menuChoice.at(0) == 'y') ? false : ((menuChoice.at(0) == 'N' || menuChoice.at(0) == 'n') ? false : true)) {
 			if(cin.fail()) {
 				cin.clear();
-				cin.ignore();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << "an error has occurred, try again" << "\n";
 			}
 			else {
-				if(menuChoice < 1 || menuChoice > 2) {
-					cout << "only enter a number  1 or 2" << "\n";
-				}
+					cout << "only enter Y for yes, or N for no" << "\n";
 			}
-			cout << "CHOOSE 1-2:  " << flush;
-			cin >> menuChoice;
+			cout << "Would you like to run the program again? (Y\\N)" << "\n" << flush;
+			getline(cin, menuChoice);
 		}
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "\n";
-	} while (menuChoice != 2);
-
+	} while (menuChoice.at(0) == 'Y' || menuChoice.at(0) == 'y');
 	cout << "\n" << "Goodbye!" << "\n" << flush;
 	return 0;
 }

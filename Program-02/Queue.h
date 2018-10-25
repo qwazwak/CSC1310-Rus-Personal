@@ -22,9 +22,8 @@ template<class T> class MyQueue {
 	public:
 		MyQueue () {
 			dataCount = 0;
-			//dataList();
-
 		}
+
 		~MyQueue () {
 			dataCount = 0;
 		}
@@ -56,15 +55,8 @@ template<class T> class MyQueue {
 			return returnData;
 		}
 
-		bool empty () {
-			return this->isEmpty();
-		}
-
 		bool isEmpty () {
-			if(dataCount == 0) {
-				return true;
-			}
-			return false;
+			return dataCount > 0 ? false : true;
 		}
 
 		void display (bool shouldAddSpace = false) {
@@ -78,5 +70,4 @@ template<class T> class MyQueue {
 			std::cout << std::flush;
 		}
 };
-
 #endif /* QUEUE_H */

@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * *
  *
- *  Filename:    Stack.hpp
+ *  Filename:    Stack.h
  *  Title:       CSC1310 - Program - 02
  *  Author(s):   Rus Hoffman
  *  Created On:  September 26, 2018
@@ -46,8 +46,9 @@ template<class T> class MyStack {
 
 		T pop () {
 			if(this->isEmpty() == true){
-				std::cerr << "error in Stack: cannot pop when Stack is empty" << std::endl;
-//				return NULL;
+				std::string theError = "error in Stack: cannot pop when Stack is empty";
+				std::cerr << theError << std::endl;
+				throw(theError);
 			}
 			T returnValue = this->peek();
 			dataCount--;
@@ -55,18 +56,14 @@ template<class T> class MyStack {
 		}
 
 		T peek () {
+			if(this->isEmpty() == true){
+				return NULL;
+			}
 			return dataArray[dataCount - 1];
 		}
 
-		bool empty () {
-			return this->isEmpty();
-		}
-
 		bool isEmpty () {
-			if(dataCount != 0)
-				return true;
-			return false;
+			return dataCount > 0 ? false : true;
 		}
 };
-
 #endif /* end STACK_H */
