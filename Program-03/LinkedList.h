@@ -19,42 +19,63 @@ template<typename T> class LinkedList {
 		};
 		ListNode *head;
 		ListNode *tail;
-		int numNodes;
+		size_t numNodes;
 
 	public:
-		LinkedList () {
+		LinkedList() {
 			head = NULL;
 			tail = NULL;
 			numNodes = 0;
 		}
 
-		~LinkedList ();
+		~LinkedList();
 
-		int getLength ();
+		size_t getLength();
 
-		T getNodeValue (int);
+		T getNodeValue(size_t);
 
-		void appendNode (T);
+		void setNodeValue(size_t, T);
 
-		void insertNode (T, int);
+		void appendNode(T);
 
-		void deleteNode (int);
+		void insertNode(T, size_t);
+
+		void deleteNode(size_t);
+
+		void swapNodes(size_t, size_t);
+
+		void shuffleNodes();
 };
 
-template<typename T> int LinkedList<T>::getLength () {
+template<typename T> size_t LinkedList<T>::getLength() {
 	return numNodes;
 }
 
 //returns the node value at a given position
 template<typename T>
-T LinkedList<T>::getNodeValue (int position) {
+T LinkedList<T>::getNodeValue(size_t position) {
 	ListNode *nodePtr;
 	nodePtr = head;
-	int currentPos = 0;
-	
+	size_t currentPos = 0;
 	while (position >= currentPos) {
-		if(position == currentPos)
+		if(position == currentPos) {
 			return nodePtr->value;
+		}
+		currentPos++;
+		nodePtr = nodePtr->next;
+	}
+	return NULL;
+}
+
+template<typename T>
+void LinkedList<T>::setNodeValue(size_t position, T newValue) {
+	ListNode* nodePtr = head;
+	size_t currentPos = 0;
+	while (position >= currentPos) {
+		if(position == currentPos) {
+			nodePtr->value = newValue;
+			return;
+		}
 		currentPos++;
 		nodePtr = nodePtr->next;
 	}
@@ -64,9 +85,9 @@ T LinkedList<T>::getNodeValue (int position) {
 // appendNode appends a node containing the        *
 // value passed into nodeValue, to the end of the list.   *
 //**************************************************
-template<typename T> void LinkedList<T>::appendNode (T nodeValue) {
+template<typename T> void LinkedList<T>::appendNode(T nodeValue) {
 	ListNode *newNode;     // To point to a new node
-	ListNode *nodePtr;     // To move through the list
+	//ListNode *nodePtr;     // To move through the list
 	// Allocate a new node and store nodeValue there.
 	newNode = new ListNode;
 	++numNodes;
@@ -74,12 +95,12 @@ template<typename T> void LinkedList<T>::appendNode (T nodeValue) {
 	newNode->next = NULL;
 
 	// If there are no nodes in the list make newNode the first node.
-	if( !head) {
+	if(!head) {
 		head = newNode;
 		tail = newNode;
 	}
-	else     // Otherwise, insert newNode at end.
-	{
+	else {
+		// Otherwise, insert newNode at end.
 		//set the current last node's next pointer to the new node
 		tail->next = newNode;
 		
@@ -88,7 +109,7 @@ template<typename T> void LinkedList<T>::appendNode (T nodeValue) {
 	}
 }
 
-template<typename T> void LinkedList<T>::insertNode (T nodeValue, int iPos) {
+template<typename T> void LinkedList<T>::insertNode(T nodeValue, size_t iPos) {
 	ListNode *newNode;     // To point to a new node
 	ListNode *nodePtr;     // To move through the list
 	ListNode *previousNode;
@@ -99,23 +120,23 @@ template<typename T> void LinkedList<T>::insertNode (T nodeValue, int iPos) {
 	newNode->next = NULL;
 
 	// If there are no nodes in the list make newNode the first node.
-	if( !head) {
+	if(!head) {
 		head = newNode;
 		tail = newNode;
 	}
-	else     // Otherwise, insert newNode at position.
-	{
-		int pos = 0;
+	else {
+		// Otherwise, insert newNode at position.
+		size_t pos = 0;
 		nodePtr = head;
 		
-		if(iPos == 0)     //insert at beginning of list
-		{
+		if(iPos == 0) {
+			//insert at beginning of list
 			newNode->next = head;
 			head = newNode;
 			return;
 		}
-		if(iPos >= this->getLength() - 1)     //insert at end
-		{
+		if(iPos >= this->getLength() - 1) {
+			//insert at end
 			newNode->next = NULL;
 			tail->next = newNode;
 			tail = newNode;
@@ -135,7 +156,7 @@ template<typename T> void LinkedList<T>::insertNode (T nodeValue, int iPos) {
 // The deleteNode function finds the node with the argument position & deletes it
 //**************************************************
 template<typename T>
-void LinkedList<T>::deleteNode (int position) {
+void LinkedList<T>::deleteNode(size_t position) {
 	ListNode *nodePtr;       // To traverse the list
 	ListNode *previousNode;     // To point to the previous node
 
@@ -149,7 +170,7 @@ void LinkedList<T>::deleteNode (int position) {
 	else {
 		// Initialize nodePtr to head of list
 		nodePtr = head;
-		int ptrPosition = 0;
+		size_t ptrPosition = 0;
 
 		// Skip all nodes whose value member is not equal to the sent position.
 		while (ptrPosition != position) {
@@ -174,7 +195,7 @@ void LinkedList<T>::deleteNode (int position) {
 // This function deletes every node in the list.   *
 // Similar to a typical list function RemoveAll    *
 //**************************************************
-template<typename T> LinkedList<T>::~LinkedList () {
+template<typename T> LinkedList<T>::~LinkedList() {
 	ListNode *nodePtr;     // To traverse the list
 	ListNode *nextNode;     // To point to the next node
 
@@ -194,4 +215,32 @@ template<typename T> LinkedList<T>::~LinkedList () {
 		nodePtr = nextNode;
 	}
 }
+
+template<typename T> void LinkedList<T>::swapNodes(size_t nodeA, size_t nodeB) {
+	T buf = this->getNodeValue(nodeA);
+	this->setNodeValue(nodeA, this->getNodeValue(nodeB));
+	this->setNodeValue(nodeA, buf);
+}
+
+template<typename T> void LinkedList<T>::shuffleNodes() {
+#if __cplusplus >= 201103L
+
+#else
+
+#endif
+	size_t indexPossibilitiesLeft = this->getLength();
+	size_t indexPossibilitiesLeftGenerator = this->getLength();
+	size_t* indexPossibilitiesGenerator = new size_t[this->getLength()];
+	size_t* indexPossibilitiesSource = new size_t[this->getLength()];
+	size_t* indexPossibilitiesTarget = new size_t[this->getLength()];
+
+	for (size_t i = 0; i < this->getLength(); i++) {
+		indexPossibilitiesSource = i;
+		indexPossibilitiesTarget = i;
+	}
+
+
+	delete[] indexPossibilitiesGenerator;
+}
+
 #endif

@@ -1,4 +1,3 @@
-CPPFLAGS += -I ./ -std=c++98
 CXXFLAGS += -I ./ -std=c++98
 CCFLAGS += -I ./ -std=c98
 
@@ -11,11 +10,12 @@ all		:	release
 release	: CXXFLAGS += -O3
 #C Compiler Flags
 release : CCFLAGS  += -O3
-release	: Program2.exe
+release	: executable
 
 
 
 #Debug settings:
+debug	:	clean
 #C++ Compiler Flags
 #unused: -fno-access-control -Q
 debug	:	CXXFLAGS += -DDEBUG -Wchar-subscripts -pedantic -g -Wmain -Wuninitialized -Wall -Wextra -fexceptions -O
@@ -23,14 +23,14 @@ debug	:	CXXFLAGS += -DDEBUG -Wchar-subscripts -pedantic -g -Wmain -Wuninitialize
 debug	:	CCFLAGS  += -DDEBUG -Wchar-subscripts -pedantic -g -Wmain -Wuninitialized -Wall -Wextra -fexceptions -O
 
 #debug 	:	clean
-debug	:	Program2.exe
+debug	:	executable
 
-
+#Actual build requirments
 
 #Cleanup! Deletes old exe and object files
 clean	:	#program02.exe
 		del *.o 
-		del Program2.exe
+		del Program3.exe
 
 
 
@@ -39,10 +39,23 @@ clean	:	#program02.exe
 #if any of the files listed has been altered since the last compile, generate a new .o file
 
 #program02.exe : executable
-Program2.exe	:	Program2.o
-			$(CXX) $(CXXFLAGS) -o Program2.exe Program2.o
 
-Program2.o	:	Program2.cpp
-				$(CXX) $(CXXFLAGS) -c Program2.cpp
+Driver.o	:	Driver.cpp
+				$(CXX) $(CXXFLAGS) -c Driver.cpp
+
+Timer.o	:	Timer.cpp
+				$(CXX) $(CXXFLAGS) -c Timer.cpp
+
+Text.o	:	Text.cpp
+				$(CXX) $(CXXFLAGS) -c Text.cpp
+
+Movies.o	:	Movies.cpp
+				$(CXX) $(CXXFLAGS) -c Movies.cpp
+
+Movie.o	:	Movie.cpp
+				$(CXX) $(CXXFLAGS) -c Movie.cpp
+				
+executable	:	Movie.o Movies.o Text.o Timer.o Driver.o 
+			$(CXX) $(CXXFLAGS) -o Program3.exe Movie.o Movies.o Text.o Timer.o Driver.o 
 				
 				
