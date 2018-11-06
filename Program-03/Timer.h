@@ -20,4 +20,7 @@ time_t getTime();
  Post: Will return the number of seconds separating two times
  */
 double totalTime(time_t start, time_t end);
+
+
+double findDelta(time_t start);
 #endif

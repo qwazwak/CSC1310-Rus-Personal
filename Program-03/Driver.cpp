@@ -19,7 +19,8 @@
  * by allowing the user to add, save, delete, and edit movies to/from a library.
  */
 
-#
+#define RUN_FAST
+#define SHOW_SORT
 
 #include "Movies.h"
 #include "Movie.h"
@@ -61,14 +62,20 @@ bool confirmDOTtxt(string &input) {
 	return (input.at(input.length() - 1) != 't' || input.at(input.length() - 2) != 'x' || input.at(input.length() - 3) != 't' || input.at(input.length() - 4) != '.') ? false : true;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 	int menuChoice;
 	//int movieChoice;
 	//int maxMovies;
 	string filename;
 	
 	Movies* movieLibrary = new Movies();
-	
+	if(argc > 1){
+		for(long i = 0; i < argc; i++){
+			if(strcmp(argv[i], "loadFile") == 0){
+				movieLibrary->readMoviesFromFile(argv[i+1]);
+			}
+		}
+	}
 	do {
 		cout << "\n\nWhat would you like to do?\n";
 		cout << "1.  Read movies from file.\n";
@@ -83,6 +90,8 @@ int main() {
 		cin >> menuChoice;
 		while (menuChoice < 1 || menuChoice > 8 || cin.fail()) {
 			if(cin.fail()) {
+				cin.clear();
+				cin.ignore();
 				cout << "An error has occured, be sure to enter only numbers" << "\n";
 			}
 			else {
@@ -136,7 +145,7 @@ int main() {
 				movieLibrary->displayMovies();
 				break;
 			case 7:
-				cerr << "add me you fuck" << endl;
+				//cerr << "add me you fuck" << endl;
 				movieLibrary->algorithmAnalysis();
 				break;
 

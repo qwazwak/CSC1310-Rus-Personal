@@ -7,7 +7,8 @@
 
 #if !defined(LINKEDLIST_H)
 #define LINKEDLIST_H
-
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 using namespace std;
 
@@ -223,24 +224,58 @@ template<typename T> void LinkedList<T>::swapNodes(size_t nodeA, size_t nodeB) {
 }
 
 template<typename T> void LinkedList<T>::shuffleNodes() {
-#if __cplusplus >= 201103L
+	srand(time(NULL));
+	size_t randBuffer;
+	size_t sizeLimit = this->getLength();
+	for (int i = sizeLimit - 1; i > 0; i--) {
+		// Pick a random index from 0 to i
+		randBuffer = rand() % (i + 1);
 
-#else
-
-#endif
-	size_t indexPossibilitiesLeft = this->getLength();
-	size_t indexPossibilitiesLeftGenerator = this->getLength();
-	size_t* indexPossibilitiesGenerator = new size_t[this->getLength()];
-	size_t* indexPossibilitiesSource = new size_t[this->getLength()];
-	size_t* indexPossibilitiesTarget = new size_t[this->getLength()];
-
-	for (size_t i = 0; i < this->getLength(); i++) {
-		indexPossibilitiesSource = i;
-		indexPossibilitiesTarget = i;
+		// Swap arr[i] with the element at random index
+		this->swapNodes(i, randBuffer);
 	}
 
+	/*
+	 size_t indexPossibilitiesLeft = this->getLength();
+	 size_t* indexPossibilitiesGenerator = new size_t[this->getLength()];
+	 for (size_t i = 0; i < this->getLength(); i++) {
+	 indexPossibilitiesGenerator[i] = i;
+	 }
 
-	delete[] indexPossibilitiesGenerator;
+	 #if defined(DEBUG)
+	 clog << "Filled Buffer Array" << endl;
+	 #endif
+	 size_t* indexToPlace_A = new size_t[this->getLength()];
+	 size_t* indexToPlace_B = new size_t[this->getLength()];
+
+
+
+
+	 for (size_t i = 0; i < this->getLength(); i++) {
+	 #if defined(DEBUG)
+	 clog << "rand() loop" << endl;
+	 #endif
+	 randBuffer = rand();
+	 indexToPlace_A[i] = indexPossibilitiesGenerator[randBuffer % indexPossibilitiesLeft];
+	 indexToPlace_B[i == 0 ? this->getLength() - 1 : i - 1] = indexToPlace_A[i];
+	 for (size_t randRemover = randBuffer; randRemover + 1 < indexPossibilitiesLeft; randRemover++) {
+	 indexPossibilitiesGenerator[randRemover] = indexPossibilitiesGenerator[randRemover + 1];
+	 }
+	 --indexPossibilitiesGenerator;
+	 }
+	 delete[] indexPossibilitiesGenerator;
+
+
+	 for (size_t i = 0; i < this->getLength(); i++) {
+	 #if defined(DEBUG)
+	 clog << "swap" << endl;
+	 clog << long(indexToPlace_A[i]) << "," << long(indexToPlace_A[i] == 0 ? this->getLength() - 1 : indexToPlace_A[i] - 1) << endl;
+	 #endif
+	 this->swapNodes(indexToPlace_A[i], indexToPlace_A[i] == 0 ? this->getLength() - 1 : indexToPlace_A[i] - 1);
+	 }
+	 delete[] indexToPlace_A;
+	 delete[] indexToPlace_B;
+	 */
 }
 
 #endif

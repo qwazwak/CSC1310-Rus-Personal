@@ -7,6 +7,7 @@
 #if !defined(MOVIES_H)
 #define MOVIES_H
 
+#include "Timer.h"
 #include "LinkedList.h"
 #include "Movie.h"
 #include <iostream>
@@ -39,11 +40,11 @@ class Movies {
 
 		 */
 
-		void algorithmAnalysis();
 
-		size_t search_LinearSearch(Text key);
-		size_t search_BinarySearch(Text key);
-		size_t search_BinarySearchWorker(Text &key, size_t first, size_t last);
+		long search_LinearSearch(Text* key);
+		long search_BinarySearch(Text* key, long first, long last);
+		long search_BinarySearch(Text* key);
+		size_t search_BinarySearchWorker(Text* key, size_t first, size_t last);
 		void sort_BubbleSort();
 		void sort_InsertionSort();
 		void sort_InsertionSortDescending();
@@ -51,10 +52,17 @@ class Movies {
 		void sort_MergeSortParent();
 		void sortHelper_MergeSort_MergeSort(size_t start, size_t endPoint);
 		void sortHelper_MergeSort_Merge(size_t startOfA, size_t endOfA, size_t startOfB, size_t endOfB);
+		void sortHelper_MergeSort_MergeSort(Movie** theArray, size_t start, size_t endPoint);
+		void sortHelper_MergeSort_Merge(Movie** theArray, size_t startOfA, size_t endOfA, size_t endOfB);
 		void sort_QuickSort();
-		void sortHelper_Partition();
+		void sort_QuickSort_Worker(long, long);
+		long sortHelper_Partition(long low, long high);
 
 	public:
+
+		void algorithmAnalysis();
+
+
 		/*
 		 *	Function name:  Movies constructor
 		 *	Parameters:  	An integer containing the maximum size of the movie library

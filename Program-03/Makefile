@@ -15,7 +15,7 @@ release	: executable
 
 
 #Debug settings:
-debug	:	clean
+#debug	:	clean
 #C++ Compiler Flags
 #unused: -fno-access-control -Q
 debug	:	CXXFLAGS += -DDEBUG -Wchar-subscripts -pedantic -g -Wmain -Wuninitialized -Wall -Wextra -fexceptions -O

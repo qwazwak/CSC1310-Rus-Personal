@@ -5,49 +5,188 @@
  *	Purpose:  Be able to create, manage, print, save & delete a movie library
  */
 #include "Movies.h"
+#include "Timer.h"
 #include "Movie.h"
 #include "LinkedList.h"
 #include <cstring>
 #include <cmath>
-time_t getTime();
-double totalTime(time_t start, time_t end);
-void Movies::algorithmAnalysis() {
-#if defined(DEBUG)
-	clog << "" << endl;
+#if defined(RUN_FAST)
+
+#define MOVIES_RUN_FAST
 #endif
+bool isAlphaOrder(const char* A, const char* B) {
+	string lowerA(A);
+	string lowerB(B);
+	return lowerA.compare(lowerB) <= 0 ? true : false;
+}
+
+bool isAlphaOrder(char* A, char* B) {
+	string lowerA(A);
+	string lowerB(B);
+	return lowerA.compare(lowerB) <= 0 ? true : false;
+}
+bool isAlphaOrder(const string A, const string B) {
+	string lowerA(A);
+	string lowerB(B);
+	return lowerA.compare(lowerB) <= 0 ? true : false;
+}
+bool isAlphaEqual(const string A, const string B) {
+	string lowerA(A);
+	string lowerB(B);
+	return lowerA.compare(lowerB) == 0 ? true : false;
+}
+/*
+ time_t getTime();
+ double totalTime(time_t start, time_t end);
+ */
+void Movies::algorithmAnalysis() {
 #if defined(DEBUG)
 	clog << "starting benchmark" << endl;
 #endif
 	time_t benchmarkStartBuffer;
-	double benchmarkDelta_;
+	Text* textBuffer = new Text("Llama");
 
+	//cout << setw(40) << setfill(' ') << setw(40) << setfill(' ');
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_BubbleSort();
+	cout << setw(30) << setfill(' ') << right << "Linear Search:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+
+	this->sort_QuickSort();
+	benchmarkStartBuffer = getTime();
+	this->search_BinarySearch(textBuffer);
+	cout << setw(30) << setfill(' ') << right << "Binary Search:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_BubbleSort();
+	cout << setw(30) << setfill(' ') << right << "Bubble Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_InsertionSort();
+	cout << setw(30) << setfill(' ') << right << "Insertion Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_InsertionSortDescending();
+	cout << setw(30) << setfill(' ') << right << "Reverse Insertion Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_SelectionSort();
+	cout << setw(30) << setfill(' ') << right << "SelectionSort:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_MergeSortParent();
+	cout << setw(30) << setfill(' ') << right << "Merge Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
+
+
+	this->movieList->shuffleNodes();
+	benchmarkStartBuffer = getTime();
+	this->sort_QuickSort();
+	cout << setw(30) << setfill(' ') << right << "Quick Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
+	cout << setw(30) << setfill(' ') << setw(0) << left;
 }
 
-size_t Movies::search_LinearSearch(Text key) {
+long Movies::search_LinearSearch(Text* key) {
 	string compareBuffer;
-	for (size_t i = 0; i < movieList->getLength(); i++) {
-		compareBuffer = string(key.getText());
+	for (long i = 0; i < static_cast<long>(movieList->getLength()); i++) {
+		compareBuffer = string(key->getText());
 		if(compareBuffer.compare(movieList->getNodeValue(i)->getMovieTitle()->getText()) == 0) {
 			return i;
 		}
 	}
 	return -1;
 }
-size_t Movies::search_BinarySearch(Text key) {
-	return search_BinarySearchWorker(key, 0, this->movieList->getLength() - 1);
+long Movies::search_BinarySearch(Text* key) {
+	return search_BinarySearch(key, 0, this->movieList->getLength());
+}
+long Movies::search_BinarySearch(Text* key, long first, long last) {
+	if(last < first) {
+		return -1;   // value would be inserted at index "low"
+	}
+	long mid = static_cast<long>(floor(static_cast<double>(first + last) / 2.0));
+	if(true == isAlphaEqual(movieList->getNodeValue(mid)->getMovieTitle()->getText(), key->getText())) {
+		return mid;
+	}
+	if(false == isAlphaOrder(movieList->getNodeValue(mid)->getMovieTitle()->getText(), key->getText())) {
+		return search_BinarySearch(key, first, mid - 1);
+	}
+	else if(true == isAlphaOrder(movieList->getNodeValue(mid)->getMovieTitle()->getText(), key->getText())) {
+		return search_BinarySearch(key, mid + 1, last);
+	}
+	else {
+		return mid;
+	}
+
+	/*
+
+	 if(last == -1) {
+	 last = this->movieList->getLength();
+	 }
+	 if(first == last) {
+	 return first;
+	 }
+	 string stringKey(key->getText());
+	 string first_string(this->movieList->getNodeValue(first)->getMovieTitle()->getText());
+	 string last_string(this->movieList->getNodeValue(last)->getMovieTitle()->getText());
+	 long midpointBOT = static_cast<long>(floor((first + last) / 2.0));
+	 string midpointBOT_string(this->movieList->getNodeValue(midpointBOT)->getMovieTitle()->getText());
+	 long midpointTOP = static_cast<long>(ceil((first + last) / 2.0));
+	 string midpointTOP_string(this->movieList->getNodeValue(midpointTOP)->getMovieTitle()->getText());
+	 if(midpointBOT == first && midpointTOP == last) {
+	 if(first_string.compare(midpointBOT_string) == 0) {
+	 return midpointBOT;
+	 }
+	 if(last_string.compare(midpointTOP_string) == 0) {
+	 return midpointTOP;
+	 }
+	 }
+	 if(stringKey.compare(midpointBOT_string) > 0) {
+	 return this->search_BinarySearchWorker(key, midpointBOT, last);
+	 }
+	 if(stringKey.compare(midpointBOT_string) < 0) {
+	 return this->search_BinarySearchWorker(key, first, midpointBOT);
+	 }
+	 return NULL;
+	 */
 }
 
-size_t Movies::search_BinarySearchWorker(Text &key, size_t first, size_t last) {
-	if(last == first) {
-		return first;
-	}
+size_t Movies::search_BinarySearchWorker(Text* key, size_t first, size_t last) {
+	clog << "GOT LEVEL" << endl;
 	size_t midpoint = static_cast<size_t>(floor(static_cast<double>(first + last) / 2.0));
-	string stringKey(key.getText());
+	string stringKey(key->getText());
+
 	string stringMidpoint(movieList->getNodeValue(midpoint)->getMovieTitle()->getText());
+	if(last - 1 == first && first + 1 == last) {
+		return -1;
+	}
+	if(stringKey.compare(movieList->getNodeValue(midpoint + 1)->getMovieTitle()->getText()) == 0) {
+		return midpoint + 1;
+	}
+	if(stringKey.compare(movieList->getNodeValue(midpoint - 1)->getMovieTitle()->getText()) == 0) {
+		return midpoint - 1;
+	}
+	if(stringKey.compare(movieList->getNodeValue(midpoint)->getMovieTitle()->getText()) == 0) {
+		return midpoint;
+	}
+	if(stringKey.compare(stringMidpoint) == 0) {
+		return midpoint;
+	}
 	if(stringKey.compare(stringMidpoint) > 0) {
 		return this->search_BinarySearchWorker(key, midpoint, last);
 	}
-	else if(stringKey.compare(stringMidpoint) < 0) {
+	if(stringKey.compare(stringMidpoint) < 0) {
 		return this->search_BinarySearchWorker(key, first, midpoint);
 	}
 	cerr << "FUCK" << endl;
@@ -108,44 +247,52 @@ void Movies::sort_SelectionSort() {
 void Movies::sort_MergeSortParent() {
 	sortHelper_MergeSort_MergeSort(0, movieList->getLength());
 }
+
 void Movies::sortHelper_MergeSort_MergeSort(size_t start, size_t endpoint) {
-	if(start < endpoint/*&& start != end*/) {
-		size_t midpoint = static_cast<size_t>(ceil((static_cast<double>(start) + static_cast<double>(endpoint)) / 2.0));
+	if(start >= endpoint   //&& start != end
+	) {
+		return;
+	}
+	size_t midpoint = static_cast<size_t>(floor((static_cast<double>(start) + static_cast<double>(endpoint)) / 2.0));
+	if(start + 1 != endpoint) {
 		sortHelper_MergeSort_MergeSort(start, midpoint);
 		sortHelper_MergeSort_MergeSort(midpoint + 1, endpoint);
-
-		sortHelper_MergeSort_Merge(start, midpoint, midpoint + 1, endpoint);
 	}
+	sortHelper_MergeSort_Merge(start, midpoint, midpoint + 1, endpoint);
+
 }
+
 void Movies::sortHelper_MergeSort_Merge(size_t startOfA, size_t endOfA, size_t startOfB, size_t endOfB) {
+
+	size_t increment_A = 0;
 	size_t sizeOfA = endOfA - startOfA + 1;
 	size_t remaingValuesA = sizeOfA;
+	size_t increment_B = 0;
 	size_t sizeOfB = endOfB - startOfB + 1;
 	size_t remaingValuesB = sizeOfB;
-	size_t currentArrayIndex = 0;
+
 	Movie** mergedArray = new Movie*[sizeOfA + sizeOfB];
+	size_t currentMergedArrayIndex = 0;
 
 	while (remaingValuesA > 0 && remaingValuesB > 0) {
-		// if not in order:
-		if(movieList->getNodeValue(sizeOfA - remaingValuesA)->getMovieTitle() <= movieList->getNodeValue(sizeOfB - remaingValuesB)->getMovieTitle()) {
-			mergedArray[currentArrayIndex++] = movieList->getNodeValue(sizeOfA - remaingValuesA--);
-		}
-		else {
-			mergedArray[currentArrayIndex++] = movieList->getNodeValue(sizeOfB - remaingValuesB--);
-		}
-	}
+		mergedArray[currentMergedArrayIndex] = movieList->getNodeValue(isAlphaOrder(movieList->getNodeValue(increment_A)->getMovieTitle()->getString(), movieList->getNodeValue(increment_B)->getMovieTitle()->getString()) ? increment_A++ : increment_B++);
+		currentMergedArrayIndex++;
 
+	}
 	while (remaingValuesA > 0) {
-		mergedArray[currentArrayIndex++] = movieList->getNodeValue(sizeOfA - remaingValuesA--);
+		mergedArray[currentMergedArrayIndex] = movieList->getNodeValue(increment_A++);
+		currentMergedArrayIndex++;
+	}
+	while (remaingValuesB > 0) {
+		mergedArray[currentMergedArrayIndex] = movieList->getNodeValue(increment_B++);
+		currentMergedArrayIndex++;
 	}
 
-	while (remaingValuesB > 0) {
-		mergedArray[currentArrayIndex++] = movieList->getNodeValue(sizeOfB - remaingValuesA--);
-	}
 	for (size_t i = 0; i < sizeOfA + sizeOfB; i++) {
-		movieList->setNodeValue(sizeOfA + i, mergedArray[i]);
+		movieList->setNodeValue(startOfA + i, mergedArray[i]);
 	}
 }
+
 /*
  Movie* Movies::sortHelper_MergeSort_Merge(Movie* arrayA, Movie* arrayB, size_t sizeOfA, size_t sizeOfB) {
  Movie* mergedArray = new Movie[sizeOfA + sizeOfB];
@@ -210,11 +357,38 @@ void Movies::sortHelper_MergeSort_Merge(size_t startOfA, size_t endOfA, size_t s
  }
  }
  */
+
 void Movies::sort_QuickSort() {
+	this->sort_QuickSort_Worker(0, this->movieList->getLength() - 1);
+}
+void Movies::sort_QuickSort_Worker(long low, long high) {
+	if(low < high) {
+		// pi is partitioning index, arr[pi] is now
+		// at right place
+		long pi = sortHelper_Partition(low, high);
+
+		this->sort_QuickSort_Worker(low, pi - 1);		// Before pi
+		this->sort_QuickSort_Worker(pi + 1, high);		// After pi
+	}
 
 }
-void Movies::sortHelper_Partition() {
+long Movies::sortHelper_Partition(long low, long high) {
+// pivot (Element to be placed at right position)
+	string pivot(this->movieList->getNodeValue(high)->getMovieTitle()->getText());
 
+	long i = (low - 1);
+// Index of smaller element
+
+	for (long j = low; j <= high - 1; j++) {
+		// If current element is smaller than or
+		// equal to pivot
+		if(isAlphaOrder(this->movieList->getNodeValue(j)->getMovieTitle()->getString(), pivot)) {
+			i++;    // increment index of smaller element
+			this->movieList->swapNodes(i, j);
+		}
+	}
+	this->movieList->swapNodes(i + 1, high);
+	return (i + 1);
 }
 
 Movies::Movies() {
@@ -235,8 +409,8 @@ void Movies::addMovieToList() {
 	Text* genre;
 	Text* rating;
 
-	//add a movie
-	cin.ignore();   //remove the \n from the keyboard buffer
+//add a movie
+	cin.ignore();    //remove the \n from the keyboard buffer
 	cout << "\n\nMOVIE TITLE: ";
 	cin.getline(tempString, 100);
 	title = new Text(tempString);
@@ -256,13 +430,13 @@ void Movies::addMovieToList() {
 	cout << "\nSTAR RATING (out of 10): ";
 	cin >> numStars;
 
-	//create the movie
+//create the movie
 	Movie* oneMovie = new Movie(title, length, year, genre, rating, numOscars, numStars);
 
-	//add the movie to the list (library)
+//add the movie to the list (library)
 	movieList->appendNode(oneMovie);
 
-	//confirm addition to user
+//confirm addition to user
 	cout << endl;
 	title->displayText();
 	cout << " was added to the movie library!\n";
@@ -327,7 +501,7 @@ void Movies::displayMovies() {
 }
 
 void Movies::displayMovieTitles() {
-	//Text* movieTitle;
+//Text* movieTitle;
 	for (size_t x = 0; x < movieList->getLength(); x++) {
 		cout << "\nMOVIE " << (x + 1) << ": ";
 		movieList->getNodeValue(x)->getMovieTitle()->displayText();
@@ -360,15 +534,15 @@ void Movies::readMoviesFromFile(const char *filename) {
 	if(inFile.good()) {
 		getline(inFile, inputBuffer);
 		while (!inFile.eof()) {
-			title = new Text(inputBuffer);   //create a text for the movie title
+			title = new Text(inputBuffer.c_str());   //create a text for the movie title
 			inFile >> movieLength;
 			inFile >> movieYear;
 			inFile.ignore();   //get rid of \n in the inFile buffer
 
 			getline(inFile, inputBuffer);   //read in genre
-			genre = new Text(inputBuffer);   //create a text for genre
+			genre = new Text(inputBuffer.c_str());   //create a text for genre
 			getline(inFile, inputBuffer);   //read in rating
-			rating = new Text(inputBuffer);   //create a text for rating
+			rating = new Text(inputBuffer.c_str());   //create a text for rating
 			inFile >> movieOscars;
 			inFile >> movieNumStars;
 			inFile.ignore();   //get rid of \n in the inFile buffer
@@ -380,8 +554,9 @@ void Movies::readMoviesFromFile(const char *filename) {
 			movieList->appendNode(oneMovie);
 
 			//confirm addition to user
+#if !defined(MOVIES_RUN_FAST)
 			cout << "\n" << title->getString() << " was added to the movie library!\n";
-
+#endif
 			getline(inFile, inputBuffer);   //read in the next movie title if there is one
 
 			numMoviesReadFromFile++;
