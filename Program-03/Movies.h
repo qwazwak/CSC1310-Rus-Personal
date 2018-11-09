@@ -42,18 +42,18 @@ class Movies {
 
 
 		long search_LinearSearch(Text* key);
-		long search_BinarySearch(Text* key, long first, long last);
-		long search_BinarySearch(Text* key);
-		size_t search_BinarySearchWorker(Text* key, size_t first, size_t last);
+		long search_BinarySearch(Text* key, long first = -1, long last = -1);
+		//long search_BinarySearch(Text* key);
+		//size_t search_BinarySearchWorker(Text* key, size_t first, size_t last);
 		void sort_BubbleSort();
 		void sort_InsertionSort();
 		void sort_InsertionSortDescending();
 		void sort_SelectionSort();
 		void sort_MergeSortParent();
-		void sortHelper_MergeSort_MergeSort(size_t start, size_t endPoint);
-		void sortHelper_MergeSort_Merge(size_t startOfA, size_t endOfA, size_t startOfB, size_t endOfB);
-		void sortHelper_MergeSort_MergeSort(Movie** theArray, size_t start, size_t endPoint);
-		void sortHelper_MergeSort_Merge(Movie** theArray, size_t startOfA, size_t endOfA, size_t endOfB);
+		void sort_MergeSort(size_t start, size_t endPoint);
+		void sortHelper_MergeSort_Merge(size_t start, size_t midpoint, size_t endpoint);
+	//	void sortHelper_MergeSort_MergeSort(Movie** theArray, size_t start, size_t endPoint);
+	//	void sortHelper_MergeSort_Merge(Movie** theArray, size_t startOfA, size_t endOfA, size_t endOfB);
 		void sort_QuickSort();
 		void sort_QuickSort_Worker(long, long);
 		long sortHelper_Partition(long low, long high);

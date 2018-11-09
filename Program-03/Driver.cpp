@@ -7,7 +7,7 @@
 //TODO: create function - Merge Sort
 //TODO: create function - Quick Sort
 //TODO: Create a function called algorithmAnalysis that will use a timer to time how long it takes to run the algorithm on a linked list of movies and print out the times.
-//TODO: add algo anal menu option 2nd to last
+//DONE: add algo anal menu option 2nd to last
 //DONE: Create Linked list class function Swap
 //DONE: Create Linked list class function setnode value
 
@@ -28,47 +28,14 @@
 #include "timer.h"
 #include <iostream>
 
-
-
-
 using namespace std;
 
-void ding(int, int);
-
-#if defined(_WIN32)
-#include <windows.h>
-#if defined(CUSTOM_TONE)
-void ding(int htz = 500, int millisLong = 200) {
-	Beep(htz, millisLong);
-}
-#else
-void ding(int, int) {
-	char command[6] = "echo";
-	command[4] = 07;
-	system(command);
-}
-#endif
-#elif defined(__unix__)
-void ding(int, int) {
-	system("echo -e \"\007\" >/dev/tty10");
-}
-#else
-void ding(int, int) {
-	cout << "\a" << flush;
-}
-#endif
-
-bool confirmDOTtxt(string &input) {
-	return (input.at(input.length() - 1) != 't' || input.at(input.length() - 2) != 'x' || input.at(input.length() - 3) != 't' || input.at(input.length() - 4) != '.') ? false : true;
-}
-
 int main(int argc, char* argv[]) {
-	int menuChoice;
-	//int movieChoice;
-	//int maxMovies;
+	long menuChoice;
 	string filename;
 	
 	Movies* movieLibrary = new Movies();
+#if defined(DEBUG)
 	if(argc > 1){
 		for(long i = 0; i < argc; i++){
 			if(strcmp(argv[i], "loadFile") == 0){
@@ -76,6 +43,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+#endif
 	do {
 		cout << "\n\nWhat would you like to do?\n";
 		cout << "1.  Read movies from file.\n";
@@ -104,7 +72,7 @@ int main(int argc, char* argv[]) {
 		switch (menuChoice) {
 			case 1:
 				cin.ignore();
-				cout << "\n" << "\n" << "What is the name of the file? (example.txt):  ";
+				cout << "\n\nWhat is the name of the file? (example.txt):  ";
 				getline(cin, filename);
 				while (filename.length() <= 5 || cin.fail()) {
 					if(cin.fail()) {
@@ -115,17 +83,28 @@ int main(int argc, char* argv[]) {
 					else {
 						cout << "That is not a valid choice" << "\n";
 					}
-					cout << "\n" << "\n" << "What is the name of the file? (example.txt):  ";
+					cout << "\n\nWhat is the name of the file? (example.txt):  ";
 					getline(cin, filename);
 				}
-				clog << "GOT FILENAME" << endl;
 				movieLibrary->readMoviesFromFile(filename.c_str());
-				clog << "GOT MOVIES" << endl;
 				break;
 
 			case 2:
+				cin.ignore();
 				cout << "\n\nWhat do you want to name the file? (example.txt):  ";
-				cin >> filename;
+				getline(cin, filename);
+				while (cin.fail() || !((filename.at(filename.length() - 1) != 't' || filename.at(filename.length() - 2) != 'x' || filename.at(filename.length() - 3) != 't' || filename.at(filename.length() - 4) != '.') ? false : true)) {
+					if(cin.fail()) {
+						cin.clear();
+						cin.ignore();
+						cout << "An error has occured, try again" << "\n";
+					}
+					else {
+						cout << "be sure to include the file extention '.txt'" << "\n";
+					}
+					cout << "\n\nWhat do you want to name the file? (example.txt):  ";
+					getline(cin, filename);
+				}
 				movieLibrary->saveToFile(filename);
 				break;
 
@@ -144,8 +123,7 @@ int main(int argc, char* argv[]) {
 			case 6:     //print all movies
 				movieLibrary->displayMovies();
 				break;
-			case 7:
-				//cerr << "add me you fuck" << endl;
+			case 7:	//Benchmark the algos
 				movieLibrary->algorithmAnalysis();
 				break;
 
