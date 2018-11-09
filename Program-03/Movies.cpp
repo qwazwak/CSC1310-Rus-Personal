@@ -99,14 +99,6 @@ void Movies::algorithmAnalysis() {
 
 
 
-	this->movieList->shuffleNodes();
-	benchmarkStartBuffer = getTime();
-	this->sort_MergeSortParent();
-	cout << setw(30) << setfill(' ') << right << "Merge Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
-
-
-
-
 	cout << setw(30) << setfill(' ') << setw(0) << left;
 }
 long Movies::search_LinearSearch(Text* key) {
