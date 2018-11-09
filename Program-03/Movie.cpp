@@ -1,8 +1,8 @@
 /*
- Title:  Movie.cpp
- Author:  April Crockett, modified by Rus Hoffman
- Date:  11/7/2017
- Purpose:  Be able to create, manage, print & delete a single movie.
+ * Title:  Movie.cpp
+ * Author:  April Crockett, modified by Rus Hoffman
+ * Date:  11/7/2017
+ * Purpose:  Be able to create, manage, print & delete a single movie.
  */
 #include "Movie.h"
 #include "Text.h"
@@ -11,6 +11,11 @@ Movie::Movie(Text* title, size_t length) {
 	//assign parameter data to structure memebers
 	movieTitle = title;
 	movieLength = length;
+	movieYear = -1;
+	movieGenre = new Text("ERR");
+	movieRating = new Text("ERR");
+	movieOscars = -1;
+	movieNumStars = -1;
 }
 
 Movie::Movie(Text* title, size_t length, size_t year, Text* genre, Text* rating, size_t nom, float stars) {
@@ -55,8 +60,6 @@ void Movie::printMovieDetailsToFile(ofstream &outFile) {
 
 void Movie::editMovie() {
 	size_t choice;
-	//Text* tempText;
-	//char temp[100];
 	string inputBuffer;
 	
 	do {
@@ -71,57 +74,109 @@ void Movie::editMovie() {
 		cout << "8.  DONE EDITING\n";
 		cout << "CHOOSE 1-8:  ";
 		cin >> choice;
-		while (choice < 1 || choice > 8) {
-			cout << "\nOOPS!  Enter choice 1 through 8:  ";
+		while (choice < 1 || choice > 8 || cin.fail()) {
+			if(cin.fail()) {
+				cin.clear();
+				cin.ignore();
+				cout << "\nErr, be sure to enter only a number 1-8" << "\n";
+
+			}
+			cout << "\nOOPS!  Enter choice 1 through 8:  " << flush;
 			cin >> choice;
 		}
-		cin.ignore();
 		
 		switch (choice) {
-		case 1:
-			cout << "\nCurrent Title: " << movieTitle << "\n";
-			cout << "NEW TITLE:  " << flush;
-			getline(cin, inputBuffer);
-			movieTitle->editText(inputBuffer.c_str());
-			break;
+			case 1:
+				cin.ignore();
+				cout << "\nCurrent Title: " << movieTitle << "\n";
+				cout << "NEW TITLE:  " << flush;
+				getline(cin, inputBuffer);
+				movieTitle->editText(inputBuffer.c_str());
+				break;
 
-		case 2:
-			cout << "\nCurrent Length: " << movieLength << "\n";
-			cout << "NEW LENGTH:  " << flush;
-			cin >> movieLength;
-			break;
+			case 2:
+				cout << "\nCurrent Length: " << movieLength << "\n";
+				cout << "NEW LENGTH:  " << flush;
+				cin >> movieLength;
+				while (movieLength < 1 || cin.fail()) {
+					if(cin.fail()) {
+						cin.clear();
+						cin.ignore();
+						cout << "\nErr, be sure to enter only a number 1 or more" << "\n";
 
-		case 3:
-			cout << "\nCurrent Year: " << movieYear << "\n";
-			cout << "NEW LENGTH:  " << flush;
-			cin >> movieYear;
-			break;
+					}
+					cout << "\nCurrent Length: " << movieLength << "\n";
+					cout << "NEW LENGTH:  " << flush;
+					cin >> movieLength;
+				}
+				break;
 
-		case 4:
-			cout << "\nCurrent Genre: " << movieGenre << "\n";
-			cout << "NEW GENRE:  " << flush;
-			getline(cin, inputBuffer);
-			movieGenre->editText(inputBuffer.c_str());
-			break;
+			case 3:
+				cout << "\nCurrent Year: " << movieYear << "\n";
+				cout << "NEW LENGTH:  " << flush;
+				cin >> movieYear;
+				while (movieYear < 0 || cin.fail()) {
+					if(cin.fail()) {
+						cin.clear();
+						cin.ignore();
+						cout << "\nErr, be sure to enter only a number 0 or more" << "\n";
 
-		case 5:
-			cout << "\nCurrent Rating: " << movieRating << "\n";
-			cout << "NEW GENRE:  ";
-			getline(cin, inputBuffer);
-			movieRating->editText(inputBuffer.c_str());
-			break;
-			
-		case 6:
-			cout << "\nCurrent Number of Oscars Won: " << movieOscars << "\n";
-			cout << "NEW NUMBER OF OSCARS:  " << flush;
-			cin >> movieOscars;
-			break;
-			
-		case 7:
-			cout << "\nCurrent Star Rating from IMDB: " << movieNumStars << "\n";
-			cout << "NEW STAR RATING:  " << flush;
-			cin >> movieNumStars;
-			break;
+					}
+					cout << "\nCurrent Year: " << movieYear << "\n";
+					cout << "NEW YEAR:  " << flush;
+					cin >> movieYear;
+				}
+				break;
+
+			case 4:
+				cin.ignore();
+				cout << "\nCurrent Genre: " << movieGenre << "\n";
+				cout << "NEW GENRE:  " << flush;
+				getline(cin, inputBuffer);
+				movieGenre->editText(inputBuffer.c_str());
+				break;
+
+			case 5:
+				cin.ignore();
+				cout << "\nCurrent Rating: " << movieRating << "\n";
+				cout << "NEW GENRE:  ";
+				getline(cin, inputBuffer);
+				movieRating->editText(inputBuffer.c_str());
+				break;
+
+			case 6:
+				cout << "\nCurrent Number of Oscars Won: " << movieOscars << "\n";
+				cout << "NEW NUMBER OF OSCARS:  " << flush;
+				cin >> movieOscars;
+				while (movieOscars < 0 || cin.fail()) {
+					if(cin.fail()) {
+						cin.clear();
+						cin.ignore();
+						cout << "\nErr, be sure to enter only a number 0 or more" << "\n";
+
+					}
+					cout << "\nCurrent Number of Oscars Won: " << movieOscars << "\n";
+					cout << "NEW NUMBER OF OSCARS:  " << flush;
+					cin >> movieOscars;
+				}
+				break;
+
+			case 7:
+				cout << "\nCurrent Star Rating from IMDB: " << movieNumStars << "\n";
+				cout << "NEW STAR RATING:  " << flush;
+				cin >> movieNumStars;
+				while (movieNumStars < 0 || movieNumStars > 10 || cin.fail()) {
+					if(cin.fail()) {
+						cin.clear();
+						cin.ignore();
+						cout << "\nErr, be sure to enter only a number 0 to 10" << "\n";
+
+					}
+					cout << "\nCurrent Star Rating from IMDB: " << movieNumStars << "\n";
+					cout << "NEW STAR RATING:  " << flush;
+					cin >> movieNumStars;
+				}
+				break;
 		}
 	}while (choice != 8);
 }
@@ -129,11 +184,7 @@ void Movie::editMovie() {
 Text* Movie::getMovieTitle() const {
 	return movieTitle;
 }
-/*
-string Movie::getMovieTitleAsString() const {
-	return string(this->movieTitle->getText());
-}
-*/
+
 size_t Movie::getMovieLength() const {
 	return movieLength;
 }

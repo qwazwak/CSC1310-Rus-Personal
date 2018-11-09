@@ -1,16 +1,3 @@
-//DONE: create function - linear search
-//TODO: create function - Binary Search
-//TODO: create function - Bubble Sort
-//TODO: create function - Insertion Sort
-//TODO: create function - Insertion Sort Descending
-//TODO: create function - Selection Sort
-//TODO: create function - Merge Sort
-//TODO: create function - Quick Sort
-//TODO: Create a function called algorithmAnalysis that will use a timer to time how long it takes to run the algorithm on a linked list of movies and print out the times.
-//DONE: add algo anal menu option 2nd to last
-//DONE: Create Linked list class function Swap
-//DONE: Create Linked list class function setnode value
-
 /*
  * Title:  Driver.cpp
  * Author:  April Crockett, modified by Rus Hoffman
@@ -35,15 +22,7 @@ int main(int argc, char* argv[]) {
 	string filename;
 	
 	Movies* movieLibrary = new Movies();
-#if defined(DEBUG)
-	if(argc > 1){
-		for(long i = 0; i < argc; i++){
-			if(strcmp(argv[i], "loadFile") == 0){
-				movieLibrary->readMoviesFromFile(argv[i+1]);
-			}
-		}
-	}
-#endif
+
 	do {
 		cout << "\n\nWhat would you like to do?\n";
 		cout << "1.  Read movies from file.\n";
@@ -133,8 +112,7 @@ int main(int argc, char* argv[]) {
 		}
 		
 	}while (menuChoice != 8);
-	
+
 	cout << "\n\nGOODBYE!\n\n" << flush;
-	
 	return 0;
 }

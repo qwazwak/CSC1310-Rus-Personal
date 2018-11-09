@@ -4,15 +4,6 @@
 
 using namespace std;
 
-std::ostream &operator<<(std::ostream &os, const Text &theText) {
-    return os << string(theText.getText());
-}
-/*
-std::ostream &operator>>(std::ostream &os, const Text &theText) {
-    return os >> theText.getText();
-}
-*/
-
 Text::Text(const char* text) {
 	//get the length of the string passed to this function
 	textLength = strlen(text);
@@ -106,37 +97,3 @@ const char* Text::getText() const {
 size_t Text::getLength() const {
 	return textLength;
 }
-
-/*
-bool operator==(Text &thisText, Text &otherText){
-	return strcmp(thisText.getText(), otherText.getText()) == 0;
-}
-
-bool operator!=(Text &thisText, Text &otherText){
-	return strcmp(thisText.getText(), otherText.getText()) != 0;
-}
-
-bool operator<(Text &thisText, Text &otherText){
-	string stringA(thisText.getText());
-	string stringB(otherText.getText());
-	return stringA.compare(stringB) < 0;
-}
-
-bool operator>(Text &thisText, Text &otherText){
-	string stringA(thisText.getText());
-	string stringB(otherText.getText());
-	return stringA.compare(stringB) > 0;
-}
-
-bool operator<=(Text &thisText, Text &otherText){
-	string stringA(thisText.getText());
-	string stringB(otherText.getText());
-	return stringA.compare(stringB) < 0 || stringA.compare(stringB) == 0;
-}
-
-bool operator>=(Text &thisText, Text &otherText){
-	string stringA(thisText.getText());
-	string stringB(otherText.getText());
-	return stringA.compare(stringB) > 0 || stringA.compare(stringB) == 0;
-}
-*/

@@ -19,32 +19,8 @@ using namespace std;
 class Movies {
 	private:
 		LinkedList<Movie*>* movieList;
-		//Movie** moviesArray; //an array of pointers - each pointer points to a single Movie
-		//int maxMovies; //maximum number of elements in the array
-		//int numMovies; //current number of movies in the array
-		
-		/*
-
-		 o binarySearch - This function should search for a particular movie title to see if it is in the list.  It should return -1 if the Movie title could not be found.  Use the binary search algorithm to implement this function.
-		 o bubbleSort – This function should sort the LinkedList of Movies in ascending order by Movie title. This function will call a function called swap in the linkedList class to swap values in the linked list when necessary.  Use the bubble sort algorithm to implement this function.
-
-		 o insertionSort - This function should sort the LinkedList of Movies in ascending order by Movie title. This function will call a function called swap in the linkedList class to swap values in the linked list when necessary.  Use the insertion sort algorithm to implement this function.
-
-		 o insertionSortDescending – This function should be the same as insertionSort except it will sort the LinkedList of Movies in descending order by Movie title instead of ascending order.
-
-		 o selectionSort - This function should sort the LinkedList of Movies in ascending order by Movie title. This function will call a function called swap in the linkedList class to swap values in the linked list when necessary.  Use the selection sort algorithm to implement this function.
-
-		 o mergeSort & merge – These two functions work together to implement the merge sort algorithm, which should sort the LinkedList of Movies in ascending order by Movie title.  The mergeSort function is a recursive function which calls the merge function.  The merge function dynamically allocates a new linked list of Movie pointers to use as the merged linked list.  At some point in the merge function you will need to replace a node….you will do this by deleting the node (deleteNode) at a particular position and then inserting a new node (insertNode function) at a particular position.
-
-		 quickSort & partition – These two functions work together to implement the quick sort algorithm, which should sort the LinkedList of Movies in ascending order by Movie title.  The quicksort function is a recursive function which calls the partition function.  The partition function will use a pivot string (c-string).  The partition function will call a function called swap in the linkedList class to swap values in the linked list when necessary.
-
-		 */
-
-
 		long search_LinearSearch(Text* key);
 		long search_BinarySearch(Text* key, long first = -1, long last = -1);
-		//long search_BinarySearch(Text* key);
-		//size_t search_BinarySearchWorker(Text* key, size_t first, size_t last);
 		void sort_BubbleSort();
 		void sort_InsertionSort();
 		void sort_InsertionSortDescending();
@@ -52,8 +28,6 @@ class Movies {
 		void sort_MergeSortParent();
 		void sort_MergeSort(size_t start, size_t endPoint);
 		void sortHelper_MergeSort_Merge(size_t start, size_t midpoint, size_t endpoint);
-	//	void sortHelper_MergeSort_MergeSort(Movie** theArray, size_t start, size_t endPoint);
-	//	void sortHelper_MergeSort_Merge(Movie** theArray, size_t startOfA, size_t endOfA, size_t endOfB);
 		void sort_QuickSort();
 		void sort_QuickSort_Worker(long, long);
 		long sortHelper_Partition(long low, long high);
@@ -61,7 +35,6 @@ class Movies {
 	public:
 
 		void algorithmAnalysis();
-
 
 		/*
 		 *	Function name:  Movies constructor
@@ -155,7 +128,6 @@ class Movies {
 		//accessor functions to get the attribute values
 		size_t getNumMovies() const;
 		
-
 };
 
 #endif

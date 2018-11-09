@@ -12,11 +12,6 @@
 #include <cmath>
 #include <cctype>
 #include <algorithm>
-
-#if defined(RUN_FAST)
-
-#define MOVIES_RUN_FAST
-#endif
 int lower_case(char c) {
 	return tolower(c);
 }
@@ -43,18 +38,9 @@ bool isAlphaEqual(const string A, const string B) {
 	return lowerA.compare(lowerB) == 0 ? true : false;
 }
 
-/*
- time_t getTime();
- double totalTime(time_t start, time_t end);
- */
 void Movies::algorithmAnalysis() {
-#if defined(DEBUG)
-	clog << "starting benchmark" << endl;
-#endif
 	time_t benchmarkStartBuffer;
 	Text* textBuffer = new Text("Llama");
-
-	//cout << setw(40) << setfill(' ') << setw(40) << setfill(' ');
 
 	this->movieList->shuffleNodes();
 	benchmarkStartBuffer = getTime();
@@ -96,10 +82,9 @@ void Movies::algorithmAnalysis() {
 	this->sort_QuickSort();
 	cout << setw(30) << setfill(' ') << right << "Quick Sort:    " << left << findDelta(benchmarkStartBuffer) << endl;
 
-
-
-
 	cout << setw(30) << setfill(' ') << setw(0) << left;
+
+	delete textBuffer;
 }
 long Movies::search_LinearSearch(Text* key) {
 	string keyBuffer(key->getText());
@@ -155,8 +140,8 @@ void Movies::sort_BubbleSort() {
 	for (size_t maxElement = movieList->getLength() - 1; maxElement > 0; maxElement--) {
 		for (size_t i = 0; i < maxElement; i++) {
 			//swap the two adjacent elements if the one on the left is greater than the one on the right
-			bufferA = movieList->getNodeValue(i)->getMovieTitle()->getText();
-			bufferB = movieList->getNodeValue(i + 1)->getMovieTitle()->getText();
+			bufferA = this->movieList->getNodeValue(i)->getMovieTitle()->getText();
+			bufferB = this->movieList->getNodeValue(i + 1)->getMovieTitle()->getText();
 			transform(bufferA.begin(), bufferA.end(), bufferA.begin(), lower_case);
 			transform(bufferB.begin(), bufferB.end(), bufferB.begin(), lower_case);
 			if(strcmp(bufferA.c_str(), bufferB.c_str()) > 0) {
@@ -185,7 +170,7 @@ void Movies::sort_InsertionSort() {
 		for (size_t i = start + 1; i < this->movieList->getLength(); i++) {
 			comparisonBuffer = moviesBootlegArray[i]->getMovieTitle()->getText();
 			transform(comparisonBuffer.begin(), comparisonBuffer.end(), comparisonBuffer.begin(), lower_case);
-			if(strcmp(comparisonBuffer.c_str(), currentKeyBuffer.c_str()) < 0){
+			if(strcmp(comparisonBuffer.c_str(), currentKeyBuffer.c_str()) < 0) {
 				currentKeyBuffer = moviesBootlegArray[i]->getMovieTitle()->getText();
 				indexOfCurrentLowest = i;
 			}
@@ -237,17 +222,10 @@ void Movies::sort_SelectionSort() {
 }
 
 void Movies::sort_MergeSortParent() {
-	this->sort_MergeSort(0, movieList->getLength());
+	this->sort_MergeSort(0, movieList->getLength() - 1);
 }
 
-void Movies::sort_MergeSort(size_t start = -1, size_t endpoint = -1) {
-	static bool hasRun = false;
-	if(hasRun == false) {
-		hasRun = true;
-		start = 0;
-		endpoint = this->movieList->getLength() - 1;
-
-	}
+void Movies::sort_MergeSort(size_t start, size_t endpoint) {
 	if(start < endpoint) {
 		// Find the midpoint in the partition
 		size_t midpoint = (start + endpoint) / 2;
@@ -295,7 +273,6 @@ void Movies::sortHelper_MergeSort_Merge(size_t start, size_t midpoint, size_t en
 	while (leftPos <= midpoint) {
 		mergedMovies[mergePos++] = this->movieList->getNodeValue(leftPos++);
 
-
 	}
 
 	// If right partition is not empty, add remaining elements to merged numbers
@@ -310,7 +287,6 @@ void Movies::sortHelper_MergeSort_Merge(size_t start, size_t midpoint, size_t en
 	}
 
 	delete[] mergedMovies;
-
 }
 
 void Movies::sort_QuickSort() {
@@ -322,8 +298,8 @@ void Movies::sort_QuickSort_Worker(long low, long high) {
 		// at right place
 		long pi = sortHelper_Partition(low, high);
 
-		this->sort_QuickSort_Worker(low, pi - 1);		// Before pi
-		this->sort_QuickSort_Worker(pi + 1, high);		// After pi
+		this->sort_QuickSort_Worker(low, pi - 1);
+		this->sort_QuickSort_Worker(pi + 1, high);
 	}
 
 }
@@ -389,7 +365,7 @@ void Movies::addMovieToList() {
 	Movie* oneMovie = new Movie(title, length, year, genre, rating, numOscars, numStars);
 
 //add the movie to the list (library)
-	movieList->appendNode(oneMovie);
+	this->movieList->appendNode(oneMovie);
 
 //confirm addition to user
 	cout << endl;
@@ -401,25 +377,25 @@ void Movies::addMovieToList() {
 void Movies::removeMovieFromList() {
 	size_t movieChoice;
 
-	if(movieList->getLength() <= 1) {
+	if(this->movieList->getLength() <= 1) {
 		cout << endl << "There must always be at least one movie in your library.  You can\'t";
 		cout << " remove any movies right now or you will have no movies in your library.\n";
 	}
 	else {
 		cout << "\n\nChoose from the following movies to remove:\n";
 		displayMovieTitles();
-		cout << "\nChoose a movie to remove between 1 & " << movieList->getLength() << ":  ";
+		cout << "\nChoose a movie to remove between 1 & " << this->movieList->getLength() << ":  ";
 		cin >> movieChoice;
 
 		while (movieChoice < 1 || movieChoice > movieList->getLength()) {
-			cout << "\nOops!  You must enter a number between 1 & " << movieList->getLength() << ":  ";
+			cout << "\nOops!  You must enter a number between 1 & " << this->movieList->getLength() << ":  ";
 			cin >> movieChoice;
 		}
 		cout << "\n\nThe movie \"";
-		movieList->getNodeValue(movieChoice - 1)->getMovieTitle()->displayText();
+		this->movieList->getNodeValue(movieChoice - 1)->getMovieTitle()->displayText();
 		cout << "\" has been successfully deleted.\n";
 
-		movieList->deleteNode(movieChoice - 1);
+		this->movieList->deleteNode(movieChoice - 1);
 
 	}
 }
@@ -430,21 +406,21 @@ void Movies::editMovieInList() {
 	cout << "\n\nChoose from the following movies to edit:\n";
 	this->displayMovieTitles();
 
-	cout << "\nChoose a movie to edit between 1 & " << movieList->getLength() << ":  ";
+	cout << "\nChoose a movie to edit between 1 & " << this->movieList->getLength() << ":  ";
 	cin >> movieChoice;
 
-	while (movieChoice < 1 || movieChoice > movieList->getLength()) {
-		cout << "\nOops!  You must enter a number between 1 & " << movieList->getLength() << ":  ";
+	while (movieChoice < 1 || movieChoice > this->movieList->getLength()) {
+		cout << "\nOops!  You must enter a number between 1 & " << this->movieList->getLength() << ":  ";
 		cin >> movieChoice;
 	}
 
-	Movie* oneMovie = movieList->getNodeValue(movieChoice - 1);
+	Movie* oneMovie = this->movieList->getNodeValue(movieChoice - 1);
 
 	oneMovie->editMovie();
 }
 
 void Movies::displayMovies() {
-	if(movieList->getLength() > 0) {
+	if(this->movieList->getLength() > 0) {
 		for (size_t x = 0; x < (movieList->getLength()); x++) {
 			cout << endl << right << setw(50) << "----------MOVIE " << (x + 1) << "----------";
 			movieList->getNodeValue(x)->printMovieDetails();
@@ -457,9 +433,9 @@ void Movies::displayMovies() {
 
 void Movies::displayMovieTitles() {
 //Text* movieTitle;
-	for (size_t x = 0; x < movieList->getLength(); x++) {
-		cout << "\nMOVIE " << (x + 1) << ": ";
-		movieList->getNodeValue(x)->getMovieTitle()->displayText();
+	for (size_t i = 0; i < movieList->getLength(); i++) {
+		cout << "\nMOVIE " << (i + 1) << ": ";
+		this->movieList->getNodeValue(i)->getMovieTitle()->displayText();
 	}
 }
 
@@ -509,10 +485,7 @@ void Movies::readMoviesFromFile(const char *filename) {
 			movieList->appendNode(oneMovie);
 
 			//confirm addition to user
-#define MOVIES_RUN_FAST
-#if !defined(MOVIES_RUN_FAST)
-			cout << "\n" << title->getString() << " was added to the movie library!\n";
-#endif
+			cout << title->getString() << " was added to the movie library!\n";
 			getline(inFile, inputBuffer);   //read in the next movie title if there is one
 
 			numMoviesReadFromFile++;
@@ -534,8 +507,8 @@ void Movies::saveToFile(char *filename) {
 
 	outFile.open(filename);
 
-	for (size_t x = 0; x < movieList->getLength(); x++) {
-		movieList->getNodeValue(x)->printMovieDetailsToFile(outFile);   //function in Movies.cpp
+	for (size_t x = 0; x < this->movieList->getLength(); x++) {
+		this->movieList->getNodeValue(x)->printMovieDetailsToFile(outFile);   //function in Movies.cpp
 	}
 	outFile.close();
 
