@@ -7,6 +7,4 @@
  *              stores a customer name (string) and the number of Krabby Patties *
  *              the customer ate.                                                *
  *********************************************************************************/
-#include <iostream>
-#include "BinaryTree.h"
-using namespace std;
+#include "BinaryTree_KK.h"

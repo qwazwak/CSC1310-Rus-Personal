@@ -9,27 +9,26 @@
  *              program is stored in a Binary Search Tree.                       *
  *********************************************************************************/
 
-#include "BinaryTree.h"
 #include <iostream>
+
+#include "BinaryTree_KK.h"
 using namespace std;
 
-int main()
-{
-	int choice;
+int main() {
+	long long choice;
 	string name;
-	int numKrabbyPatties, total;
+	long long numKrabbyPatties;
+	long long total;
 	
 	//LOOK!!!  Create a BinaryTree object.
+	BinaryTree_kk* krustyKrabBT = nullptr;
 	
-
 	cout << "\n\n_  _   ____   _  _    ___   _____  _  _     _  _   ____     _    ___  \n";
-	cout << ") |) / /  _ \\ ) () (  (  _( )__ __() () (   ) |) / /  _ \\   )_\\  \\  _)\n"; 
-	cout << "| ( (  )  ' / | \\/ |  _) \\    | |  '.  /    | ( (  )  ' /  /( )\\ |  ( \n"; 
+	cout << ") |) / /  _ \\ ) () (  (  _( )__ __() () (   ) |) / /  _ \\   )_\\  \\  _)\n";
+	cout << "| ( (  )  ' / | \\/ |  _) \\    | |  '.  /    | ( (  )  ' /  /( )\\ |  ( \n";
 	cout << ")_|)_\\ |_()_\\ )____( )____)   )_(   /_(     )_|)_\\ |_()_\\ )_/ \\_(/__o)\n\n";
 	
-	
-	do
-	{
+	do {
 		cout << "Welcome to the Krusty Krab!\n";
 		cout << "Choose one of the following options:\n";
 		cout << "1.  Enter customer data.\n";
@@ -40,34 +39,36 @@ int main()
 		cout << "ENTER 1-5:  ";
 		cin >> choice;
 		
-		while(choice < 1 || choice > 5)
-		{
+		while (choice < 1 || choice > 5) {
 			cout << "Invalid choice.  Please enter 1-5:  ";
 			cin >> choice;
 		}
 		
-		switch(choice)
-		{
-			case 1: //insert customer's data
-				do
-				{
+		switch (choice) {
+			case 1:   //insert customer's data
+				do {
 					cout << "Enter a customer's name or -1 to quit entering data.\n";
 					cout << "NAME:  ";
 					cin.ignore();
 					getline(cin, name);
 					
-					if(name != "-1")
-					{
+					if(name != "-1") {
 						cout << "NUMBER KRABBY PATTIES EATEN:  ";
 						cin >> numKrabbyPatties;
+						if(krustyKrabBT == nullptr) {
+							krustyKrabBT = new BinaryTree_kk(name, numKrabbyPatties);
+						}
+						else {
+							krustyKrabBT->createAddNode(name, numKrabbyPatties);
+						}
 						//LOOK!!  Call the insertNode BinaryTree member function here
 						
 					}
-				}while(name != "-1");
+				}while (name != "-1");
 				cout << endl;
 				break;
-			
-			case 2:  //remove customer's data
+
+			case 2:   //remove customer's data
 				cout << "\n\nYou may remove the following customers:\n";
 				//LOOK!!  Call the displayInOrder BinaryTree member function here
 				
@@ -76,29 +77,32 @@ int main()
 				cin.ignore();
 				getline(cin, name);
 				cout << endl;
-				krustyKrabBT.remove(name);
+				krustyKrabBT->removeNode(name);
 				cout << endl;
 				break;
-		
-			case 3: //statistics
+
+			case 3:   //statistics
 			
 				//LOOK!!  Call the getLeastNumPatties BinaryTree member function here
+				krustyKrabBT->findMinVal(name, numKrabbyPatties);
 				
 				cout << "\n\nLEAST NUMBER OF KRABBY PATTIES EATEN:  " << name << ", " << numKrabbyPatties << " Krabby Patties\n";
 				
 				//LOOK!!  Call the getMostNumPatties BinaryTree member function here
+				krustyKrabBT->findMaxVal(name, numKrabbyPatties);
 				
 				cout << "LARGEST NUMBER OF KRABBY PATTIES EATEN:  " << name << ", " << numKrabbyPatties << " Krabby Patties\n";
 				
 				//LOOK!!  Call the getTotalNumPatties BinaryTree member function here
+				total = krustyKrabBT->getTotalNumPatties();
 				
 				cout << "TOTAL NUMBER OF KRABBY PATTIES EATEN:  " << total << endl << endl;
 				break;
-					
-			case 4: //search
+
+			case 4:   //search
 				cout << "\n\nWhich customer are you looking for?\n";
 				//LOOK!!  Call the displayInOrder BinaryTree member function here
-				
+				krustyKrabBT->streamOutInorder();
 				
 				cout << "Enter the name of the customer.\n";
 				cout << "NAME:  ";
@@ -106,19 +110,18 @@ int main()
 				getline(cin, name);
 				
 				//LOOK!!  Call the searchNode BinaryTree member function here
-				
+				numKrabbyPatties = krustyKrabBT->getEatenByName(name);
 				
 				if(numKrabbyPatties != -1)
 					cout << "\n" << name << " ate " << numKrabbyPatties << " Krabby Patties\n\n";
 				else
 					cout << "\n" << name << " is not a customer of the Krusty Krab.\n";
-				break;	
-			
-			
-			case 5: //end
+				break;
+
+			case 5:   //end
 				cout << "\n\nGoodbye!\n\n";
 		}
-	}while(choice != 5);
+	}while (choice != 5);
 	
 	return 0;
 }
