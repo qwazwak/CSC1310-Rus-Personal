@@ -14,6 +14,6 @@ KrustyKrab.o	:	KrustyKrab.cpp
 					g++ -std=c++11 -I ./ -c KrustyKrab.cpp
 		
 
-clean			:	KrustyKrab.exe
+clean			:	#KrustyKrab.exe
 					del *.o 
 					del KrustyKrab.exe

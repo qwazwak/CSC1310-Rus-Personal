@@ -1,7 +1,7 @@
 /*********************************************************************************
  *     Title:   BinaryTree.h                                                     *
  *     Author:  Rus Hoffman                                                      *
- *     Date:    March 29, 2018                                                   *
+ *     Date:    December 4, 2018                                                   *
  *     Purpose: This is the specification file for the BinaryTree class, which   *
  *              is an implementation of a Binary Search Tree.  Each Tree Node    *
  *              stores a customer name (string) and the number of Krabby Patties *
@@ -27,404 +27,198 @@ using namespace std;
 //right is >=
 
 class BinaryTree_kk {
-private:
-	string name;
-	long long eaten;
+	private:
+		string name;
+		long long eaten;
 
-	BinaryTree_kk* rightNode;
-	BinaryTree_kk* leftNode;
+		BinaryTree_kk* rightNode;
+		BinaryTree_kk* leftNode;
 
-	string to_lower(string str) {   // return string converted to lower case
-		string returnMe = "";
-		for (size_t i = 0; i < str.length(); i++) {
-			returnMe += tolower(str.at(i));
-		}
-		return str;
-	}
+		void destroySubTree();
 
-	void destroySubTree() {
-		if (this->hasLeft()) {
-			delete this->getLeft();
-			this->leftNode = nullptr;
-		}
-		if (this->hasRight()) {
-			delete this->getRight();
-			this->rightNode = nullptr;
-		}
-		this->name = "";
-		this->eaten = 0;
-	}
+		void insert(BinaryTree_kk* insertMe);
 
-	void insert(BinaryTree_kk* insertMe) {
-		if (insertMe->hasLeft()) {
-			this->insertNode(insertMe->getLeft());
-			insertMe->destroyEntireLeft();
-			insertMe->setLeft(nullptr);
-		}
-		if (insertMe->hasRight()) {
-			this->insertNode(insertMe->getRight());
-			insertMe->destroyEntireRight();
-			insertMe->setRight(nullptr);
-		}
+		unsigned long long getTotal();
+		void leastPatties(string & nameOfMin, long long & eatenOfMin);
+		void mostPatties(string & nameOfMax, long long & eatenOfMax);
 
-		if (insertMe->getEaten() >= this->getEaten()) {
-			//if(to_lower(insertMe->getName()) >= to_lower(this->getName())) {
-			if (this->hasRight() == false) {
-				this->rightNode = insertMe;
-			} else {
-				this->rightNode->insertNode(insertMe);
-			}
-		} else {
-			if (this->hasLeft() == false) {
-				this->leftNode = insertMe;
-			} else {
-				this->leftNode->insertNode(insertMe);
-			}
-		}
-	}
+		void streamOutInorder(ostream& stream = cout);
+		long long getEatenByName(string nameKey);
 
-	unsigned long long getTotal() {
-		return this->getEaten()
-				+ (this->hasLeft() ? this->getLeft()->getTotal() : 0)
-				+ (this->hasRight() ? this->getRight()->getTotal() : 0);
-	}
-	void leastPatties(string *nameOfMin, long long *eatenOfMin) {
-		if (this->hasLeft()) {
-			this->getLeft()->getLeastNumPatties(nameOfMin, eatenOfMin);
-		} else {
-			nameOfMin = this->getName();
-			eatenOfMin = this->getEaten();
-		}
-	}
-	void mostPatties(string *nameOfMax, long long *eatenOfMax) {
-		if (this->hasRight()) {
-			this->getRight()->getMaxNumPatties(nameOfMax, eatenOfMax);
-		} else {
-			nameOfMax = this->getName();
-			eatenOfMax = this->getEaten();
-		}
-	}
+	public:
 
-	void streamOutInorder(ostream& stream = cout) {
-		if (this->leftNode != nullptr) {
-			this->leftNode->streamOutInorder(stream);
-		}
-		stream << this->name << " -    " << this->eaten << "\n";
-		if (this->rightNode != nullptr) {
-			this->rightNode->streamOutInorder(stream);
-		}
-	}
-	long long getEatenByName(string nameKey) {
-		if (string(to_lower(nameKey)).compare(to_lower(this->getName()))) {
-			return this->getEaten();
-		}
-		long long buffer;
-		if (this->hasLeft()) {
-			buffer = this->getLeft()->searchNode(nameKey);
-			return (buffer != -1 ? buffer : -1);
-		}
-		if (this->hasRight()) {
-			buffer = this->getRight()->searchNode(nameKey);
-			return (buffer != -1 ? buffer : -1);
-		}
-		return -1;
-	}
+		BinaryTree_kk(string inputName, long long inputEaten);
 
-public:
-
-	BinaryTree_kk(string inputName, long long inputEaten) {
-		this->name = inputName;
-		this->eaten = inputEaten;
-		this->rightNode = nullptr;
-		this->leftNode = nullptr;
-	}
-
-	~BinaryTree_kk() {
-		this->destroySubTree();
-	}
+		~BinaryTree_kk();
 
 //Getters and Setters
 
-	void setEaten(long long input) {
-		this->eaten = input;
-	}
-	void setName(string input) {
-		this->name = input;
-	}
-	long long getEaten() {
-		return this->eaten;
-	}
-	string getName() {
-		return this->name;
-	}
+		void setEaten(long long input);
+		void setName(string input);
+		long long getEaten();
+		string getName();
 
-	void setLeft(BinaryTree_kk* nodeToSet) {
-		this->leftNode = nodeToSet;
-	}
-	void setRight(BinaryTree_kk* nodeToSet) {
-		this->rightNode = nodeToSet;
-	}
-	BinaryTree_kk* getLeft() {
-		return this->leftNode;
-	}
-	BinaryTree_kk* getRight() {
-		return this->rightNode;
-	}
+		void setLeft(BinaryTree_kk* nodeToSet);
+		void setRight(BinaryTree_kk* nodeToSet);
+		BinaryTree_kk* getLeft();
+		BinaryTree_kk* getRight();
 
 //Node helping
-	int getNumChildren() {
-		return (this->hasLeft() ? 1 : 0) + (this->hasRight() ? 1 : 0);
-	}
-	BinaryTree_kk* getOnlyChild() {
-		if (this->getNumChildren() > 1) {
-			string errorString =
-					"ERROR TRYING TO GET SINGLE CHILD WHEN TWO EXIST";
-			throw(errorString);
-			return nullptr;
-		}
-		return (this->hasRight() ? this->getRight() : this->getLeft());
-	}
-	bool hasLeft() {
-		return this->getLeft() != nullptr;
-	}
-	bool hasRight() {
-		return this->getRight() != nullptr;
-	}
+		int getNumChildren();
+		BinaryTree_kk* getOnlyChild();
+		bool hasLeft();
+		bool hasRight();
 
-	void destroyEntireRight() {
-		delete this->getRight();
-		this->setRight(nullptr);
-	}
-	void destroyEntireLeft() {
-		delete this->getLeft();
-		this->setLeft(nullptr);
-	}
+		void destroyEntireRight();
+		void destroyEntireLeft();
 
 //Node adding
-	void createAndAddNode(string inputName, long long inputEaten) {
-		this->insertNode(new BinaryTree_kk(inputName, inputEaten));
-	}
-	void insertNode(BinaryTree_kk* insertMe) {
-		this->insert(insertMe);
-	}
+		void createAndAddNode(string inputName, long long inputEaten);
+		void insertNode(BinaryTree_kk* insertMe);
 
 //Stats:
-	unsigned long long getTotalEaten() {
-		return this->getTotal();
-	}
-	void getLeastNumPatties(string *nameOfMin, long long *eatenOfMin) {
-		this->leastPatties(nameOfMin, eatenOfMin);
-	}
-	void getMaxNumPatties(string *nameOfMax, long long *eatenOfMax) {
-		this->mostPatties(nameOfMax, eatenOfMax);
-	}
+		unsigned long long getTotalEaten();
+		void getLeastNumPatties(string & nameOfMin, long long & eatenOfMin);
+		void getMaxNumPatties(string & nameOfMax, long long & eatenOfMax);
 
-	BinaryTree_kk* getSmallestNode() {
-		if (this->hasLeft() == false) {
-			return this;
-		}
-		//else..
-		return this->getLeft()->getSmallestNode();
-	}
-	BinaryTree_kk* getLargestNode() {
-		if (this->hasRight() == false) {
-			return this;
-		}
-		//else..
-		return this->getRight()->getLargestNode();
-	}
+		BinaryTree_kk* getSmallestNode();
+		BinaryTree_kk* getLargestNode();
 
 //Tools:
 
-	void displayInOrder(ostream& stream = cout) {
-		this->streamOutInorder(stream);
-	}
+		void displayInOrder(ostream& stream = cout);
 
-	long long searchNode(string nameKey) {
-		return getEatenByName(nameKey);
-	}
+		long long searchNode(string nameKey);
 
-	BinaryTree_kk* getSecondSmallestNode() {
-		if (this->hasLeft()) {
-			if (this->getLeft()->hasLeft()) {
-				return this->getLeft()->getSecondSmallestNode();
-			}
-			return this;
-		}
-		clog << "ERROR IN GETTING SECOND SMALLEST NODE, CANNOT DO IT" << endl;
-		return nullptr;
-	}
-	BinaryTree_kk* getSecondLargestNode() {
-		if (this->hasRight()) {
-			if (this->getRight()->hasRight()) {
-				return this->getRight()->getSecondLargestNode();
-			}
-			return this;
-		}
-		clog << "ERROR IN GETTING SECOND LARGEST NODE, CANNOT DO IT" << endl;
-		return nullptr;
-	}
+		BinaryTree_kk* getSecondSmallestNode();
+		BinaryTree_kk* getSecondLargestNode();
 
-	BinaryTree_kk* findParentOfNode(BinaryTree_kk* childAddress) {
-		if (this->hasLeft()) {
-			if (this->getLeft() == childAddress) {
-				return this;
-			}
-			BinaryTree_kk* buffer = this->getLeft()->findParentOfNode(
-					childAddress);
-			if (buffer != nullptr) {
-				return buffer;
-			}
-		}
-		if (this->hasRight()) {
-			if (this->getRight() == childAddress) {
-				return this;
-			}
-			BinaryTree_kk* buffer = this->getRight()->findParentOfNode(
-					childAddress);
-			if (buffer != nullptr) {
-				return buffer;
-			}
-		}
-		return nullptr;
-	}
-	/*
-	 You will also need a destructor, which will call a private function named destroySubTree.
-	 The destroySubTree function should delete all nodes in the tree since they were dynamically allocated.
-	 BINARY TREE OPERATIONS:
-	 1. Insert a new node (requires two functions)
-	 a. The public function (insertNode) should accept a new customer’s name and the number of Krabby Patties they ate.
-	 This function should create a new TreeNode and fill it with these new values and then call the private function (insert).
-	 b. The insert function (recursive function) inserts the node in the correct position.
+		BinaryTree_kk* findParentOfNode(BinaryTree_kk* childAddress);
 
-
-
-
-	 2. Delete a node (requires three functions) a. The public function (remove) accepts a customer’s name in order to identify the node that should be removed.  This function prints, “You are trying to delete [name].”  This function will call the private deleteNode function (a recursive function). b. The deleteNode function tries to find the node that needs deleted.  If deleteNode finds the node, it calls the private makeDeletion function.  If deleteNode does not find the node, it should print “I’m sorry.  That customer can’t be found in the Krusty Krab.” c. The makeDeletion function removes the node and reattaches the branches of the tree below the node.
-
-
-
-
-	 3. Display names of customers (requires two functions)
-	 a. The public function (displayInOrder) will call the private overloaded function also called displayInOrder.
-	 b. The private displayInOrder accepts a TreeNode as an argument and it is a recursive function which traverses the nodes using the inorder method and prints the customer’s name from each node.
-
-	 4. Search for a customer
-	 a. The searchNode function accepts the customer’s name as an argument and then it will look at each node (traverse the tree) to find the node with that name.
-	 If the name is found, the function returns the number of Krabby Patties that customer ate.  If not, then it will return -1 instead.
-
-	 5. Find the lowest number of Krabby Patties eaten by any customer (requires two functions) a. The public function (getLeastNumPatties) accepts two arguments – a string that will eventually hold the customer’s name that has the least number of eaten Krabby Patties and an integer that will eventually hold the customer’s # of eaten Krabby Patties.  This function sets the integer parameter (leastPatties) to the root node’s # of patties and then calls the private function (getLeast). b. The getLeast function is a recursive function that traverses the nodes like the displayInOrder function except instead of printing out the customer’s name, it will check to see if the current node has a smaller number then the one saved in the leastPatties variable.  If so, then save this node’s customer name & number of patties as the new least.
-
-	 6. Find the highest number of Krabby Patties eaten by any customer (requires two functions) a. Follow the instructions for finding the lowest except find the highest instead
-
-	 7. Find the total number of Krabby Patties eaten by ALL customers (requires two functions)
-	 a. The public function (getTotalNumPatties) accepts no arguments.
-	 It reates a variable to hold the total and then calls the private getTotal function, sending the root node & the total variable (send total by reference) to the function.
-	 Then, this function will return the total as an integer.
-	 b. The getTotal function is a recursive function that traverses the tree like the displayInOrder function except instead of printing out the customer’s name, it will get a running total of Krabby Patties eaten from each node.
-	 */
-	void removeSingleRight() {
-
-		this->findParentOfNode(this->getRight()->getSmallestNode())->destroyEntireRight();
-	}
-	void removeSingleLeft() {
-		this->findParentOfNode(this->getLeft()->getSmallestNode())->destroyEntireLeft();
-	}
-
-
-
-
-	bool removeNode(string nameKeyOriginal) {
-		string nameKey = nameKeyOriginal;
-		transform(nameKey.begin(), nameKey.end(), nameKey.begin(), ::tolower);
-		string stringComparisonBuffer = this->getName();
-		transform(stringComparisonBuffer.begin(), stringComparisonBuffer.end(),
-				stringComparisonBuffer.begin(), ::tolower);
-
-		//am i the node
-		stringComparisonBuffer = this->getName();
-		transform(stringComparisonBuffer.begin(), stringComparisonBuffer.end(),
-				stringComparisonBuffer.begin(), ::tolower);
-		if (nameKey.compare(stringComparisonBuffer) == 0) {
-			if (this->getNumChildren() == 0) {
-				string errorString = "ERROR: CANNOT REMOVE SINGLE NODE TREE";
-				throw(errorString);
-				return false;
-			} else if (this->getNumChildren() == 2) {
-				BinaryTree_kk* filler = this->getRight();
-				BinaryTree_kk* parent = this;
-				while (filler->getLeft() != nullptr) {
-					parent = filler;
-					filler = filler->getLeft();
+		bool removeNode(string nameKey) {
+			//If this is the node to remove (only useful for root node) do special stuff because it cannot be deleted, but changed
+			if(strcasecmp(nameKey.c_str(), this->getName().c_str()) == 0) {
+				if(this->getNumChildren() == 0) {
+					string errorString = "ERROR: CANNOT REMOVE SINGLE NODE TREE";
+					throw(errorString);
+					return false;
 				}
-				this->setName(filler->getName());
-				this->setEaten(filler->getEaten());
-				parent->setLeft(nullptr);
-				delete filler;
-			} else if (this->getNumChildren() == 1) {
-				BinaryTree_kk* childBackup = this->getOnlyChild();
-				this->setLeft(childBackup->getLeft());
-				this->setRight(childBackup->getRight());
-				this->setName(childBackup->getName());
-				this->setEaten(childBackup->getEaten());
-				childBackup->setRight(nullptr);
-				childBackup->setLeft(nullptr);
-				delete childBackup;
-			}
-			return true;
-
-		} else {
-			//I am not to be removed, check children
-
-			if (this->hasRight()) {
-				stringComparisonBuffer = this->getRight()->getName();
-				transform(stringComparisonBuffer.begin(),
-						stringComparisonBuffer.end(),
-						stringComparisonBuffer.begin(), ::tolower);
-				if (nameKey.compare(stringComparisonBuffer) == 0) {
-					BinaryTree_kk* childBackup = this->getRight();
-					this->setRight(nullptr);
-					if (childBackup->getLeft() != nullptr) {
-						this->insertNode(childBackup->getLeft());
+				else if(this->getNumChildren() == 2) {
+					BinaryTree_kk* filler = this->getRight();
+					BinaryTree_kk* parent = this;
+					while (filler->getLeft() != nullptr) {
+						parent = filler;
+						filler = filler->getLeft();
 					}
-					if (childBackup->getRight() != nullptr) {
-						this->insertNode(childBackup->getRight());
-					}
-					childBackup->setLeft(nullptr);
+					this->setName(filler->getName());
+					this->setEaten(filler->getEaten());
+					parent->setLeft(nullptr);
+					delete filler;
+				}
+				else if(this->getNumChildren() == 1) {
+					BinaryTree_kk* childBackup = this->getOnlyChild();
+					this->setLeft(childBackup->getLeft());
+					this->setRight(childBackup->getRight());
+					this->setName(childBackup->getName());
+					this->setEaten(childBackup->getEaten());
 					childBackup->setRight(nullptr);
-					delete childBackup;
-					return true;
-				}
-
-			}
-			if (this->hasLeft()) {
-				stringComparisonBuffer = this->getLeft()->getName();
-				transform(stringComparisonBuffer.begin(),
-						stringComparisonBuffer.end(),
-						stringComparisonBuffer.begin(), ::tolower);
-				if (nameKey.compare(stringComparisonBuffer) == 0) {
-					BinaryTree_kk* childBackup = this->getLeft();
-					this->setLeft(nullptr);
-					if (childBackup->getLeft() != nullptr) {
-						this->insertNode(childBackup->getLeft());
-					}
-					if (childBackup->getRight() != nullptr) {
-						this->insertNode(childBackup->getRight());
-					}
 					childBackup->setLeft(nullptr);
-					childBackup->setRight(nullptr);
 					delete childBackup;
-					return true;
 				}
+				return true;
 
 			}
-			//We know that WE are not the data, and each child isnt, now recursivly check each
-			bool miniReturn = this->getLeft()->removeNode(name);
-			if (miniReturn == false) {
-				miniReturn = this->getRight()->removeNode(name);
+			else {
+				//I am not to be removed, check children
+				//case of 2 children
+				if(this->hasRight() && this->hasLeft()) {
+					//Key is on right
+					if(strcasecmp(nameKey.c_str(), this->getName().c_str()) >= 0) {
+						if(strcasecmp(nameKey.c_str(), this->getRight()->getName().c_str()) == 0) {
+							//REMOVE THE RIGHT CHILD
+							//save the one to remove
+							BinaryTree_kk* buffer = this->getRight();
+							//make it not part of the main tree
+							this->setRight(nullptr);
+							//if it has children, bring them in
+							if(buffer->hasRight()) {
+								this->insertNode(buffer->getRight());
+							}
+							if(buffer->hasLeft()) {
+								this->insertNode(buffer->getLeft());
+							}
+							//remove links to its children and delete the node
+							buffer->setLeft(nullptr);
+							buffer->setRight(nullptr);
+							delete buffer;
+							return true;
+						}
+						else {
+							return this->getRight()->removeNode(nameKey);
+						}
+
+					}
+					//key is on left
+					else {
+
+						if(strcasecmp(nameKey.c_str(), this->getLeft()->getName().c_str()) == 0) {
+							//REMOVE THE LEFT CHILD
+							//save the one to remove
+							BinaryTree_kk* buffer = this->getLeft();
+							//make it not part of the main tree
+							this->setLeft(nullptr);
+							//if it has children, bring them in
+							if(buffer->hasRight()) {
+								this->insertNode(buffer->getRight());
+							}
+							if(buffer->hasLeft()) {
+								this->insertNode(buffer->getLeft());
+							}
+							//remove links to its children and delete the node
+							buffer->setLeft(nullptr);
+							buffer->setRight(nullptr);
+							delete buffer;
+							return true;
+						}
+						else {
+							return this->getLeft()->removeNode(nameKey);
+						}
+					}
+				}
+				//case of one child
+				else if(this->hasRight() != this->hasLeft()) {
+					if(strcasecmp(nameKey.c_str(), this->getOnlyChild()->getName().c_str()) == 0) {
+						//save the one to remove
+						BinaryTree_kk* buffer = this->getOnlyChild();
+						//make it not part of the main tree
+						this->setLeft(nullptr);
+						this->setRight(nullptr);
+						//if it has children, bring them in
+						if(buffer->hasRight()) {
+							this->insertNode(buffer->getRight());
+						}
+						if(buffer->hasLeft()) {
+							this->insertNode(buffer->getLeft());
+						}
+						//remove links to its children and delete the node
+						buffer->setLeft(nullptr);
+						buffer->setRight(nullptr);
+						delete buffer;
+						return true;
+					}
+					else {
+						return this->getOnlyChild()->removeNode(nameKey);
+					}
+
+				}
+				//case of no children
+				else {
+					return false;
+				}
 			}
-			return miniReturn;
+
 		}
-	}
 };
+
+
 #endif
