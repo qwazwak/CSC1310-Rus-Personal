@@ -59,7 +59,7 @@ int main() {
 							krustyKrabBT = new BinaryTree_kk(name, numKrabbyPatties);
 						}
 						else {
-							krustyKrabBT->createAddNode(name, numKrabbyPatties);
+							krustyKrabBT->createAndAddNode(name, numKrabbyPatties);
 						}
 						//LOOK!!  Call the insertNode BinaryTree member function here
 						
@@ -84,17 +84,17 @@ int main() {
 			case 3:   //statistics
 			
 				//LOOK!!  Call the getLeastNumPatties BinaryTree member function here
-				krustyKrabBT->findMinVal(name, numKrabbyPatties);
+				krustyKrabBT->getLeastNumPatties(&name, &numKrabbyPatties);
 				
 				cout << "\n\nLEAST NUMBER OF KRABBY PATTIES EATEN:  " << name << ", " << numKrabbyPatties << " Krabby Patties\n";
 				
 				//LOOK!!  Call the getMostNumPatties BinaryTree member function here
-				krustyKrabBT->findMaxVal(name, numKrabbyPatties);
+				krustyKrabBT->getMaxNumPatties(&name, &numKrabbyPatties);
 				
 				cout << "LARGEST NUMBER OF KRABBY PATTIES EATEN:  " << name << ", " << numKrabbyPatties << " Krabby Patties\n";
 				
 				//LOOK!!  Call the getTotalNumPatties BinaryTree member function here
-				total = krustyKrabBT->getTotalNumPatties();
+				total = krustyKrabBT->getTotalEaten();
 				
 				cout << "TOTAL NUMBER OF KRABBY PATTIES EATEN:  " << total << endl << endl;
 				break;
